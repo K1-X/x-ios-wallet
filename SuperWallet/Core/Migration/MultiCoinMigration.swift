@@ -35,4 +35,46 @@ class MultiCoinMigration {
         self.appTracker = appTracker
     }
 
+	func start() -> Bool {
+        if !keystore.wallets.isEmpty && appTracker.completeMultiCoinMigration == false {
+            appTracker.completeMultiCoinMigration = true
+            return self.runMigrate()
+        }
+        appTracker.completeMultiCoinMigration = true
+        return false
+    }
+
+    //TODO: Just run this once
+    @discardableResult func runMigrate() -> Bool {
+        func keychainOldKey(for account: Account) -> String {
+            guard let wallet = account.wallet else {
+                return account.address.description.lowercased()
+            }
+            switch wallet.type {
+            case .encryptedKey:
+                return account.address.description.lowercased()
+            case .hierarchicalDeterministicWallet:
+                return "hd-wallet-" + account.address.description
+            }
+        }
+        keystore.wallets.filter { !$0.accounts.isEmpty }.forEach { wallet in
+            switch wallet.type {
+            case .hd, .privateKey:
+                if let account = wallet.accounts.first, let password = keychain.get(keychainOldKey(for: account)), let walletI = account.wallet {
+                    let _ = keystore.setPassword(password, for: walletI)
+                }
+            case .address:
+                break
+            }
+        }
+
+        // Move string addresses to WalletAddress
+        let addresses = watchAddresses.compactMap {
+            EthereumAddress(string: $0)
+        }.compactMap {
+            WalletAddress(coin: .ethereum, address: $0)
+        }
+        keystore.storage.store(address: addresses)
+        return true
+    }
 }
