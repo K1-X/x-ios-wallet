@@ -51,4 +51,17 @@ func start() {
         navigationController.pushViewController(coordinator.navigationController, animated: true)
         addCoordinator(coordinator)
     }
+extension InitialWalletCreationCoordinator: WalletCoordinatorDelegate {
+
+    func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
+        delegate?.didAddAccount(account, in: self)
+        removeCoordinator(coordinator)
+    }
+
+    func didCancel(in coordinator: WalletCoordinator) {
+        delegate?.didCancel(in: self)
+        removeCoordinator(coordinator)
+    }
+
+}
 }
