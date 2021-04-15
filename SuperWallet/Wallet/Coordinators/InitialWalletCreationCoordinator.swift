@@ -11,7 +11,7 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 
 final class InitialWalletCreationCoordinator: Coordinator {
 
-let navigationController: NavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     weak var delegate: InitialWalletCreationCoordinatorDelegate?
@@ -30,9 +30,9 @@ let navigationController: NavigationController
     ) {
         self.navigationController = navigationController
         self.keystore = keystore
-    }    
-	
-func start() {
+    }
+
+    func start() {
         navigationController.viewControllers = [rootViewController]
     }
 
@@ -51,6 +51,8 @@ func start() {
         navigationController.pushViewController(coordinator.navigationController, animated: true)
         addCoordinator(coordinator)
     }
+}
+
 extension InitialWalletCreationCoordinator: WalletCoordinatorDelegate {
 
     func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
@@ -73,6 +75,4 @@ extension InitialWalletCreationCoordinator: WelcomeViewControllerDelegate {
     func didPressImportWallet(in viewController: WelcomeViewController) {
         presentImportWallet()
     }
-}
-
 }
