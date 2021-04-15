@@ -64,4 +64,15 @@ extension InitialWalletCreationCoordinator: WalletCoordinatorDelegate {
     }
 
 }
+
+extension InitialWalletCreationCoordinator: WelcomeViewControllerDelegate {
+    func didPressCreateWallet(in viewController: WelcomeViewController) {
+        showCreateWallet()
+    }
+
+    func didPressImportWallet(in viewController: WelcomeViewController) {
+        presentImportWallet()
+    }
+}
+
 }
