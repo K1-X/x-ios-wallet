@@ -11,5 +11,24 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 
 final class InitialWalletCreationCoordinator: Coordinator {
 
-    
+let navigationController: NavigationController
+    let keystore: Keystore
+    var coordinators: [Coordinator] = []
+    weak var delegate: InitialWalletCreationCoordinatorDelegate?
+
+    lazy var welcomeViewController: WelcomeViewController = {
+        let controller = WelcomeViewController()
+        controller.delegate = self
+        return controller
+    }()
+    lazy var rootViewController: WelcomeViewController = {
+        return welcomeViewController
+    }()
+    init(
+        navigationController: NavigationController = NavigationController(),
+        keystore: Keystore
+    ) {
+        self.navigationController = navigationController
+        self.keystore = keystore
+    }    
 }
