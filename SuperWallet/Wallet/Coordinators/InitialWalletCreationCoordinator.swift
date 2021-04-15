@@ -31,4 +31,24 @@ let navigationController: NavigationController
         self.navigationController = navigationController
         self.keystore = keystore
     }    
+	
+func start() {
+        navigationController.viewControllers = [rootViewController]
+    }
+
+    func showCreateWallet() {
+        let coordinator = WalletCoordinator(navigationController: navigationController, keystore: keystore)
+        coordinator.delegate = self
+        coordinator.start(.createInstantWallet)
+        navigationController.pushViewController(coordinator.navigationController, animated: true)
+        addCoordinator(coordinator)
+    }
+
+    func presentImportWallet() {
+        let coordinator = WalletCoordinator(keystore: keystore)
+        coordinator.delegate = self
+        coordinator.start(.importWallet)
+        navigationController.pushViewController(coordinator.navigationController, animated: true)
+        addCoordinator(coordinator)
+    }
 }
