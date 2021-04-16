@@ -43,3 +43,18 @@ lazy var bookmarksViewController: BookmarkViewController = {
         controller.webView.uiDelegate = self
         return controller
     }()
+
+private let sharedRealm: Realm
+    private lazy var bookmarksStore: BookmarksStore = {
+        return BookmarksStore(realm: sharedRealm)
+    }()
+    private lazy var historyStore: HistoryStore = {
+        return HistoryStore(realm: sharedRealm)
+    }()
+    lazy var preferences: PreferencesController = {
+        return PreferencesController()
+    }()
+    var urlParser: BrowserURLParser {
+        let engine = SearchEngine(rawValue: preferences.get(for: .browserSearchEngine)) ?? .default
+        return BrowserURLParser(engine: engine)
+    }
