@@ -82,3 +82,12 @@ private let sharedRealm: Realm
         self.keystore = keystore
         self.sharedRealm = sharedRealm
     }
+
+    func start() {
+        navigationController.viewControllers = [rootViewController]
+//        rootViewController.browserViewController.goHome()
+    }
+
+    @objc func dismiss() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
