@@ -14,13 +14,12 @@ protocol BrowserCoordinatorDelegate: class {
 }
 
 final class BrowserCoordinator: NSObject, Coordinator {
-     var coordinators: [Coordinator] = []
+    var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
-    let navigationController: NavigationController   
-}
+    let navigationController: NavigationController
 
-lazy var bookmarksViewController: BookmarkViewController = {
+    lazy var bookmarksViewController: BookmarkViewController = {
         let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
         controller.delegate = self
         return controller
@@ -43,8 +42,7 @@ lazy var bookmarksViewController: BookmarkViewController = {
         controller.webView.uiDelegate = self
         return controller
     }()
-
-private let sharedRealm: Realm
+    private let sharedRealm: Realm
     private lazy var bookmarksStore: BookmarksStore = {
         return BookmarksStore(realm: sharedRealm)
     }()
@@ -71,7 +69,7 @@ private let sharedRealm: Realm
         }
     }
 
-   init(
+    init(
         session: WalletSession,
         keystore: Keystore,
         navigator: Navigator,
@@ -92,7 +90,7 @@ private let sharedRealm: Realm
         navigationController.dismiss(animated: true, completion: nil)
     }
 
- private func executeTransaction(account: Account, action: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType, server: RPCServer) {
+    private func executeTransaction(account: Account, action: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType, server: RPCServer) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
@@ -138,6 +136,7 @@ private let sharedRealm: Realm
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
     func openURL(_ url: URL) {
 //        rootViewController.browserViewController.goTo(url: url)
         handleToolbar(for: url)
@@ -221,3 +220,208 @@ private let sharedRealm: Realm
         alertController.addAction(cancelAction)
         return alertController
     }
+
+//    private func share() {
+//        guard let url = rootViewController.browserViewController.webView.url else { return }
+//        rootViewController.displayLoading()
+//        let params = BranchEvent.openURL(url).params
+//        Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
+//            guard let `self` = self else { return }
+//            let shareURL: URL = {
+//                if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
+//                    return shortURL
+//                }
+//                return url
+//            }()
+//            self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+//                self?.rootViewController.hideLoading()
+//            }
+//        }
+//    }
+}
+
+extension BrowserCoordinator: BrowserViewControllerDelegate {
+    func runAction(action: BrowserAction) {
+        switch action {
+        case .bookmarks:break
+//            rootViewController.select(viewType: .bookmarks)
+        case .addBookmark(let bookmark):
+            bookmarksStore.add(bookmarks: [bookmark])
+        case .qrCode:
+            presentQRCodeReader()
+        case .history:break
+//            rootViewController.select(viewType: .history)
+        case .navigationAction(let navAction):
+            switch navAction {
+            case .home:
+                enableToolbar = true
+//                rootViewController.select(viewType: .browser)
+//                rootViewController.browserViewController.goHome()
+            case .more(let sender):
+                presentMoreOptions(sender: sender)
+            case .enter(let string):
+                guard let url = urlParser.url(from: string) else { return }
+                openURL(url)
+            case .goBack:break
+//                rootViewController.browserViewController.webView.goBack()
+            default: break
+            }
+        case .changeURL(let url):
+            handleToolbar(for: url)
+        }
+    }
+
+    func didCall(action: DappAction, callbackID: Int) {
+        guard let account = session.account.currentAccount, let _ = account.wallet else {
+//            self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            self.navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
+            return
+        }
+        switch action {
+        case .signTransaction(let unconfirmedTransaction):
+            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
+        case .sendTransaction(let unconfirmedTransaction):
+            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
+        case .signMessage(let hexMessage):
+            signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
+        case .signPersonalMessage(let hexMessage):
+            signMessage(with: .personalMessage(Data(hex: hexMessage)), account: account, callbackID: callbackID)
+        case .signTypedMessage(let typedData):
+            signMessage(with: .typedMessage(typedData), account: account, callbackID: callbackID)
+        case .unknown:
+            break
+        }
+    }
+
+    func didVisitURL(url: URL, title: String) {
+        historyStore.record(url: url, title: title)
+    }
+}
+
+extension BrowserCoordinator: SignMessageCoordinatorDelegate {
+    func didCancel(in coordinator: SignMessageCoordinator) {
+        coordinator.didComplete = nil
+        removeCoordinator(coordinator)
+    }
+}
+
+extension BrowserCoordinator: ConfirmCoordinatorDelegate {
+    func didCancel(in coordinator: ConfirmCoordinator) {
+        navigationController.dismiss(animated: true, completion: nil)
+        coordinator.didCompleted = nil
+        removeCoordinator(coordinator)
+    }
+}
+
+extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        guard let url = URL(string: result) else {
+            return
+        }
+        openURL(url)
+    }
+}
+
+extension BrowserCoordinator: BookmarkViewControllerDelegate {
+    func didSelectBookmark(_ bookmark: Bookmark, in viewController: BookmarkViewController) {
+        guard let url = bookmark.linkURL else {
+            return
+        }
+        openURL(url)
+    }
+}
+
+extension BrowserCoordinator: HistoryViewControllerDelegate {
+    func didSelect(history: History, in controller: HistoryViewController) {
+        guard let url = history.URL else {
+            return
+        }
+        openURL(url)
+    }
+}
+
+extension BrowserCoordinator: WKUIDelegate {
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if navigationAction.targetFrame == nil {
+            browserViewController.webView.load(navigationAction.request)
+        }
+        return nil
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
+            completionHandler()
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
+            completionHandler(true)
+        }))
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .default, handler: { _ in
+            completionHandler(false)
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: prompt,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addTextField { (textField) in
+            textField.text = defaultText
+        }
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
+            if let text = alertController.textFields?.first?.text {
+                completionHandler(text)
+            } else {
+                completionHandler(defaultText)
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .default, handler: { _ in
+            completionHandler(nil)
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension BrowserCoordinator: MasterBrowserViewControllerDelegate {
+    func didPressAction(_ action: BrowserToolbarAction) {
+        switch action {
+        case .view(let viewType):
+            switch viewType {
+            case .bookmarks:
+                break
+            case .history:
+                break
+            case .browser:
+                break
+            }
+        case .qrCode:
+            presentQRCodeReader()
+        }
+    }
+}
