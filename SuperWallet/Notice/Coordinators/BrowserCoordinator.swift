@@ -151,3 +151,34 @@ private let sharedRealm: Realm
 //            rootViewController.select(viewType: .browser)
         }
     }
+
+    func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
+        let coordinator = SignMessageCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            account: account
+        )
+        coordinator.didComplete = { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let data):
+                let callback: DappCallback
+                switch type {
+                case .message:
+                    callback = DappCallback(id: callbackID, value: .signMessage(data))
+                case .personalMessage:
+                    callback = DappCallback(id: callbackID, value: .signPersonalMessage(data))
+                case .typedMessage:
+                    callback = DappCallback(id: callbackID, value: .signTypedMessage(data))
+                }
+//                self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+            case .failure: break
+//                self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            }
+            coordinator.didComplete = nil
+            self.removeCoordinator(coordinator)
+        }
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        coordinator.start(with: type)
+    }
