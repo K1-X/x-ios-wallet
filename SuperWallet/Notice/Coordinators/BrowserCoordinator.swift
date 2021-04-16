@@ -138,4 +138,16 @@ private let sharedRealm: Realm
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+    func openURL(_ url: URL) {
+//        rootViewController.browserViewController.goTo(url: url)
+        handleToolbar(for: url)
+    }
 
+    func handleToolbar(for url: URL) {
+        let isToolbarHidden = url.absoluteString != Constants.dappsBrowserURL
+        navigationController.isToolbarHidden = isToolbarHidden
+
+        if isToolbarHidden {
+//            rootViewController.select(viewType: .browser)
+        }
+    }
