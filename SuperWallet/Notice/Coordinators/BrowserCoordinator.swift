@@ -196,3 +196,28 @@ private let sharedRealm: Realm
         let alertController = makeMoreAlertSheet(sender: sender)
         navigationController.present(alertController, animated: true, completion: nil)
     }
+
+    private func makeMoreAlertSheet(sender: UIView) -> UIAlertController {
+        let alertController = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alertController.popoverPresentationController?.sourceView = sender
+        alertController.popoverPresentationController?.sourceRect = sender.centerRect
+        let reloadAction = UIAlertAction(title: R.string.localizable.reload(), style: .default) { [unowned self] _ in
+//            self.rootViewController.browserViewController.reload()
+        }
+        let shareAction = UIAlertAction(title: R.string.localizable.share(), style: .default) { [unowned self] _ in
+//            self.share()
+        }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in }
+        let addBookmarkAction = UIAlertAction(title: R.string.localizable.browserAddbookmarkButtonTitle(), style: .default) { [unowned self] _ in
+//            self.rootViewController.browserViewController.addBookmark()
+        }
+        alertController.addAction(reloadAction)
+        alertController.addAction(shareAction)
+        alertController.addAction(addBookmarkAction)
+        alertController.addAction(cancelAction)
+        return alertController
+    }
