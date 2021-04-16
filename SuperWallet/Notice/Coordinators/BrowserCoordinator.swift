@@ -58,3 +58,15 @@ private let sharedRealm: Realm
         let engine = SearchEngine(rawValue: preferences.get(for: .browserSearchEngine)) ?? .default
         return BrowserURLParser(engine: engine)
     }
+
+    var server: RPCServer {
+        return session.currentRPC
+    }
+
+    weak var delegate: BrowserCoordinatorDelegate?
+
+    var enableToolbar: Bool = true {
+        didSet {
+            navigationController.isToolbarHidden = !enableToolbar
+        }
+    }
