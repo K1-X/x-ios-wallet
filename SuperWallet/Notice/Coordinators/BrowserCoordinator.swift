@@ -36,3 +36,10 @@ lazy var bookmarksViewController: BookmarkViewController = {
         let controller = AdViewController()
         return controller
     }()
+
+    lazy var browserViewController: BrowserViewController = {
+        let controller = BrowserViewController(account: session.account, config: session.config, server: server)
+        controller.delegate = self
+        controller.webView.uiDelegate = self
+        return controller
+    }()
