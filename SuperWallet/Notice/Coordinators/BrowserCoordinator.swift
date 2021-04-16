@@ -70,3 +70,15 @@ private let sharedRealm: Realm
             navigationController.isToolbarHidden = !enableToolbar
         }
     }
+
+   init(
+        session: WalletSession,
+        keystore: Keystore,
+        navigator: Navigator,
+        sharedRealm: Realm
+    ) {
+        self.navigationController = NavigationController()
+        self.session = session
+        self.keystore = keystore
+        self.sharedRealm = sharedRealm
+    }
