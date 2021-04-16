@@ -182,3 +182,12 @@ private let sharedRealm: Realm
         addCoordinator(coordinator)
         coordinator.start(with: type)
     }
+
+    func presentQRCodeReader() {
+        let coordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.qrcodeController, animated: true, completion: nil)
+    }
