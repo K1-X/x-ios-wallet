@@ -91,3 +91,51 @@ private let sharedRealm: Realm
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
+
+ private func executeTransaction(account: Account, action: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType, server: RPCServer) {
+        let configurator = TransactionConfigurator(
+            session: session,
+            account: account,
+            transaction: transaction,
+            server: server,
+            chainState: ChainState(server: server)
+        )
+        let coordinator = ConfirmCoordinator(
+            session: session,
+            configurator: configurator,
+            keystore: keystore,
+            account: account,
+            type: type,
+            server: server
+        )
+        addCoordinator(coordinator)
+        coordinator.didCompleted = { [unowned self] result in
+            switch result {
+            case .success(let type):
+                switch type {
+                case .signedTransaction(let transaction):
+                    // on signing we pass signed hex of the transaction
+                    let callback = DappCallback(id: callbackID, value: .signTransaction(transaction.data))
+//                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                case .sentTransaction(let transaction):
+                    // on send transaction we pass transaction ID only.
+                    let data = Data(hex: transaction.id)
+                    let callback = DappCallback(id: callbackID, value: .sentTransaction(data))
+//                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                }
+            case .failure: break
+//                self.rootViewController.browserViewController.notifyFinish(
+//                    callbackID: callbackID,
+//                    value: .failure(DAppError.cancelled)
+//                )
+            }
+            coordinator.didCompleted = nil
+            self.removeCoordinator(coordinator)
+            self.navigationController.dismiss(animated: true, completion: nil)
+        }
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+
