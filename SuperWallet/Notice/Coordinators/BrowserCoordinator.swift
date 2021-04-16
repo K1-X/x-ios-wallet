@@ -19,3 +19,20 @@ final class BrowserCoordinator: NSObject, Coordinator {
     let keystore: Keystore
     let navigationController: NavigationController   
 }
+
+lazy var bookmarksViewController: BookmarkViewController = {
+        let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
+        controller.delegate = self
+        return controller
+    }()
+
+    lazy var historyViewController: HistoryViewController = {
+        let controller = HistoryViewController(store: historyStore)
+        controller.delegate = self
+        return controller
+    }()
+
+    lazy var rootViewController: AdViewController = {
+        let controller = AdViewController()
+        return controller
+    }()
