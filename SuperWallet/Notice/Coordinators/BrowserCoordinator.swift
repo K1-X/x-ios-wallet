@@ -191,3 +191,8 @@ private let sharedRealm: Realm
         addCoordinator(coordinator)
         navigationController.present(coordinator.qrcodeController, animated: true, completion: nil)
     }
+
+    private func presentMoreOptions(sender: UIView) {
+        let alertController = makeMoreAlertSheet(sender: sender)
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
