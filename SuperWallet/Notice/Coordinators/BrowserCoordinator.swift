@@ -14,5 +14,8 @@ protocol BrowserCoordinatorDelegate: class {
 }
 
 final class BrowserCoordinator: NSObject, Coordinator {
-   
+     var coordinators: [Coordinator] = []
+    let session: WalletSession
+    let keystore: Keystore
+    let navigationController: NavigationController   
 }
