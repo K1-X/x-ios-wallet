@@ -273,7 +273,17 @@ class EtherKeystore: Keystore {
             }
         }
     }
-
+    func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+        guard let password = getPassword(for: wallet) else {
+            return .failure(.failedToDeleteAccount)
+        }
+        do {
+            try keyStore.delete(wallet: wallet, password: password)
+            return .success(())
+        } catch {
+            return .failure(.failedToDeleteAccount)
+        }
+    }
 }
 
 
