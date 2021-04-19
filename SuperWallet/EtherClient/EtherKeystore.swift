@@ -68,4 +68,22 @@ class EtherKeystore: Keystore {
             }
         ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
+
+   var recentlyUsedWallet: WalletInfo? {
+        set {
+            keychain.set(newValue?.description ?? "", forKey: Keys.recentlyUsedWallet, withAccess: defaultKeychainAccess)
+        }
+        get {
+            let walletKey = keychain.get(Keys.recentlyUsedWallet)
+            let foundWallet = wallets.filter { $0.description == walletKey }.first
+            guard let wallet = foundWallet else {
+                // Old way to match recently selected address
+                let address = keychain.get(Keys.recentlyUsedAddress)
+                return wallets.filter {
+                    $0.address.description == address || $0.description.lowercased() == address?.lowercased()
+                }.first
+            }
+            return wallet
+        }
+    }
 }
