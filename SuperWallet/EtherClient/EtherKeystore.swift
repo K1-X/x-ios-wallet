@@ -186,7 +186,23 @@ class EtherKeystore: Keystore {
         }
     }
 
-
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<Wallet, KeystoreError> {
+        guard let data = value.data(using: .utf8) else {
+            return (.failure(.failedToParseJSON))
+        }
+        do {
+            //TODO: Blockchain. Pass blockchain ID
+            let wallet = try keyStore.import(json: data, password: password, newPassword: password, coin: coin)
+            let _ = setPassword(password, for: wallet)
+            return .success(wallet)
+        } catch {
+            if case KeyStore.Error.accountAlreadyExists = error {
+                return .failure(.duplicateAccount)
+            } else {
+                return .failure(.failedToImport(error))
+            }
+        }
+    }
 }
 
 
