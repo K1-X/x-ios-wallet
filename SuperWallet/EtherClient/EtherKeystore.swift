@@ -203,6 +203,21 @@ class EtherKeystore: Keystore {
             }
         }
     }
+
+    func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {
+        let result = self.exportData(account: account, password: password, newPassword: newPassword)
+        switch result {
+        case .success(let data):
+            var dict: Dictionary = self.dataToDictionary(data: data)!
+            let address: String = account.address.description
+            dict["address"] = address.drop0x
+            let keystoreData: Data = self.jsonToData(jsonDic: dict)!
+            let string = String(data: keystoreData, encoding: .utf8) ?? ""
+            return .success(string)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }
 
 
