@@ -154,6 +154,20 @@ class EtherKeystore: Keystore {
             completion(.success(WalletInfo(type: type, info: storage.get(for: type))))
         }
     }
+    
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.importKeystore(value: value, password: password, newPassword: newPassword, coin: coin)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let account):
+                    completion(.success(account))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 
 }
 
