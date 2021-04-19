@@ -227,6 +227,16 @@ class EtherKeystore: Keystore {
             }
         }
     }
+   
+    func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeystoreError> {
+        do {
+            let data = try keyStore.export(wallet: account.wallet!, password: password, newPassword: newPassword)
+            return (.success(data))
+        } catch {
+            return (.failure(.failedToDecryptKey))
+        }
+    }
+
 }
 
 
