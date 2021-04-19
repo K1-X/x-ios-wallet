@@ -237,6 +237,23 @@ class EtherKeystore: Keystore {
         }
     }
 
+    func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void) {
+        guard let password = getPassword(for: account.wallet!) else {
+            return completion(.failure(KeystoreError.accountNotFound))
+        }
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let privateKey = try account.privateKey(password: password).data
+                DispatchQueue.main.async {
+                    completion(.success(privateKey))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(KeystoreError.accountNotFound))
+                }
+            }
+        }
+    }
 }
 
 
