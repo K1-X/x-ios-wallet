@@ -254,6 +254,26 @@ class EtherKeystore: Keystore {
             }
         }
     }
+   
+    func exportMnemonic(wallet: Wallet, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
+        guard let password = getPassword(for: wallet) else {
+            return completion(.failure(KeystoreError.accountNotFound))
+        }
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let mnemonic = try  self.keyStore.exportMnemonic(wallet: wallet, password: password)
+                let words = mnemonic.components(separatedBy: " ")
+                DispatchQueue.main.async {
+                    completion(.success(words))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(KeystoreError.accountNotFound))
+                }
+            }
+        }
+    }
+
 }
 
 
