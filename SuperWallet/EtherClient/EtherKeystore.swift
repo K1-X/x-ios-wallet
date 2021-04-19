@@ -40,4 +40,12 @@ class EtherKeystore: Keystore {
         self.userDefaults = userDefaults
         self.storage = storage
     }    
+
+    var hasWallets: Bool {
+        return !wallets.isEmpty
+    }
+
+    var mainWallet: WalletInfo? {
+        return wallets.filter { $0.mainWallet }.first
+    }
 }
