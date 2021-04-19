@@ -86,4 +86,75 @@ class EtherKeystore: Keystore {
             return wallet
         }
     }
+    
+    // Async
+    @available(iOS 10.0, *)
+    func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let account = self.createAccout(password: password)
+            DispatchQueue.main.async {
+                completion(.success(account))
+            }
+        }
+    }
+
+    func importWallet(type: ImportType, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+        let newPassword = PasswordGenerator.generateRandom()
+        switch type {
+        case .keystore(let string, let password):
+            importKeystore(
+                value: string,
+                password: password,
+                newPassword: newPassword,
+                coin: coin
+            ) { result in
+                switch result {
+                case .success(let account):
+                    let type = WalletType.privateKey(account)
+                    completion(.success(WalletInfo(type: type, info: self.storage.get(for: type))))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        case .privateKey(let privateKey, let password):
+            let hexStringData: Data = Data(hex: privateKey)
+            let privateKeyData = PrivateKey(data:hexStringData)!
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: password, coin: coin)
+                    self.setPassword(newPassword, for: wallet)
+                    DispatchQueue.main.async {
+                        completion(.success(WalletInfo(type: .privateKey(wallet))))
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(.failure(KeystoreError.failedToImportPrivateKey))
+                    }
+                }
+            }
+        case .mnemonic(let words, let passphrase, let derivationPath):
+            let string = words.map { try! String($0) }.joined(separator: " ")
+            if !Crypto.isValid(mnemonic: string) {
+                return completion(.failure(KeystoreError.invalidMnemonicPhrase))
+            }
+            do {
+                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: derivationPath)
+                setPassword(newPassword, for: account)
+                completion(.success(WalletInfo(type: .hd(account))))
+            } catch {
+                return completion(.failure(KeystoreError.duplicateAccount))
+            }
+        case .address(let address):
+            let watchAddress = WalletAddress(coin: coin, address: address)
+            guard !storage.addresses.contains(watchAddress) else {
+                return completion(.failure(.duplicateAccount))
+            }
+            storage.store(address: [watchAddress])
+            let type = WalletType.address(coin, address)
+            completion(.success(WalletInfo(type: type, info: storage.get(for: type))))
+        }
+    }
+
 }
+
+
