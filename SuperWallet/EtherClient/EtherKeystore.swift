@@ -168,7 +168,12 @@ class EtherKeystore: Keystore {
             }
         }
     }
-
+    
+    func createAccout(password: String) -> Wallet {
+        let wallet  = try! keyStore.createWallet(password: password, for: Coin(rawValue: 60)!)
+        let _ = setPassword(password, for: wallet)
+        return wallet
+    }
 }
 
 
