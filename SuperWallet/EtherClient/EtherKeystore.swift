@@ -174,6 +174,19 @@ class EtherKeystore: Keystore {
         let _ = setPassword(password, for: wallet)
         return wallet
     }
+
+    func importPrivateKey(privateKey: PrivateKey, password: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
+        do {
+            let wallet = try keyStore.import(privateKey: privateKey, password: password, coin: coin)
+            let w = WalletInfo(type: .privateKey(wallet))
+            let _ = setPassword(password, for: wallet)
+            return .success(w)
+        } catch {
+            return .failure(.failedToImport(error))
+        }
+    }
+
+
 }
 
 
