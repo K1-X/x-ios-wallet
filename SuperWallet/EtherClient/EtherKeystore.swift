@@ -218,6 +218,15 @@ class EtherKeystore: Keystore {
             return .failure(error)
         }
     }
+
+    func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.export(account: account, password: password, newPassword: newPassword)
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+    }
 }
 
 
