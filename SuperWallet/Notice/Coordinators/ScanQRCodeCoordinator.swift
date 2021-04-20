@@ -30,4 +30,7 @@ final class  ScanQRCodeCoordinator: NSObject, Coordinator {
    func start() {
         navigationController.present(qrcodeController, animated: true, completion: nil)
     }
+    @objc func dismiss() {
+        qrcodeController.dismiss(animated: true, completion: nil)
+    }
 }
