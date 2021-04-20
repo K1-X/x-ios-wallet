@@ -34,3 +34,17 @@ final class  ScanQRCodeCoordinator: NSObject, Coordinator {
         qrcodeController.dismiss(animated: true, completion: nil)
     }
 }
+
+extension ScanQRCodeCoordinator: QRCodeReaderDelegate {
+    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
+        reader.stopScanning()
+        reader.dismiss(animated: true)
+        delegate?.didCancel(in: self)
+    }
+
+    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
+        reader.stopScanning()
+        delegate?.didScan(result: result, in: self)
+        reader.dismiss(animated: true)
+    }
+}
