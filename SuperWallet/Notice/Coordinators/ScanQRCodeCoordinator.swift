@@ -26,4 +26,8 @@ final class  ScanQRCodeCoordinator: NSObject, Coordinator {
         ) {
         self.navigationController = navigationController
     }
+
+   func start() {
+        navigationController.present(qrcodeController, animated: true, completion: nil)
+    }
 }
