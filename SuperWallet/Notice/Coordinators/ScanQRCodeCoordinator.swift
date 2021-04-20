@@ -20,4 +20,10 @@ final class  ScanQRCodeCoordinator: NSObject, Coordinator {
         controller.delegate = self
         return controller
     }()
+
+   init(
+        navigationController: NavigationController = NavigationController()
+        ) {
+        self.navigationController = navigationController
+    }
 }
