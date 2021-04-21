@@ -28,5 +28,12 @@ final class AddCustomNetworkCoordinator: Coordinator {
         return controller
     }()
 
+
+    init(
+        navigationController: NavigationController = NavigationController()
+    ) {
+        self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
+    }
  
 }
