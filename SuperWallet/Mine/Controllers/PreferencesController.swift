@@ -11,5 +11,9 @@ final class PreferencesController {
     ) {
         self.userDefaults = userDefaults
     }
-    
+
+
+     func set(value: Bool, for option: PreferenceOption) {
+        userDefaults.set(value, forKey: option.key)
+    }    
 }
