@@ -35,5 +35,22 @@ final class AddCustomNetworkCoordinator: Coordinator {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
     }
+
+   
+
+start() {
+        navigationController.viewControllers = [addCustomNetworkController]
+    }
+
+    @objc func addNetwork() {
+        addCustomNetworkController.addNetwork { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let network):
+                self.delegate?.didAddNetwork(network: network, in: self)
+            case .failure: break
+            }
+        }
+    }
  
 }
