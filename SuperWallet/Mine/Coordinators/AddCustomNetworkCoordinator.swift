@@ -14,4 +14,12 @@ final class AddCustomNetworkCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     weak var delegate: AddCustomNetworkCoordinatorDelegate?
 
+   lazy var addNetworkItem: UIBarButtonItem = {
+        return UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addNetwork)
+        )
+    }()
+
 }
