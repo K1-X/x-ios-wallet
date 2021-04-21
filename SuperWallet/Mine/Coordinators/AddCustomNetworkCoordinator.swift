@@ -21,5 +21,12 @@ final class AddCustomNetworkCoordinator: Coordinator {
             action: #selector(addNetwork)
         )
     }()
+    
+   lazy var addCustomNetworkController: AddCustomNetworkViewController = {
+        let controller = AddCustomNetworkViewController()
+        controller.navigationItem.rightBarButtonItem = addNetworkItem
+        return controller
+    }()
 
+ 
 }
