@@ -9,8 +9,8 @@ extension WKWebViewConfiguration {
     static func make(for server: RPCServer, address: Address, with sessionConfig: Config, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
         let config = WKWebViewConfiguration()
         var js = ""
-    
-    guard
+
+        guard
             let bundlePath = Bundle.main.path(forResource: "TrustWeb3Provider", ofType: "bundle"),
             let bundle = Bundle(path: bundlePath) else { return config }
 
@@ -20,17 +20,17 @@ extension WKWebViewConfiguration {
             } catch { }
         }
 
-    js +=
+        js +=
         """
         const addressHex = "\(address.description.lowercased())"
         const rpcURL = "\(server.rpcURL.absoluteString)"
         const chainID = "\(server.chainID)"
 
-    function executeCallback (id, error, value) {
+        function executeCallback (id, error, value) {
             Trust.executeCallback(id, error, value)
         }
 
-    Trust.init(rpcURL, {
+        Trust.init(rpcURL, {
             getAccounts: function (cb) { cb(null, [addressHex]) },
             processTransaction: function (tx, cb){
                 console.log('signing a transaction', tx)
@@ -64,19 +64,21 @@ extension WKWebViewConfiguration {
             networkVersion: chainID
         })
 
-     web3.setProvider = function () {
+        web3.setProvider = function () {
             console.debug('Trust Wallet - overrode web3.setProvider')
         }
 
-     web3.eth.defaultAccount = addressHex
+        web3.eth.defaultAccount = addressHex
 
         web3.version.getNetwork = function(cb) {
             cb(null, chainID)
         }
-      web3.eth.getCoinbase = function(cb) {
+
+        web3.eth.getCoinbase = function(cb) {
             return cb(null, addressHex)
         }
-"""
+
+        """
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.add(messageHandler, name: Method.signTransaction.rawValue)
         config.userContentController.add(messageHandler, name: Method.signPersonalMessage.rawValue)
@@ -84,5 +86,5 @@ extension WKWebViewConfiguration {
         config.userContentController.add(messageHandler, name: Method.signTypedMessage.rawValue)
         config.userContentController.addUserScript(userScript)
         return config
-}    
+    }
 }
