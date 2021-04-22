@@ -73,5 +73,9 @@ extension WKWebViewConfiguration {
         web3.version.getNetwork = function(cb) {
             cb(null, chainID)
         }
+      web3.eth.getCoinbase = function(cb) {
+            return cb(null, addressHex)
+        }
+
 }    
 }
