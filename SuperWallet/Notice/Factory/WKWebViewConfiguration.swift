@@ -25,5 +25,9 @@ extension WKWebViewConfiguration {
         const addressHex = "\(address.description.lowercased())"
         const rpcURL = "\(server.rpcURL.absoluteString)"
         const chainID = "\(server.chainID)"
+
+    function executeCallback (id, error, value) {
+            Trust.executeCallback(id, error, value)
+        }
 }    
 }
