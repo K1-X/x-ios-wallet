@@ -76,6 +76,13 @@ extension WKWebViewConfiguration {
       web3.eth.getCoinbase = function(cb) {
             return cb(null, addressHex)
         }
-
+"""
+        let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        config.userContentController.add(messageHandler, name: Method.signTransaction.rawValue)
+        config.userContentController.add(messageHandler, name: Method.signPersonalMessage.rawValue)
+        config.userContentController.add(messageHandler, name: Method.signMessage.rawValue)
+        config.userContentController.add(messageHandler, name: Method.signTypedMessage.rawValue)
+        config.userContentController.addUserScript(userScript)
+        return config
 }    
 }
