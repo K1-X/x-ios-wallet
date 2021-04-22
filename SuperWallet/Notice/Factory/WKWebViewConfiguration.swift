@@ -20,6 +20,10 @@ extension WKWebViewConfiguration {
             } catch { }
         }
 
-
+    js +=
+        """
+        const addressHex = "\(address.description.lowercased())"
+        const rpcURL = "\(server.rpcURL.absoluteString)"
+        const chainID = "\(server.chainID)"
 }    
 }
