@@ -9,3 +9,6 @@ enum AddressCoordinatorType: Int {
     case mineVC
 }
 
+protocol AddressCoordinatorDelegate: class {
+    func didClickAddress(addressBook: AddressBook ,coordinator: AddressCoordinator)
+}
