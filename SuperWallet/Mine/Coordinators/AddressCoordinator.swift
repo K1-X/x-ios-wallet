@@ -31,4 +31,13 @@ class AddressCoordinator: RootCoordinator {
         return controller
     }()
 
+   init(
+        keystore: Keystore,
+        navigationController: NavigationController = NavigationController(),
+        sharedRealm: Realm
+        ) {
+        self.keystore = keystore
+        self.navigationController = navigationController
+        self.sharedRealm = sharedRealm
+    }
 }
