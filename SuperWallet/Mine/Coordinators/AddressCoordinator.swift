@@ -44,4 +44,26 @@ class AddressCoordinator: RootCoordinator {
    func start() {
         navigationController.viewControllers = [rootViewController]
     }
+
+
+}
+
+extension AddressCoordinator: AddressBookControllerDelegate {
+
+    func didClickAddButton(bookStorage: AddressBookStorage, viewController: AddressBookController) {
+        let controller = AddAddressController(
+            store: bookStorage)
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    func didClickAddress(bookStorage: AddressBookStorage, addressBook: AddressBook, viewController: AddressBookController) {
+        if self.type == .sendVC {
+            delegate?.didClickAddress(addressBook: addressBook, coordinator: self)
+        } else {
+            let controller = EditAddressController(
+                store: bookStorage,
+                addressBook: addressBook)
+            navigationController.pushViewController(controller, animated: true)
+        }
+    }
 }
