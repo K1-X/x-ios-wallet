@@ -40,4 +40,8 @@ class AddressCoordinator: RootCoordinator {
         self.navigationController = navigationController
         self.sharedRealm = sharedRealm
     }
+
+   func start() {
+        navigationController.viewControllers = [rootViewController]
+    }
 }
