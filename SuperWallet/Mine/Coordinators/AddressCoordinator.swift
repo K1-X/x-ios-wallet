@@ -12,3 +12,16 @@ enum AddressCoordinatorType: Int {
 protocol AddressCoordinatorDelegate: class {
     func didClickAddress(addressBook: AddressBook ,coordinator: AddressCoordinator)
 }
+
+class AddressCoordinator: RootCoordinator {
+    var coordinators: [Coordinator] = []
+    let keystore: Keystore
+    let navigationController: NavigationController
+    let sharedRealm: Realm
+    weak var delegate: AddressCoordinatorDelegate?
+    var type: AddressCoordinatorType?
+    lazy var rootViewController: UIViewController = {
+        return addressBookController
+    }()
+
+}
