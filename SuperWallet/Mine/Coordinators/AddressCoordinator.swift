@@ -24,14 +24,14 @@ class AddressCoordinator: RootCoordinator {
         return addressBookController
     }()
 
-   lazy var addressBookController: AddressBookController = {
+    lazy var addressBookController: AddressBookController = {
         let viewModel = AddressBookModel(sharedRealm: sharedRealm)
         let controller = AddressBookController(viewModel: viewModel)
         controller.delegate = self
         return controller
     }()
 
-   init(
+    init(
         keystore: Keystore,
         navigationController: NavigationController = NavigationController(),
         sharedRealm: Realm
@@ -41,10 +41,9 @@ class AddressCoordinator: RootCoordinator {
         self.sharedRealm = sharedRealm
     }
 
-   func start() {
+    func start() {
         navigationController.viewControllers = [rootViewController]
     }
-
 
 }
 
