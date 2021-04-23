@@ -24,4 +24,11 @@ class AddressCoordinator: RootCoordinator {
         return addressBookController
     }()
 
+   lazy var addressBookController: AddressBookController = {
+        let viewModel = AddressBookModel(sharedRealm: sharedRealm)
+        let controller = AddressBookController(viewModel: viewModel)
+        controller.delegate = self
+        return controller
+    }()
+
 }
