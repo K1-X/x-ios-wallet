@@ -16,4 +16,10 @@ var bookmarks: Results<Bookmark> {
     ) {
         self.realm = realm
     }  
+
+    func add(bookmarks: [Bookmark]) {
+        realm.beginWrite()
+        realm.add(bookmarks, update: .all)
+        try! realm.commitWrite()
+    }
 }
