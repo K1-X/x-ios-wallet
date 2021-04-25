@@ -22,4 +22,10 @@ var bookmarks: Results<Bookmark> {
         realm.add(bookmarks, update: .all)
         try! realm.commitWrite()
     }
+
+    func delete(bookmarks: [Bookmark]) {
+        realm.beginWrite()
+        realm.delete(bookmarks)
+        try! realm.commitWrite()
+    }
 }
