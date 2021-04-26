@@ -58,4 +58,15 @@ final class HelpUsCoordinator: Coordinator {
         controller.showShareActivity(from: sender, with: viewModel.activityItems)
     }
 
+extension HelpUsCoordinator: WellDoneViewControllerDelegate {
+    func didPress(action: WellDoneAction, sender: UIView, in viewController: WellDoneViewController) {
+        switch action {
+        case .other:
+            presentSharing(in: viewController, from: sender)
+        }
+
+        appTracker.completedSharing = true
+    }
+}
+
 }
