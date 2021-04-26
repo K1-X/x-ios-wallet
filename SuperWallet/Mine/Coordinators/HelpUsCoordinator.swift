@@ -50,4 +50,8 @@ final class HelpUsCoordinator: Coordinator {
         navigationController.present(NavigationController(rootViewController: wellDoneController), animated: true, completion: nil)
     }
 
+    @objc private func dismiss() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+
 }
