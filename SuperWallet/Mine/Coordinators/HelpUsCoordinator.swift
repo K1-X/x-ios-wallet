@@ -54,4 +54,8 @@ final class HelpUsCoordinator: Coordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
+ func presentSharing(in controller: UIViewController, from sender: UIView) {
+        controller.showShareActivity(from: sender, with: viewModel.activityItems)
+    }
+
 }
