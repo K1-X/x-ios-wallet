@@ -5,10 +5,10 @@ import StoreKit
 
 final class HelpUsCoordinator: Coordinator {
 
-	let navigationController: NavigationController
+    let navigationController: NavigationController
     let appTracker: AppTracker
     var coordinators: [Coordinator] = []
-    
+
     private let viewModel = HelpUsViewModel()
     private lazy var wellDoneController: WellDoneViewController = {
         let controller = WellDoneViewController()
@@ -17,7 +17,7 @@ final class HelpUsCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
-   
+
     init(
         navigationController: NavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
@@ -54,9 +54,10 @@ final class HelpUsCoordinator: Coordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
- func presentSharing(in controller: UIViewController, from sender: UIView) {
+    func presentSharing(in controller: UIViewController, from sender: UIView) {
         controller.showShareActivity(from: sender, with: viewModel.activityItems)
     }
+}
 
 extension HelpUsCoordinator: WellDoneViewControllerDelegate {
     func didPress(action: WellDoneAction, sender: UIView, in viewController: WellDoneViewController) {
@@ -67,6 +68,4 @@ extension HelpUsCoordinator: WellDoneViewControllerDelegate {
 
         appTracker.completedSharing = true
     }
-}
-
 }
