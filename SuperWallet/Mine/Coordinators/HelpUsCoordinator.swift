@@ -5,5 +5,8 @@ import StoreKit
 
 final class HelpUsCoordinator: Coordinator {
 
+	let navigationController: NavigationController
+    let appTracker: AppTracker
+    var coordinators: [Coordinator] = []
     
 }
