@@ -46,4 +46,8 @@ final class HelpUsCoordinator: Coordinator {
         appTracker.completedRating = true
     }
 
+    private func presentWellDone() {
+        navigationController.present(NavigationController(rootViewController: wellDoneController), animated: true, completion: nil)
+    }
+
 }
