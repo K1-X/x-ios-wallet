@@ -17,4 +17,14 @@ final class HelpUsCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+   
+    init(
+        navigationController: NavigationController = NavigationController(),
+        appTracker: AppTracker = AppTracker()
+    ) {
+        self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
+        self.appTracker = appTracker
+    }
+
 }
