@@ -4,4 +4,7 @@ import Foundation
 import TrustCore
 import UIKit
 import RealmSwift
-
+protocol MineCoordinatorDelegate: class {
+    func didSelectChain()
+    func selectWalletTab()
+}
