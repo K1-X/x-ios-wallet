@@ -40,4 +40,12 @@ final class MineCoordinator: Coordinator {
         self.session = session
         self.walletStorage = walletStorage
     }
+
+    func start() {
+        navigationController.viewControllers = [rootViewController]
+    }
+
+    private func realm(for config: Realm.Configuration) -> Realm {
+        return try! Realm(configuration: config)
+    }
 }
