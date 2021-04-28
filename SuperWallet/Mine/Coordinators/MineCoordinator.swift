@@ -68,4 +68,19 @@ final class MineCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
+    
+    private func showSetting() {
+        let sharedMigration = SharedMigrationInitializer()
+        sharedMigration.perform()
+        let sharedRealm = self.realm(for: sharedMigration.config)
+        let coordinator = SettingsCoordinator(
+            keystore: keystore,
+            session: session,
+            walletStorage: walletStorage,
+            sharedRealm: sharedRealm
+        )
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 }
