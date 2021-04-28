@@ -111,3 +111,10 @@ extension MineCoordinator: SettingsCoordinatorDelegate {
         delegate?.didSelectChain()
     }
 }
+
+extension MineCoordinator: PublishTokenControllerDelegate {
+    func selectWalletTab() {
+        delegate?.selectWalletTab()
+        self.navigationController.popViewController(animated: true)
+    }
+}
