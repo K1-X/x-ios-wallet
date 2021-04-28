@@ -54,4 +54,18 @@ final class MineCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
+
+    private func showAddressBook() {
+        let sharedMigration = SharedMigrationInitializer()
+        sharedMigration.perform()
+        let sharedRealm = self.realm(for: sharedMigration.config)
+        let coordinator = AddressCoordinator(
+            keystore: keystore,
+            navigationController: navigationController,
+            sharedRealm: sharedRealm
+        )
+        coordinator.type = AddressCoordinatorType.mineVC
+        addCoordinator(coordinator)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 }
