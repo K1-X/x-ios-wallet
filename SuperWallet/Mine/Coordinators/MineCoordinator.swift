@@ -17,4 +17,15 @@ final class MineCoordinator: Coordinator {
     let walletStorage: WalletStorage
     weak var delegate: MineCoordinatorDelegate?
     var coordinators: [Coordinator] = []
+ 
+    lazy var rootViewController: MineViewController = {
+        let controller = MineViewController(
+            session: session,
+            keystore: keystore
+        )
+        controller.delegate = self
+        controller.modalPresentationStyle = .pageSheet
+        return controller
+    }()
+
 }
