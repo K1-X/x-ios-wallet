@@ -84,3 +84,24 @@ final class MineCoordinator: Coordinator {
         navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 }
+
+extension MineCoordinator: MineViewControllerDelegate {
+    func didAction(action: MineAction, in viewController: MineViewController) {
+        switch action {
+        case .publishToken:
+            let controller = PublishTokenController(
+                session: self.session,
+                keystore: self.keystore)
+            controller.delegate = self as PublishTokenControllerDelegate
+            self.navigationController.pushViewController(controller, animated: true)
+        case .addressBook:
+            showAddressBook()
+        case .walletManager:
+            showWallets()
+        case .safetyManager:
+            break
+        case .setting:
+            showSetting()
+        }
+    }
+}
