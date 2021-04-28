@@ -105,3 +105,9 @@ extension MineCoordinator: MineViewControllerDelegate {
         }
     }
 }
+
+extension MineCoordinator: SettingsCoordinatorDelegate {
+    func didSelectChain() {
+        delegate?.didSelectChain()
+    }
+}
