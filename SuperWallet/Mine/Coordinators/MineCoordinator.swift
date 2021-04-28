@@ -48,4 +48,10 @@ final class MineCoordinator: Coordinator {
     private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
     }
+
+    private func showWallets() {
+        let coordinator = WalletsCoordinator(keystore: keystore, navigationController: navigationController)
+        addCoordinator(coordinator)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 }
