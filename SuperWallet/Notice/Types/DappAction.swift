@@ -5,4 +5,11 @@ import BigInt
 import TrustCore
 import WebKit
 
-
+enum DappAction {
+    case signMessage(String)
+    case signPersonalMessage(String)
+    case signTypedMessage([EthTypedData])
+    case signTransaction(UnconfirmedTransaction)
+    case sendTransaction(UnconfirmedTransaction)
+    case unknown
+}
