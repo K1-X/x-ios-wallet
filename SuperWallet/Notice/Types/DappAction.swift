@@ -35,4 +35,31 @@ extension DappAction {
         }
     }
 
+    private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue], transfer: Transfer) -> UnconfirmedTransaction {
+        let to = EthereumAddress(string: object["to"]?.value ?? "")
+        let value = BigInt((object["value"]?.value ?? "0").drop0x, radix: 16) ?? BigInt()
+        let nonce: BigInt? = {
+            guard let value = object["nonce"]?.value else { return .none }
+            return BigInt(value.drop0x, radix: 16)
+        }()
+        let gasLimit: BigInt? = {
+            guard let value = object["gasLimit"]?.value ?? object["gas"]?.value else { return .none }
+            return BigInt((value).drop0x, radix: 16)
+        }()
+        let gasPrice: BigInt? = {
+            guard let value = object["gasPrice"]?.value else { return .none }
+            return BigInt((value).drop0x, radix: 16)
+        }()
+        let data = Data(hex: object["data"]?.value ?? "0x")
+
+        return UnconfirmedTransaction(
+            transfer: transfer,
+            value: value,
+            to: to,
+            data: data,
+            gasLimit: gasLimit,
+            gasPrice: gasPrice,
+            nonce: nonce
+        )
+    }
 }
