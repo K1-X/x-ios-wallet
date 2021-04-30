@@ -8,4 +8,6 @@ import TrustCore
 
 class PushNotificationsRegistrar: NSObject {
 
+    private let provider = SuperWalletProviderFactory.makeProvider()
+    let config = Config()
 }  
