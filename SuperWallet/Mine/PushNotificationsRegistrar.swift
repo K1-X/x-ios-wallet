@@ -57,4 +57,16 @@ class PushNotificationsRegistrar: NSObject {
             }
         }
     }
-}  
+}
+
+extension PushNotificationsRegistrar: JPUSHRegisterDelegate {
+
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
+
+        let userInfo = notification.request.content.userInfo
+        if notification.request.trigger is UNPushNotificationTrigger {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue))
+    }
+|  
