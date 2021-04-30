@@ -35,4 +35,26 @@ class PushNotificationsRegistrar: NSObject {
 //        UIApplication.shared.unregisterForRemoteNotifications()
 //    }
 
+    func didRegister(with deviceToken: Data, networks: [Int: [String]]) {
+        JPUSHService.registerDeviceToken(deviceToken)
+
+        let addressList = networks[60]
+        var addresses: String = ""
+        addressList?.forEach({ (value) in
+            let address = addresses
+            if address.isEmpty {
+                addresses = "\(value.lowercased())"
+            } else {
+                addresses = address + "," + "\(value.lowercased())"
+            }
+        })
+        provider.request(.deviceRegistry(deviceId: JPUSHService.registrationID(), deviceType: "phone", osType: "ios", addresses: addresses)) { result in
+            switch result {
+            case .success:
+                print("")
+            case .failure:
+                print("")
+            }
+        }
+    }
 }  
