@@ -7,3 +7,8 @@ struct DappCommand: Decodable {
     let id: Int
     let object: [String: DappCommandObjectValue]
 }
+
+struct DappCallback {
+    let id: Int
+    let value: DappCallbackValue
+}
