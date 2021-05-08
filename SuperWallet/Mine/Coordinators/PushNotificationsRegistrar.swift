@@ -22,4 +22,16 @@ class PushNotificationsRegistrar: NSObject {
                            channel: "appstore",
                            apsForProduction: false)
     }
+
+    //    func unregister() {
+//        let device = PushDevice(
+//            deviceID: UIDevice.current.identifierForVendor!.uuidString,
+//            token: "",
+//            networks: [:],
+//            preferences: NotificationsViewController.getPreferences()
+//        )
+//
+//        provider.request(.unregister(device: device)) { _ in }
+//        UIApplication.shared.unregisterForRemoteNotifications()
+//    }
 }
