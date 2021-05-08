@@ -69,3 +69,16 @@ extension PushNotificationsRegistrar: JPUSHRegisterDelegate {
         }
         completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue))
     }
+
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, didReceive response: UNNotificationResponse!, withCompletionHandler completionHandler: (() -> Void)!) {
+        let userInfo = response.notification.request.content.userInfo
+        if (response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self))! {
+            JPUSHService.handleRemoteNotification(userInfo)
+        }
+        completionHandler()
+    }
+
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, openSettingsFor notification: UNNotification?) {
+
+    }
+}
