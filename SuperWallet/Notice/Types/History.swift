@@ -8,4 +8,11 @@ final class History: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var id: String = ""
+
+    convenience init(url: String, title: String) {
+        self.init()
+        self.url = url
+        self.title = title
+        self.id = "\(url)|\(createdAt.timeIntervalSince1970)"
+    }
 }
