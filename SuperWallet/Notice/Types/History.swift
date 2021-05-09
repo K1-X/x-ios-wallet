@@ -15,4 +15,12 @@ final class History: Object {
         self.title = title
         self.id = "\(url)|\(createdAt.timeIntervalSince1970)"
     }
+
+    var URL: URL? {
+        return Foundation.URL(string: url)
+    }
+
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }
