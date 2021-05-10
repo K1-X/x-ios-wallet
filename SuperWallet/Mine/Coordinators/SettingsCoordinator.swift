@@ -20,4 +20,8 @@ final class SettingsCoordinator: RootCoordinator {
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
+    
+    lazy var rootViewController: UIViewController = {
+        return settingViewController
+    }()
 }
