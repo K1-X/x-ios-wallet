@@ -24,4 +24,14 @@ final class SettingsCoordinator: RootCoordinator {
     lazy var rootViewController: UIViewController = {
         return settingViewController
     }()
+
+    lazy var settingViewController: SettingViewController = {
+        let controller = SettingViewController(
+            session: session,
+            keystore: keystore
+        )
+        controller.delegate = self
+        controller.modalPresentationStyle = .pageSheet
+        return controller
+    }()
 }
