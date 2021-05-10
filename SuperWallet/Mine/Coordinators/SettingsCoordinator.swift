@@ -59,3 +59,27 @@ final class SettingsCoordinator: RootCoordinator {
         navigationController.viewControllers = [rootViewController]
     }
 }
+
+extension SettingsCoordinator: SettingViewControllerDelegate {
+
+    func didAction(action: SettingsAction, in viewController: SettingViewController) {
+        switch action {
+        case .chooseChain:
+            break
+        case .feedback:
+            break
+        case .updateVersion:
+            break
+        case .clearCache:
+            break
+        case .aboutUS:
+            break
+        case .logout:
+            break
+        }
+    }
+
+    func didSelectChain() {
+        delegate?.didSelectChain()
+    }
+}
