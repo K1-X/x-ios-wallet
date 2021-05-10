@@ -39,4 +39,23 @@ final class SettingsCoordinator: RootCoordinator {
     private lazy var historyStore: HistoryStore = {
         return HistoryStore(realm: sharedRealm)
     }()
+
+    init(
+        navigationController: NavigationController = NavigationController(),
+        keystore: Keystore,
+        session: WalletSession,
+        walletStorage: WalletStorage,
+        sharedRealm: Realm
+    ) {
+        self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
+        self.keystore = keystore
+        self.session = session
+        self.walletStorage = walletStorage
+        self.sharedRealm = sharedRealm
+    }
+
+    func start() {
+        navigationController.viewControllers = [rootViewController]
+    }
 }
