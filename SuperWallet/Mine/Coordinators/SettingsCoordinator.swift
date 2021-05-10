@@ -16,4 +16,8 @@ final class SettingsCoordinator: RootCoordinator {
     let keystore: Keystore
     let session: WalletSession
     let walletStorage: WalletStorage
+
+    weak var delegate: SettingsCoordinatorDelegate?
+    let pushNotificationsRegistrar = PushNotificationsRegistrar()
+    var coordinators: [Coordinator] = []
 }
