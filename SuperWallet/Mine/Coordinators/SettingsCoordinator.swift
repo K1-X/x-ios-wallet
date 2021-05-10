@@ -6,3 +6,6 @@ import UIKit
 import WebKit
 import RealmSwift
 
+protocol SettingsCoordinatorDelegate: class {
+    func didSelectChain()
+}
