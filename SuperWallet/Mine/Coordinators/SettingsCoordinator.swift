@@ -34,4 +34,9 @@ final class SettingsCoordinator: RootCoordinator {
         controller.modalPresentationStyle = .pageSheet
         return controller
     }()
+
+    let sharedRealm: Realm
+    private lazy var historyStore: HistoryStore = {
+        return HistoryStore(realm: sharedRealm)
+    }()
 }
