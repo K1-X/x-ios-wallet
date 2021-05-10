@@ -9,3 +9,11 @@ import RealmSwift
 protocol SettingsCoordinatorDelegate: class {
     func didSelectChain()
 }
+
+final class SettingsCoordinator: RootCoordinator {
+
+    let navigationController: NavigationController
+    let keystore: Keystore
+    let session: WalletSession
+    let walletStorage: WalletStorage
+}
