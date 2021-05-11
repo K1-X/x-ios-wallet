@@ -82,3 +82,33 @@ extension HistoryViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension HistoryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let history = viewModel.item(for: indexPath)
+        delegate?.didSelect(history: history, in: self)
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let history = viewModel.item(for: indexPath)
+            confirm(
+                title: NSLocalizedString("Are you sure you would like to delete?", value: "Are you sure you would like to delete?", comment: ""),
+                okTitle: R.string.localizable.delete(),
+                okStyle: .destructive
+            ) { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.store.delete(histories: [history])
+                        self?.tableView.reloadData()
+                    case .failure: break
+                    }
+            }
+        }
+    }
+}
