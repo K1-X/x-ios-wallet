@@ -60,3 +60,9 @@ final class HistoryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension HistoryViewController: StatefulViewController {
+    func hasContent() -> Bool {
+        return viewModel.hasContent
+    }
+}
