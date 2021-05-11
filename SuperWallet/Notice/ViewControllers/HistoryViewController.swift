@@ -66,3 +66,19 @@ extension HistoryViewController: StatefulViewController {
         return viewModel.hasContent
     }
 }
+
+extension HistoryViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
+        cell.viewModel = HistoryViewModel(history: viewModel.item(for: indexPath))
+        return cell
+    }
+}
