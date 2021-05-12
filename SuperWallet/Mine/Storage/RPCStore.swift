@@ -15,4 +15,10 @@ class RPCStore {
     ) {
         self.realm = realm
     }
+
+    func add(endpoints: [CustomRPC]) {
+        realm.beginWrite()
+        realm.add(endpoints, update: true)
+        try! realm.commitWrite()
+    }
 }
