@@ -21,4 +21,10 @@ class RPCStore {
         realm.add(endpoints, update: true)
         try! realm.commitWrite()
     }
+
+    func delete(endpoints: [CustomRPC]) {
+        realm.beginWrite()
+        realm.delete(endpoints)
+        try! realm.commitWrite()
+    }
 }
