@@ -45,4 +45,20 @@ final class CookiesStore {
         let data = NSKeyedArchiver.archivedData(withRootObject: cookies)
         keychain.set(data, forKey: cookiesKey)
     }
+
+    private static func fetchCookies() -> Promise<[HTTPCookie]> {
+        return Promise { seal in
+            if #available(iOS 11.0, *) {
+                webKitStorage.httpCookieStore.getAllCookies { cookies in
+                    seal.fulfill(cookies)
+                }
+            } else {
+                guard let cookies = httpCookieStorage.cookies else {
+                    seal.reject(CookiesStoreError.empty)
+                    return
+                }
+                seal.fulfill(cookies)
+            }
+        }
+    }
 }
