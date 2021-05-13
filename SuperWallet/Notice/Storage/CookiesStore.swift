@@ -25,4 +25,15 @@ final class CookiesStore {
             save(cookies: cookies)
         }.catch { _ in }
     }
+
+    static func load() {
+        guard let encodedData = keychain.getData(cookiesKey), let decodedArray = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? [HTTPCookie] else { return }
+        decodedArray.forEach { cookie in
+            if #available(iOS 11.0, *) {
+                webKitStorage.httpCookieStore.setCookie(cookie, completionHandler: nil)
+            } else {
+                httpCookieStorage.setCookie(cookie)
+            }
+        }
+    }
 }
