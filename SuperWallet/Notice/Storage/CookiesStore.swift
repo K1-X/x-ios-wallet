@@ -15,4 +15,14 @@ final class CookiesStore {
     private static let httpCookieStorage = HTTPCookieStorage.shared
     private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
+
+    private static let cookiesKey = "cookies"
+
+    static func save() {
+        firstly {
+            fetchCookies()
+        }.done { cookies in
+            save(cookies: cookies)
+        }.catch { _ in }
+    }
 }
