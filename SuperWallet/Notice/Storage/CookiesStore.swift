@@ -36,4 +36,8 @@ final class CookiesStore {
             }
         }
     }
+
+    static func delete() {
+        keychain.delete(cookiesKey)
+    }
 }
