@@ -40,4 +40,9 @@ final class CookiesStore {
     static func delete() {
         keychain.delete(cookiesKey)
     }
+
+    private static func save(cookies: [HTTPCookie]) {
+        let data = NSKeyedArchiver.archivedData(withRootObject: cookies)
+        keychain.set(data, forKey: cookiesKey)
+    }
 }
