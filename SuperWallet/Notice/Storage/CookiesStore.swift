@@ -9,4 +9,10 @@ enum CookiesStoreError: LocalizedError {
     case empty
 }
 
+final class CookiesStore {
 
+    private static let webKitStorage = WKWebsiteDataStore.default()
+    private static let httpCookieStorage = HTTPCookieStorage.shared
+    private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
+
+}
