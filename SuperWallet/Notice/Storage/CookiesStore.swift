@@ -5,3 +5,8 @@ import WebKit
 import PromiseKit
 import KeychainSwift
 
+enum CookiesStoreError: LocalizedError {
+    case empty
+}
+
+
