@@ -22,5 +22,15 @@ enum AutoLock: Int {
     var displayName: String {
         return "\(self.name)"
     }
+
+    var interval: Int {
+        switch self {
+        case .immediate: return 0
+        case .oneMinute: return 60
+        case .fiveMinutes: return 300
+        case .oneHour: return 3600
+        case .fiveHours: return 18000
+        }
+    }
 }
 
