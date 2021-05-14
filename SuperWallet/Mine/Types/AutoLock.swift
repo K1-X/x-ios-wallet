@@ -19,5 +19,8 @@ enum AutoLock: Int {
         }
     }
 
+    var displayName: String {
+        return "\(self.name)"
+    }
 }
 
