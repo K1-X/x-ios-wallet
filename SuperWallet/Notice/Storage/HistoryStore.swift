@@ -21,5 +21,16 @@ final class  HistoryStore {
         ])
         return set
     }()
+    
+    func record(url: URL, title: String) {
+        let history = History(url: url.absoluteString, title: title)
+
+        guard !ignoreSet.contains(history.url) else {
+            return
+        }
+
+        add(histories: [history])
+    }
+
 }
 
