@@ -9,5 +9,11 @@ final class  HistoryStore {
             .sorted(byKeyPath: "createdAt", ascending: false)
     }
 
+    let realm: Realm
+
+    init(realm: Realm) {
+        self.realm = realm
+    }
+
 }
 
