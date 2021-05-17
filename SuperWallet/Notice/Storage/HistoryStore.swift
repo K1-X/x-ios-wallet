@@ -15,5 +15,11 @@ final class  HistoryStore {
         self.realm = realm
     }
 
+    lazy var ignoreSet: Set<String> = {
+        let set = Set<String>([
+            Constants.dappsBrowserURL
+        ])
+        return set
+    }()
 }
 
