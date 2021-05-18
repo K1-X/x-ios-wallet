@@ -4,3 +4,7 @@ import Foundation
 import LocalAuthentication
 
 
+enum BiometryAuthenticationType {
+
+
+}
