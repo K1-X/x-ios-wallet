@@ -95,3 +95,23 @@ extension BookmarkViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension BookmarkViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let bookmark = viewModel.bookmark(for: indexPath)
+            confirmDelete(bookmark: bookmark, index: indexPath)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let bookmark = viewModel.bookmark(for: indexPath)
+        delegate?.didSelectBookmark(bookmark, in: self)
+    }
+}
