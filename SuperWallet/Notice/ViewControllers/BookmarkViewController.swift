@@ -83,3 +83,15 @@ extension BookmarkViewController: StatefulViewController {
         return viewModel.hasBookmarks
     }
 }
+
+extension BookmarkViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
+        cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmark(for: indexPath))
+        return cell
+    }
+}
