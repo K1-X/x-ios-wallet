@@ -77,3 +77,9 @@ final class BookmarkViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension BookmarkViewController: StatefulViewController {
+    func hasContent() -> Bool {
+        return viewModel.hasBookmarks
+    }
+}
