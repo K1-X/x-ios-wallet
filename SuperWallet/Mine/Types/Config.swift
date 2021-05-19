@@ -4,6 +4,8 @@ import Foundation
 import TrustCore
 
 struct Config {
-
+    private struct Keys {
+        static let currencyID = "currencyID"
+    }
     
 }
