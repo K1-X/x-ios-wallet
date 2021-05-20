@@ -33,4 +33,9 @@ struct Config {
         set { defaults.set(newValue.rawValue, forKey: Keys.currencyID) }
     }
 
+    var servers: [Coin] {
+        return [
+            Coin.ethereum
+        ]
+    }
 }
