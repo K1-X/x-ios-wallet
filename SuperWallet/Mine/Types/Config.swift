@@ -16,4 +16,21 @@ struct Config {
     ) {
         self.defaults = defaults
     }    
+
+    var currency: Currency {
+        get {
+            if let currency = defaults.string(forKey: Keys.currencyID) {
+                return Currency(rawValue: currency)!
+            }
+            let avaliableCurrency = Currency.allValues.first { currency in
+                return currency.rawValue == Locale.current.currencySymbol
+            }
+            if let isAvaliableCurrency = avaliableCurrency {
+                return isAvaliableCurrency
+            }
+            return Currency.CNY
+        }
+        set { defaults.set(newValue.rawValue, forKey: Keys.currencyID) }
+    }
+
 }
