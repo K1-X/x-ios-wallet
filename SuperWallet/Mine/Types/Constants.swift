@@ -2,3 +2,7 @@
 
 import Foundation
 
+public struct Constants {
+    public static let keychainKeyPrefix = "superwallet"
+    public static let keychainTestsKeyPrefix = "superwallet-tests"
+}
