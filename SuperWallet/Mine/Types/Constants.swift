@@ -26,3 +26,8 @@ public struct Constants {
 
     public static let superWalletAPI = URL(string: "http://116.62.160.218:8080")!
 }
+
+public struct UnitConfiguration {
+    public static let gasPriceUnit: EthereumUnit = .gwei
+    public static let gasFeeUnit: EthereumUnit = .ether
+}
