@@ -88,4 +88,7 @@ extension BrowserController: WKNavigationDelegate {
     }
 }
 
+extension BrowserController: WKUIDelegate {
+
+}
 
