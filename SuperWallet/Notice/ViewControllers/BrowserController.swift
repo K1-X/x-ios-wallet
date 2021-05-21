@@ -22,4 +22,20 @@ class BrowserController: UIViewController {
         self.loadURL = loadURL
         super.init(nibName: nil, bundle: nil)
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(webview)
+        view.addSubview(progressView)
+        navigationItem.title = "NewsDApp"
+        webview.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        if loadURL.isEmpty {
+            loadURL = "http://h5.meiti.in/"
+        }
+        webview.load(URLRequest.init(url: URL.init(string: loadURL)!))
+    }
 }
