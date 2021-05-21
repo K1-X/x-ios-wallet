@@ -38,4 +38,18 @@ class BrowserController: UIViewController {
         }
         webview.load(URLRequest.init(url: URL.init(string: loadURL)!))
     }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress"{
+            progressView.alpha = 1.0
+            progressView.setProgress(Float(webview.estimatedProgress), animated: true)
+            if webview.estimatedProgress >= 1.0 {
+                UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseOut, animations: {
+                    self.progressView.alpha = 0
+                }, completion: { (_) in
+                    self.progressView.setProgress(0.0, animated: false)
+                })
+            }
+        }
+    }
 }
