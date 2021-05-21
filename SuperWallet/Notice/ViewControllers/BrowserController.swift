@@ -17,4 +17,9 @@ class BrowserController: UIViewController {
         self.progressView.trackTintColor = UIColor.white // 
         return self.progressView
     }()
+
+    init(loadURL: String) {
+        self.loadURL = loadURL
+        super.init(nibName: nil, bundle: nil)
+    }
 }
