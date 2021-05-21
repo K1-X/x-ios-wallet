@@ -52,4 +52,14 @@ class BrowserController: UIViewController {
             }
         }
     }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+    deinit {
+        webview.removeObserver(self, forKeyPath: "estimatedProgress")
+        webview.uiDelegate = nil
+        webview.navigationDelegate = nil
+    }
 }
