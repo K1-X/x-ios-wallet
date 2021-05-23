@@ -51,6 +51,33 @@ final class BrowserViewController: UIViewController {
         }
         return webView
     }()
+    lazy var errorView: BrowserErrorView = {
+        let errorView = BrowserErrorView()
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.delegate = self
+        return errorView
+    }()
 
+    weak var delegate: BrowserViewControllerDelegate?
+
+    var browserNavBar: BrowserNavigationBar? {
+        return navigationController?.navigationBar as? BrowserNavigationBar
+    }
+
+    lazy var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.tintColor = Colors.darkBlue
+        progressView.trackTintColor = .clear
+        return progressView
+    }()
+
+    //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
+    lazy var config: WKWebViewConfiguration = {
+        //TODO
+        let config = WKWebViewConfiguration.make(for: server, address: account.address, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
+        config.websiteDataStore = WKWebsiteDataStore.default()
+        return config
+    }()
 
 }
