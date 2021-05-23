@@ -245,3 +245,21 @@ final class BrowserViewController: UIViewController {
         }
     }
 }
+
+extension BrowserViewController: BrowserNavigationBarDelegate {
+    func did(action: BrowserNavigation) {
+        delegate?.runAction(action: .navigationAction(action))
+        switch action {
+        case .goBack:
+            break
+        case .more:
+            break
+        case .home:
+            break
+        case .enter:
+            break
+        case .beginEditing:
+            stopLoading()
+        }
+    }
+}
