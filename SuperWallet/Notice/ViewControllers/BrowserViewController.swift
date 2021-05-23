@@ -14,3 +14,9 @@ enum BrowserAction {
     case changeURL(URL)
     case navigationAction(BrowserNavigation)
 }
+
+protocol BrowserViewControllerDelegate: class {
+    func didCall(action: DappAction, callbackID: Int)
+    func runAction(action: BrowserAction)
+    func didVisitURL(url: URL, title: String)
+}
