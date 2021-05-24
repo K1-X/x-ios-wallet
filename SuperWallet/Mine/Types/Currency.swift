@@ -75,3 +75,13 @@ enum Currency: String {
         self =  Currency(rawValue: value) ?? .USD
     }
 }
+
+class CurrencyManager {
+}
+
+extension CurrencyManager {
+    static func getSymbolForCurrencyCode(code: String) -> String? {
+        let locale = NSLocale(localeIdentifier: code)
+        return locale.displayName(forKey: NSLocale.Key.identifier, value: code)
+    }
+}
