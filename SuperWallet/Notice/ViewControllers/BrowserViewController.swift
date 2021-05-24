@@ -283,3 +283,16 @@ extension BrowserViewController: WKNavigationDelegate {
         handleError(error: error)
     }
 }
+
+extension BrowserViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard let command = DappAction.fromMessage(message) else { return }
+        let requester = DAppRequester(title: webView.title, url: webView.url)
+        //TODO: Refactor
+        let token = TokensDataStore.token(for: server)
+        let transfer = Transfer(server: server, type: .dapp(token, requester))
+        let action = DappAction.fromCommand(command, transfer: transfer)
+
+        delegate?.didCall(action: action, callbackID: command.id)
+    }
+}
