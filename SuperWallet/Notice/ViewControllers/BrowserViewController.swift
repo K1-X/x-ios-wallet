@@ -296,3 +296,9 @@ extension BrowserViewController: WKScriptMessageHandler {
         delegate?.didCall(action: action, callbackID: command.id)
     }
 }
+
+extension BrowserViewController: BrowserErrorViewDelegate {
+    func didTapReload(_ sender: Button) {
+        reload()
+    }
+}
