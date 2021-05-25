@@ -3,3 +3,11 @@
 import Foundation
 import UIKit
 
+protocol MasterBrowserViewControllerDelegate: class {
+    func didPressAction(_ action: BrowserToolbarAction)
+}
+
+enum BrowserToolbarAction {
+    case view(BookmarksViewType)
+    case qrCode
+}
