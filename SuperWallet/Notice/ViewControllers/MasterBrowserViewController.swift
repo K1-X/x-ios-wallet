@@ -11,3 +11,9 @@ enum BrowserToolbarAction {
     case view(BookmarksViewType)
     case qrCode
 }
+
+enum BookmarksViewType: Int {
+    case browser
+    case bookmarks
+    case history
+}
