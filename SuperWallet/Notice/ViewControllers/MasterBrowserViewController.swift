@@ -58,5 +58,30 @@ final class MasterBrowserViewController: UIViewController {
 
         segmentController.selectedSegmentIndex = type.rawValue
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+    }
+
+    func select(viewType: BookmarksViewType) {
+        segmentController.selectedSegmentIndex = viewType.rawValue
+        updateView()
+    }
+
+    private func setupView() {
+        let items: [UIBarButtonItem] = [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(customView: segmentController),
+            UIBarButtonItem(customView: qrcodeButton),
+            UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        ]
+        self.toolbarItems = items
+        self.navigationController?.isToolbarHidden = false
+        self.navigationController?.toolbar.isTranslucent = false
+        updateView()
+    }
+
 }
 
