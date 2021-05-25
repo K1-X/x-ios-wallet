@@ -39,5 +39,24 @@ final class MasterBrowserViewController: UIViewController {
         return button
     }()
 
+    weak var delegate: MasterBrowserViewControllerDelegate?
+
+    let bookmarksViewController: BookmarkViewController
+    let historyViewController: HistoryViewController
+    let browserViewController: BrowserViewController
+
+    init(
+        bookmarksViewController: BookmarkViewController,
+        historyViewController: HistoryViewController,
+        browserViewController: BrowserViewController,
+        type: BookmarksViewType
+    ) {
+        self.bookmarksViewController = bookmarksViewController
+        self.historyViewController = historyViewController
+        self.browserViewController = browserViewController
+        super.init(nibName: nil, bundle: nil)
+
+        segmentController.selectedSegmentIndex = type.rawValue
+    }
 }
 
