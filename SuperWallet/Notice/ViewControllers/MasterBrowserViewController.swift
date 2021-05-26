@@ -82,6 +82,38 @@ final class MasterBrowserViewController: UIViewController {
         self.navigationController?.toolbar.isTranslucent = false
         updateView()
     }
+    
+    private func updateView() {
+        if segmentController.selectedSegmentIndex == BookmarksViewType.bookmarks.rawValue {
+            remove(asChildViewController: browserViewController)
+            remove(asChildViewController: historyViewController)
+            add(asChildViewController: bookmarksViewController)
+        } else if segmentController.selectedSegmentIndex == BookmarksViewType.history.rawValue {
+            remove(asChildViewController: browserViewController)
+            remove(asChildViewController: bookmarksViewController)
+            add(asChildViewController: historyViewController)
+        } else {
+            remove(asChildViewController: bookmarksViewController)
+            remove(asChildViewController: historyViewController)
+            add(asChildViewController: browserViewController)
+        }
+    }
 
+    @objc func selectionDidChange(_ sender: UISegmentedControl) {
+        updateView()
+
+        guard let viewType = BookmarksViewType(rawValue: sender.selectedSegmentIndex) else {
+            return
+        }
+        delegate?.didPressAction(.view(viewType))
+    }
+
+    @objc func qrReader() {
+        delegate?.didPressAction(.qrCode)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
