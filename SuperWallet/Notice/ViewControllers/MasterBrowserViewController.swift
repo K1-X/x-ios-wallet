@@ -117,3 +117,8 @@ final class MasterBrowserViewController: UIViewController {
     }
 }
 
+extension MasterBrowserViewController: Scrollable {
+    func scrollOnTop() {
+        browserViewController.goHome()
+    }
+}
