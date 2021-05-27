@@ -2,3 +2,6 @@
 
 import UIKit
 
+protocol BrowserErrorViewDelegate: class {
+    func didTapReload(_ sender: Button)
+}
