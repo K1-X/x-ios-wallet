@@ -3,5 +3,8 @@
 import Foundation
 
 enum PreferenceOption {
-  
+
+	case airdropNotifications
+    case browserSearchEngine
+    case testNetworks  
 }
