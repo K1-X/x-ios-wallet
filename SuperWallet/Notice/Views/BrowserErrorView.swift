@@ -56,5 +56,19 @@ final class BrowserErrorView: UIView {
     @objc func reloadTapped() {
         delegate?.didTapReload(reloadButton)
     }
+
+    private func finishInit() {
+        self.backgroundColor = .white
+        addSubview(textLabel)
+        addSubview(reloadButton)
+        NSLayoutConstraint.activate([
+            textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftMargin),
+            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -leftMargin),
+            textLabel.topAnchor.constraint(equalTo: topAnchor, constant: topMargin),
+
+            reloadButton.centerXAnchor.constraint(equalTo: textLabel.centerXAnchor),
+            reloadButton.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: buttonTopMargin)
+        ])
+    }
 }
 
