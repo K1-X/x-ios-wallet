@@ -45,5 +45,16 @@ final class BrowserErrorView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func show(error: Error) {
+        self.isHidden = false
+        textLabel.text = error.localizedDescription
+        textLabel.textAlignment = .center
+        textLabel.setNeedsLayout()
+    }
+
+    @objc func reloadTapped() {
+        delegate?.didTapReload(reloadButton)
+    }
 }
 
