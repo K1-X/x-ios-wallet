@@ -26,4 +26,13 @@ enum RPCServer: Int {
         case .sct_lb: return "SCT_LB"
         }
     }
+
+    var priceID: Address {
+        switch self {
+        case .main: return EthereumAddress(string: "0x000000000000000000000000000000000000003c")!
+        case .geth: return EthereumAddress(string: "0x00000000000000000000000000000000000000AC")!
+        case .sct_02: return EthereumAddress(string: "0x000000000000000000000000000000000000003D")!
+        case .sct_lb: return EthereumAddress(string: "0x0000000000000000000000000000000000000334")!
+        }
+    }
 }
