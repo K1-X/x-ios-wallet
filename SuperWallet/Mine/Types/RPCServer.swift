@@ -17,4 +17,13 @@ enum RPCServer: Int {
         case .sct_lb: return 4
         }
     }
+
+    var chainID: String {
+        switch self {
+        case .main: return "DEFAULT"
+        case .geth: return "GETH"
+        case .sct_02: return "SCT_02"
+        case .sct_lb: return "SCT_LB"
+        }
+    }
 }
