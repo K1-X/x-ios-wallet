@@ -35,4 +35,13 @@ enum RPCServer: Int {
         case .sct_lb: return EthereumAddress(string: "0x0000000000000000000000000000000000000334")!
         }
     }
+
+    var isDisabledByDefault: Bool {
+        switch self {
+        case .main: return false
+        case .geth: return false
+        case .sct_02: return true
+        case .sct_lb: return true
+        }
+    }
 }
