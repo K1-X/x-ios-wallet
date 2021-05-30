@@ -8,4 +8,13 @@ enum RPCServer: Int {
     case geth = 3
     case sct_02 = 2
     case sct_lb = 4    
+
+    var pkId: Int {
+        switch self {
+        case .main: return 1
+        case .geth: return 3
+        case .sct_02: return 2
+        case .sct_lb: return 4
+        }
+    }
 }
