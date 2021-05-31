@@ -90,4 +90,50 @@ enum RPCServer: Int {
             }() as! String
         return URL(string: urlString)!
     }
+
+    var remoteURL: URL {
+        let urlString: String = {
+            switch self {
+            case .main: return "http://116.62.160.218:8080"
+            case .geth: return "http://47.105.173.168:8080"
+            case .sct_02: return "http://116.62.160.218/sct02"
+            case .sct_lb: return "http://47.105.173.168/sctlb"
+            }
+        }()
+        return URL(string: urlString)!
+    }
+
+    var ensContract: EthereumAddress {
+        // https://docs.ens.domains/en/latest/introduction.html#ens-on-ethereum
+        switch self {
+        case .main:
+            return EthereumAddress(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
+        case .geth:
+            return EthereumAddress.zero
+        case .sct_02:
+            return EthereumAddress.zero
+        case .sct_lb:
+            return EthereumAddress.zero
+        }
+    }
+
+    var openseaPath: String {
+        switch self {
+        case .main, .geth, .sct_02, .sct_lb: return Constants.dappsOpenSea
+        }
+    }
+
+    var openseaURL: URL? {
+        return URL(string: openseaPath)
+    }
+
+    func opensea(with contract: String, and id: String) -> URL? {
+        return URL(string: (openseaPath + "/assets/\(contract)/\(id)"))
+    }
+
+    var coin: Coin {
+        switch self {
+        case .main, .geth, .sct_02, .sct_lb: return Coin.ethereum
+        }
+    }
 }
