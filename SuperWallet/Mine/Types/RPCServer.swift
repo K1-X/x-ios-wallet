@@ -66,4 +66,28 @@ enum RPCServer: Int {
         case .sct_lb: return "SCT_LB"
         }
     }
+
+    var isDisabled: Bool {
+        switch self {
+        case .main:
+            return false
+        case .geth:
+            return false
+        case .sct_02:
+            return false
+        case .sct_lb:
+            return false
+        }
+    }
+
+    var decimals: Int {
+        return 18
+    }
+
+    var rpcURL: URL {
+        let urlString: String = {
+            return UserDefaults.standard.object(forKey: DefaultServer)
+            }() as! String
+        return URL(string: urlString)!
+    }
 }
