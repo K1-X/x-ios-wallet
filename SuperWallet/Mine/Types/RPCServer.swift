@@ -44,4 +44,13 @@ enum RPCServer: Int {
         case .sct_lb: return true
         }
     }
+
+    var name: String {
+        switch self {
+        case .main: return "v1"
+        case .geth: return "Ethereum"
+        case .sct_02: return "v3"
+        case .sct_lb: return ""
+        }
+    }
 }
