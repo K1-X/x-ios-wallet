@@ -53,4 +53,17 @@ enum RPCServer: Int {
         case .sct_lb: return ""
         }
     }
+
+    var displayName: String {
+        return "\(self.name) (\(self.symbol))"
+    }
+
+    var symbol: String {
+        switch self {
+        case .main: return "SCT"
+        case .geth: return "ETH"
+        case .sct_02: return "SCT_02"
+        case .sct_lb: return "SCT_LB"
+        }
+    }
 }
