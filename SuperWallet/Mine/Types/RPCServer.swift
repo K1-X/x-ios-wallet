@@ -137,3 +137,13 @@ enum RPCServer: Int {
         }
     }
 }
+
+extension RPCServer: Equatable {
+    static func == (lhs: RPCServer, rhs: RPCServer) -> Bool {
+        switch (lhs, rhs) {
+        case (let lhs, let rhs):
+            return lhs.chainID == rhs.chainID
+        }
+    }
+}
+
