@@ -39,4 +39,12 @@ class ADHeaderView: UIView, UIScrollViewDelegate {
         }
         return pageControl
     }()
+
+    // MARK: - Public
+    func resetCurrentPage(_ page: Int) {
+        currentIndex = page
+        pageControl.currentPage = page
+        resetImageView()
+        startTimer()
+    }
 }
