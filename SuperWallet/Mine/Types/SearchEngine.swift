@@ -3,5 +3,11 @@
 import Foundation
 
 enum SearchEngine: Int {
-    
+
+    case google = 0
+    case duckDuckGo
+
+    static var `default`: SearchEngine {
+        return .google
+    }    
 }
