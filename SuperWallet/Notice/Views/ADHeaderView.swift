@@ -63,4 +63,33 @@ class ADHeaderView: UIView, UIScrollViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetX = scrollView.contentOffset.x
+        // 
+        if contentOffsetX == 2 * scrollView.frame.width {// 
+            currentIndex = getActualCurrentPage(calculatedPage: currentIndex + 1)
+            resetImageView()
+        } else if (contentOffsetX == 0) {// 
+            currentIndex = getActualCurrentPage(calculatedPage: currentIndex - 1)
+            resetImageView()
+        }
+
+        //  pageControl
+        if contentOffsetX < scrollView.frame.width && contentOffsetX > 0 {
+            if contentOffsetX <= scrollView.frame.width * 0.5 {
+                pageControl.currentPage = getActualCurrentPage(calculatedPage: currentIndex - 1)
+            } else if contentOffsetX > scrollView.frame.width * 0.5 {
+                pageControl.currentPage = getActualCurrentPage(calculatedPage: currentIndex)
+            }
+        } else if contentOffsetX > scrollView.frame.width && contentOffsetX < scrollView.frame.width * 2 {
+            if contentOffsetX >= scrollView.frame.width * 1.5 {
+                pageControl.currentPage = getActualCurrentPage(calculatedPage: currentIndex + 1)
+            } else if contentOffsetX < scrollView.frame.width * 1.5 {
+                pageControl.currentPage = currentIndex
+            }
+        }
+
+    }
 }
