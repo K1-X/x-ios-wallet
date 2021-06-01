@@ -92,4 +92,95 @@ class ADHeaderView: UIView, UIScrollViewDelegate {
         }
 
     }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollView.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: true)
+        startTimer()
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    // MARK: - Action
+    @objc fileprivate func cycleViewDidClick(gesture: UITapGestureRecognizer) {
+        print("\(currentIndex)")
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        imageView.kf.setImage(with: URL(string: imageUrls[currentIndex])!)
+        tapAction(currentIndex)
+    }
+
+    @objc fileprivate func autoScroll() {
+        if imageUrls.count < 2 {
+            return
+        }
+        scrollView.setContentOffset(CGPoint(x: self.frame.width * 2, y: 0), animated: true)
+    }
+
+    func startTimer() {
+        guard !imageUrls.isEmpty else { return }
+
+        if let myTimer = timer {
+            myTimer.invalidate()
+            timer = nil
+        }
+        timer = Timer.scheduledTimer(timeInterval: self.timeInterval, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
+    }
+
+    func invalidateTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    fileprivate func addImageView() {
+        var x: CGFloat = 0
+        var pageIndex: NSInteger = self.imageUrls.count - 1
+        for index in 0..<3 {
+            let imgNode = UIImageView()
+            x = CGFloat(index) * frame.width
+            imgNode.frame = CGRect(x: x, y: 0, width: frame.width, height: frame.height)
+            imgNode.kf.setImage(with: URL(string: imageUrls.isEmpty ? "":(imageUrls[pageIndex]))!)
+            imgNode.contentMode = .scaleAspectFill
+            imgNode.clipsToBounds = true
+
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(cycleViewDidClick(gesture:)))
+            imgNode.addGestureRecognizer(gesture)
+            imgNode.isUserInteractionEnabled = true
+            imageArray.append(imgNode)
+            scrollView.addSubview(imgNode)
+
+            if imageUrls.count == 1 {
+                pageIndex = 0
+                scrollView.isScrollEnabled = false
+            } else {
+                pageIndex = index == 0 ? 0 : 1
+            }
+        }
+    }
+    fileprivate func resetImageView() {
+        let preIndex: NSInteger = getActualCurrentPage(calculatedPage: currentIndex - 1)
+        let nextIndex: NSInteger = getActualCurrentPage(calculatedPage: currentIndex + 1)
+        if imageUrls.isEmpty {
+            return
+        }
+        imageArray[0].kf.setImage(with: URL(string: imageUrls[preIndex])!)
+        imageArray[1].kf.setImage(with: URL(string: imageUrls[preIndex])!)
+        imageArray[2].kf.setImage(with: URL(string: imageUrls[preIndex])!)
+        scrollView.contentOffset = CGPoint(x: self.frame.width, y: 0)// setcontentOffset:animate，bug
+    }
+    /// 
+    ///
+    /// - Parameter page: +1-1
+    /// - Returns: 
+    fileprivate func getActualCurrentPage(calculatedPage page: NSInteger) -> NSInteger {
+        if page == imageUrls.count {
+            return 0
+        } else if page == -1 {
+            return imageUrls.count - 1
+        } else {
+            return page
+        }
+    }
 }
