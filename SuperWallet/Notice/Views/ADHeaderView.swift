@@ -47,4 +47,20 @@ class ADHeaderView: UIView, UIScrollViewDelegate {
         resetImageView()
         startTimer()
     }
+
+    // MARK: - Init
+    init(frame: CGRect, imageUrls: [String], tapAction action: @escaping(Int) -> Void) {
+        self.imageUrls = imageUrls
+        self.tapAction = action
+        super.init(frame: frame)
+
+        addImageView()
+        addSubview(scrollView)
+        addSubview(pageControl)
+        startTimer()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
