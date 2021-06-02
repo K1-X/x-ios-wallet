@@ -19,4 +19,13 @@ enum SearchEngine: Int {
             return R.string.localizable.duckDuckGo()
         }
     }
+
+    var host: String {
+        switch self {
+        case .google:
+            return "google.com"
+        case .duckDuckGo:
+            return "duckduckgo.com"
+        }
+    }
 }
