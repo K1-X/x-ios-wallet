@@ -28,4 +28,13 @@ enum SearchEngine: Int {
             return "duckduckgo.com"
         }
     }
+
+    func path(for query: String) -> String {
+        switch self {
+        case .google:
+            return "/search"
+        case .duckDuckGo:
+            return "/\(query)"
+        }
+    }
 }
