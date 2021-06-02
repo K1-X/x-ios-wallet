@@ -37,4 +37,11 @@ enum SearchEngine: Int {
             return "/\(query)"
         }
     }
+
+    func queryItems(for query: String) -> [URLQueryItem] {
+        switch self {
+        case .google: return [URLQueryItem(name: "q", value: query)]
+        case .duckDuckGo: return []
+        }
+    }
 }
