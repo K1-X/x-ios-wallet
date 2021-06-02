@@ -10,4 +10,13 @@ enum SearchEngine: Int {
     static var `default`: SearchEngine {
         return .google
     }    
+
+    var title: String {
+        switch self {
+        case .google:
+            return R.string.localizable.google()
+        case .duckDuckGo:
+            return R.string.localizable.duckDuckGo()
+        }
+    }
 }
