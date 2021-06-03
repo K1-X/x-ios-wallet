@@ -30,4 +30,22 @@ enum URLServiceProvider {
         case .dappsOpenSea: return R.string.localizable.openSea()
         }
     }
+
+    var localURL: URL? {
+        switch self {
+        case .twitter:
+            return URL(string: "twitter://user?screen_name=\(Constants.twitterUsername)")!
+        case .telegram:
+            return URL(string: "tg://resolve?domain=\(preferredTelegramUsername())")
+        case .facebook:
+            return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
+        case .discord: return nil
+        case .helpCenter: return nil
+        case .sourceCode: return nil
+        case .privacyPolicy: return nil
+        case .termsOfService: return nil
+        case .infura: return nil
+        case .dappsOpenSea: return nil
+        }
+    }
 }
