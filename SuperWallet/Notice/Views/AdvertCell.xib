@@ -64,6 +64,7 @@
                 <outlet property="timeLabel" destination="4WU-8X-uGi" id="PdZ-8c-iFJ"/>
                 <outlet property="titleLabel" destination="eYr-Kr-DRY" id="bcs-F2-0tr"/>
             </connections>
-        </tableViewCell>
+        <point key="canvasLocation" x="131.8840579710145" y="132.25446428571428"/>
+		</tableViewCell>
     </objects>
 </document>
