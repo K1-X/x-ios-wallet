@@ -58,6 +58,12 @@
                     <constraint firstItem="4WU-8X-uGi" firstAttribute="top" secondItem="eYr-Kr-DRY" secondAttribute="bottom" id="xD0-gn-rDv"/>
                 </constraints>
             </tableViewCellContentView>
-
+         	<viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="headerImageView" destination="7VV-jG-H24" id="hdl-xi-YVQ"/>
+                <outlet property="timeLabel" destination="4WU-8X-uGi" id="PdZ-8c-iFJ"/>
+                <outlet property="titleLabel" destination="eYr-Kr-DRY" id="bcs-F2-0tr"/>
+            </connections>
+        </tableViewCell>
     </objects>
 </document>
