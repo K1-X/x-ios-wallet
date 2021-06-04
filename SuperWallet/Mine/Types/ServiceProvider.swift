@@ -52,4 +52,29 @@ enum URLServiceProvider {
     var remoteURL: URL {
         return URL(string: self.remoteURLString)!
     }
+
+    private var remoteURLString: String {
+        switch self {
+        case .twitter:
+            return "https://twitter.com/\(Constants.twitterUsername)"
+        case .telegram:
+            return "https://telegram.me/\(preferredTelegramUsername())"
+        case .facebook:
+            return "https://www.facebook.com/\(Constants.facebookUsername)"
+        case .discord:
+            return "https://discord.gg/ahPWeHk"
+        case .helpCenter:
+            return ""
+        case .sourceCode:
+            return ""
+        case .privacyPolicy:
+            return ""
+        case .termsOfService:
+            return ""
+        case .infura:
+            return "https://infura.io/"
+        case .dappsOpenSea:
+            return "https://opensea.io"
+        }
+    }
 }
