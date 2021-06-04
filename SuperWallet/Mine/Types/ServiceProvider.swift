@@ -92,4 +92,9 @@ enum URLServiceProvider {
         case .dappsOpenSea: return nil
         }
     }
+
+    private func preferredTelegramUsername() -> String {
+        let languageCode = NSLocale.preferredLanguageCode ?? ""
+        return Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
+    }
 }
