@@ -78,4 +78,9 @@ final class BrowserNavigationBar: UINavigationBar {
             moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth)
         ])
     }
+
+    @objc private func goBackAction() {
+        browserDelegate?.did(action: .goBack)
+    }
+
 }
