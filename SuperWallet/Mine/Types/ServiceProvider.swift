@@ -77,4 +77,19 @@ enum URLServiceProvider {
             return "https://opensea.io"
         }
     }
+
+    var image: UIImage? {
+        switch self {
+        case .twitter: return R.image.settings_colorful_twitter()
+        case .telegram: return R.image.settings_colorful_telegram()
+        case .facebook: return R.image.settings_colorful_facebook()
+        case .discord: return R.image.settings_colorful_discord()
+        case .helpCenter: return R.image.settings_colorful_help_center()
+        case .sourceCode: return nil
+        case .privacyPolicy: return nil
+        case .termsOfService: return nil
+        case .infura: return nil
+        case .dappsOpenSea: return nil
+        }
+    }
 }
