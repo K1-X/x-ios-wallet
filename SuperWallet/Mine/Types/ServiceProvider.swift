@@ -48,4 +48,8 @@ enum URLServiceProvider {
         case .dappsOpenSea: return nil
         }
     }
+
+    var remoteURL: URL {
+        return URL(string: self.remoteURLString)!
+    }
 }
