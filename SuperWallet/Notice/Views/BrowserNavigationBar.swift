@@ -85,4 +85,8 @@ final class BrowserNavigationBar: UINavigationBar {
     @objc private func moreAction(_ sender: UIView) {
         browserDelegate?.did(action: .more(sender: sender))
     }
+
+    @objc private func homeAction(_ sender: UIView) {
+        browserDelegate?.did(action: .home)
+    }
 }
