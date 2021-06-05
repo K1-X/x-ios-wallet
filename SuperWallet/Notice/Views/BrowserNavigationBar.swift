@@ -82,5 +82,7 @@ final class BrowserNavigationBar: UINavigationBar {
     @objc private func goBackAction() {
         browserDelegate?.did(action: .goBack)
     }
-
+    @objc private func moreAction(_ sender: UIView) {
+        browserDelegate?.did(action: .more(sender: sender))
+    }
 }
