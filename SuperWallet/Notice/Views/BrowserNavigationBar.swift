@@ -94,3 +94,15 @@ final class BrowserNavigationBar: UINavigationBar {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension BrowserNavigationBar: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        browserDelegate?.did(action: .enter(textField.text ?? ""))
+        textField.resignFirstResponder()
+        return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        browserDelegate?.did(action: .beginEditing)
+    }
+}
