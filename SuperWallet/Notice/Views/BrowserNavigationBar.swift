@@ -89,4 +89,8 @@ final class BrowserNavigationBar: UINavigationBar {
     @objc private func homeAction(_ sender: UIView) {
         browserDelegate?.did(action: .home)
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
