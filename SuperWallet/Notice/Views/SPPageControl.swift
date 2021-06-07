@@ -22,5 +22,21 @@ class SPPageControl: UIControl {
         super.init(frame: frame)
         initialize()
     }
-    
+  
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func initialize() {
+        self.backgroundColor = UIColor.clear
+        localNumberOfPages = 0//
+        localCurrentPage = 0//
+        localPointSize = CGSize.init(width: 6, height: 6)//6
+        localPointSpace = 8//8
+        localIsSquare = false//
+        localOtherColor = UIColor.init(white: 1, alpha: 0.5)//，50%
+        localCurrentColor = UIColor.white//
+        localCurrentWidthMultiple = 1//，1
+        creatPointView()//view
+    }    
 }
