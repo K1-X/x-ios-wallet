@@ -65,4 +65,16 @@ class SPPageControl: UIControl {
             return self.localCurrentPage
         }
     }
+
+    var pointSize: CGSize {
+        set {
+            if localPointSize != newValue {
+                localPointSize = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localPointSize
+        }
+    }
 }
