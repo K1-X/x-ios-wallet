@@ -39,4 +39,30 @@ class SPPageControl: UIControl {
         localCurrentWidthMultiple = 1//，1
         creatPointView()//view
     }    
+
+    var numberOfPages: NSInteger {
+        set {
+            if localNumberOfPages == newValue {
+                return
+            }
+            localNumberOfPages = newValue
+            creatPointView()
+        }
+        get {
+            return self.localNumberOfPages
+        }
+    }
+
+    var currentPage: NSInteger {
+        set {
+            if localCurrentPage == newValue {
+                return
+            }
+            exchangeCurrentView(oldSelectedIndex: localCurrentPage, newSelectedIndex: newValue)
+            localCurrentPage = newValue
+        }
+        get {
+            return self.localCurrentPage
+        }
+    }
 }
