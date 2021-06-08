@@ -89,4 +89,28 @@ class SPPageControl: UIControl {
             return self.localPointSpace
         }
     }
+
+    var otherColor: UIColor {
+        set {
+            if localOtherColor != newValue {
+                localOtherColor = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localOtherColor
+        }
+    }
+
+    var currentColor: UIColor {
+        set {
+            if localCurrentColor != newValue {
+                localCurrentColor = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localCurrentColor
+        }
+    }
 }
