@@ -55,4 +55,19 @@ final class AboutViewController: FormViewController {
             <<< linkProvider(type: .infura)
             <<< linkProvider(type: .dappsOpenSea)
     }
+  
+    private func linkProvider(
+        type: URLServiceProvider
+    ) -> ButtonRow {
+        return AppFormAppearance.button {
+            $0.title = type.title
+        }.onCellSelection { [weak self] (_, _) in
+            guard let `self` = self else { return }
+            self.delegate?.didPressURL(type.remoteURL, in: self)
+        }.cellUpdate({ (cell, _) in
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textColor = .black
+        })
+    }
 }
