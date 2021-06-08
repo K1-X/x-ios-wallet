@@ -137,4 +137,29 @@ class SPPageControl: UIControl {
             return self.localCurrentImage!
         }
     }
+    
+    var isSquare: Bool {
+        set {
+            if localIsSquare != newValue {
+                localIsSquare = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localIsSquare
+        }
+    }
+
+    var currentWidthMultiple: CGFloat {
+        set {
+            if localCurrentWidthMultiple != newValue {
+                localCurrentWidthMultiple = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localCurrentWidthMultiple
+        }
+    }
+
 }
