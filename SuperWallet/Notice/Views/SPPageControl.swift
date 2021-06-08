@@ -113,4 +113,28 @@ class SPPageControl: UIControl {
             return self.localCurrentColor
         }
     }
+
+    var otherImage: UIImage {
+        set {
+            if localOtherImage != newValue {
+                localOtherImage = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localOtherImage!
+        }
+    }
+
+    var currentImage: UIImage {
+        set {
+            if localCurrentImage != newValue {
+                localCurrentImage = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localCurrentImage!
+        }
+    }
 }
