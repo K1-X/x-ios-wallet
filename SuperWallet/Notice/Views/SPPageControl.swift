@@ -77,4 +77,16 @@ class SPPageControl: UIControl {
             return self.localPointSize
         }
     }
+
+    var pointSpace: CGFloat {
+        set {
+            if localPointSpace != newValue {
+                localPointSpace = newValue
+                creatPointView()
+            }
+        }
+        get {
+            return self.localPointSpace
+        }
+    }
 }
