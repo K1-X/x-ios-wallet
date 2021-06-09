@@ -70,4 +70,16 @@ final class AboutViewController: FormViewController {
                 cell.textLabel?.textColor = .black
         })
     }
+
+    func sendUsEmail() {
+        let composerController = MFMailComposeViewController()
+        composerController.mailComposeDelegate = self
+        composerController.setToRecipients([Constants.supportEmail])
+        composerController.setSubject(R.string.localizable.settingsFeedbackEmailTitle())
+        composerController.setMessageBody(emailTemplate(), isHTML: false)
+
+        if MFMailComposeViewController.canSendMail() {
+            present(composerController, animated: true, completion: nil)
+        }
+    }
 }
