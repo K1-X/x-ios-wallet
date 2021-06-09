@@ -82,4 +82,16 @@ final class AboutViewController: FormViewController {
             present(composerController, animated: true, completion: nil)
         }
     }
+
+    private func emailTemplate() -> String {
+        return """
+        \n\n\n
+
+        Helpful information to developers:
+        iOS Version: \(UIDevice.current.systemVersion)
+        Device Model: \(UIDevice.current.model)
+        SuperWallet Version: \(Bundle.main.fullVersion)
+        Current locale: \(Locale.preferredLanguages.first ?? "")
+        """
+    }
 }
