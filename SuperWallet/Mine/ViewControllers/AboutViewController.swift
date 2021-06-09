@@ -99,3 +99,9 @@ final class AboutViewController: FormViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension AboutViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
