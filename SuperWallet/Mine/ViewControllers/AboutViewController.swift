@@ -94,4 +94,8 @@ final class AboutViewController: FormViewController {
         Current locale: \(Locale.preferredLanguages.first ?? "")
         """
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
