@@ -10,4 +10,8 @@ struct BookmarksViewModel {
     ) {
         self.bookmarksStore = bookmarksStore
     }
+
+    var hasBookmarks: Bool {
+        return !bookmarksStore.bookmarks.isEmpty
+    }
 }
