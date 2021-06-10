@@ -31,4 +31,18 @@ class AddAddressController: UIViewController {
         remarkTextField.tintColor = Colors.blue
         return remarkTextField
     }()    
+
+    lazy var remarkUnderLine: UIView = {
+        let remarkUnderLine = UIView()
+        remarkUnderLine.backgroundColor = Colors.veryLightGray
+        return remarkUnderLine
+    }()
+
+    lazy var tokenName: UILabel = {
+        let tokenName = UILabel()
+        tokenName.text = "SCT:"
+        tokenName.textAlignment = .center
+        tokenName.font = UIFont.systemFont(ofSize: 16)
+        return tokenName
+    }()
 }
