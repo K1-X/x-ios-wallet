@@ -45,4 +45,18 @@ class AddAddressController: UIViewController {
         tokenName.font = UIFont.systemFont(ofSize: 16)
         return tokenName
     }()
+
+    lazy var addressvLine: UIView = {
+        let addressvLine = UIView()
+        addressvLine.backgroundColor = Colors.veryLightGray
+        return addressvLine
+    }()
+    lazy var addressTextField: UITextField = {
+        let addressTextField = UITextField()
+        let attributedString:NSAttributedString =  NSAttributedString(string: "", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
+        addressTextField.attributedPlaceholder = attributedString
+        addressTextField.delegate = self
+        addressTextField.tintColor = Colors.blue
+        return addressTextField
+    }()
 }
