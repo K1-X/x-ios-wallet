@@ -7,5 +7,14 @@ import TrustCore
 
 class AddAddressController: UIViewController {
 
+    let store: AddressBookStorage
+
+    lazy var addressNameTextField: UITextField = {
+        let addressName = UITextField()
+        addressName.placeholder = ""
+        addressName.delegate = self
+        addressName.tintColor = Colors.blue
+        return addressName
+    }()
     
 }
