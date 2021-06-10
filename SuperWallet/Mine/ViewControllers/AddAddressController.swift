@@ -59,4 +59,18 @@ class AddAddressController: UIViewController {
         addressTextField.tintColor = Colors.blue
         return addressTextField
     }()
+
+    lazy var addresshLine: UIView = {
+        let addresshLine = UIView()
+        addresshLine.backgroundColor = Colors.veryLightGray
+        return addresshLine
+    }()
+    lazy var scanButton: UIButton = {
+        let scanButton = UIButton(type: .custom)
+        scanButton.setImage(R.image.qr_code_scan(), for: .normal)
+        scanButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 0)
+        scanButton.imageView?.contentMode = .scaleAspectFill
+        scanButton.addTarget(self, action: #selector(scanAddressCode), for: .touchUpInside)
+        return scanButton
+    }()
 }
