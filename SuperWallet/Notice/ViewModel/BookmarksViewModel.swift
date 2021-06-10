@@ -18,4 +18,8 @@ struct BookmarksViewModel {
     var numberOfRows: Int {
         return bookmarksStore.bookmarks.count
     }
+
+    func bookmark(for indexPath: IndexPath) -> Bookmark {
+        return bookmarksStore.bookmarks[indexPath.row]
+    }
 }
