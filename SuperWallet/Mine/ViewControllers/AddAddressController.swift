@@ -16,5 +16,19 @@ class AddAddressController: UIViewController {
         addressName.tintColor = Colors.blue
         return addressName
     }()
-    
+
+
+    lazy var addressNameUnderLine: UIView = {
+        let addressNameUnderLine = UIView()
+        addressNameUnderLine.backgroundColor = Colors.veryLightGray
+        return addressNameUnderLine
+    }()
+
+    lazy var remarkTextField: UITextField = {
+        let remarkTextField = UITextField()
+        remarkTextField.placeholder = "（）"
+        remarkTextField.delegate = self
+        remarkTextField.tintColor = Colors.blue
+        return remarkTextField
+    }()    
 }
