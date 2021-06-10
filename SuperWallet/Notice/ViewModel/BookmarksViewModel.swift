@@ -22,4 +22,8 @@ struct BookmarksViewModel {
     func bookmark(for indexPath: IndexPath) -> Bookmark {
         return bookmarksStore.bookmarks[indexPath.row]
     }
+
+     func delete(bookmark: Bookmark) {
+        bookmarksStore.delete(bookmarks: [bookmark])
+    }
 }
