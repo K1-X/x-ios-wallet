@@ -209,3 +209,15 @@ extension AddAddressController: UITextFieldDelegate {
         return true
     }
 }
+
+extension AddAddressController: ScanCodeControllerDelegate {
+    func scanResult(result: String, in controller: ScanCodeController) {
+        guard let address = EthereumAddress(string: result) else {
+            return displayError(error: Errors.invalidAddress)
+        }
+        addressTextField.text = address.description
+    }
+    func didCancel(in controller: ScanCodeController) {
+
+    }
+}
