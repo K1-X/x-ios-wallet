@@ -161,4 +161,41 @@ class AddAddressController: UIViewController {
             make.height.equalTo(48)
         }
     }
+
+    init(store: AddressBookStorage) {
+        self.store = store
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @objc func scanAddressCode() {
+        let controller = ScanCodeController()
+        controller.delegate = self
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    @objc func saveAddress() {
+        let addressName: String = self.addressNameTextField.text!
+        let remark: String = self.remarkTextField.text!
+        let address: String = self.addressTextField.text!
+        if addressName.isEmpty || address.isEmpty {
+            let hud = MBProgressHUD.showAdded(to: view, animated: true)
+            hud.mode = .text
+            hud.label.text = ""
+            hud.hide(animated: true, afterDelay: 1.5)
+        } else {
+            let addressBook: AddressBook = AddressBook(
+                headImageURL: "",
+                addressName: addressName,
+                address: address,
+                remark: remark
+            )
+            let addresss: [AddressBook] = [addressBook]
+            self.store.store(address: addresss)
+            navigationController?.popViewController(animated: true)
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
