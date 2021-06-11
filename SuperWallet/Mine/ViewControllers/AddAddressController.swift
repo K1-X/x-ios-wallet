@@ -199,3 +199,13 @@ class AddAddressController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension AddAddressController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
+}
