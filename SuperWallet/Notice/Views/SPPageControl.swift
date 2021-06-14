@@ -180,4 +180,14 @@ class SPPageControl: UIControl {
             return self.localOtherBorderWidth!
         }
     }
+
+    var currentBorderColor: UIColor {
+        set {
+            localCurrentBorderColor = newValue
+            creatPointView()
+        }
+        get {
+            return self.localCurrentBorderColor!
+        }
+    }
 }
