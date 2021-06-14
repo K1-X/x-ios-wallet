@@ -170,4 +170,14 @@ class SPPageControl: UIControl {
             return self.localOtherBorderColor!
         }
     }
+
+    var otherBorderWidth: CGFloat {
+        set {
+            localOtherBorderWidth = newValue
+            creatPointView()
+        }
+        get {
+            return self.localOtherBorderWidth!
+        }
+    }
 }
