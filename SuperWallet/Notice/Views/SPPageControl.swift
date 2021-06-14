@@ -190,4 +190,14 @@ class SPPageControl: UIControl {
             return self.localCurrentBorderColor!
         }
     }
+
+    var currentBorderWidth: CGFloat {
+        set {
+            localCurrentBorderWidth = newValue
+            creatPointView()
+        }
+        get {
+            return self.localCurrentBorderWidth!
+        }
+    }
 }
