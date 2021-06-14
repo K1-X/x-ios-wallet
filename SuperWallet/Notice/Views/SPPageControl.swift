@@ -161,5 +161,13 @@ class SPPageControl: UIControl {
             return self.localCurrentWidthMultiple
         }
     }
-
+    var otherBorderColor: UIColor {
+        set {
+            localOtherBorderColor = newValue
+            creatPointView()
+        }
+        get {
+            return self.localOtherBorderColor!
+        }
+    }
 }
