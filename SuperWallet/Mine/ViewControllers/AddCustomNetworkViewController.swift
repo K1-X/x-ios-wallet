@@ -14,5 +14,9 @@ final class AddCustomNetworkViewController: FormViewController {
         static let symbol = "symbol"
         static let endpoint = "endpoint"
     }
-    
+    weak var delegate: NewTokenViewControllerDelegate?
+
+    private var chainIDRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.chainID) as? TextFloatLabelRow
+    }    
 }
