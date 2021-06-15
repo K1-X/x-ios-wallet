@@ -347,4 +347,10 @@ class SPPageControl: UIControl {
             }
         }
     }
+
+    @objc func clickAction(tapGesture: UITapGestureRecognizer) {//
+        let index = (tapGesture.view?.tag)! - 1000
+        self.clickIndex?(index)
+
+    }
 }
