@@ -353,4 +353,8 @@ class SPPageControl: UIControl {
         self.clickIndex?(index)
 
     }
+
+    func clickPoint(index: @escaping (_ result: NSInteger?) -> Void) {
+        self.clickIndex = index
+    }
 }
