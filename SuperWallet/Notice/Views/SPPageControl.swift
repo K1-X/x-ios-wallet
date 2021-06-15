@@ -274,4 +274,77 @@ class SPPageControl: UIControl {
             }
         }
     }
+
+    func exchangeCurrentView(oldSelectedIndex: NSInteger, newSelectedIndex: NSInteger) {//
+        let oldPointView = self.viewWithTag(1000 + oldSelectedIndex)
+        let newPointView = self.viewWithTag(1000 + newSelectedIndex)
+
+        oldPointView?.layer.borderColor = localOtherBorderColor != nil ? localOtherBorderColor?.cgColor : localOtherColor.cgColor
+        oldPointView?.layer.borderWidth = localOtherBorderWidth != nil ? localOtherBorderWidth! : 0
+
+        newPointView?.layer.borderColor = localCurrentBorderColor != nil ? localCurrentBorderColor?.cgColor : localCurrentColor.cgColor
+        newPointView?.layer.borderWidth = localCurrentBorderWidth != nil ? localCurrentBorderWidth! : 0
+
+        oldPointView?.backgroundColor = localOtherColor
+        newPointView?.backgroundColor = localCurrentColor
+
+        if localCurrentWidthMultiple != 1 {//，frame
+            var oldPointFrame = oldPointView?.frame
+            if newSelectedIndex < oldSelectedIndex {
+                oldPointFrame?.origin.x += localPointSize.width * (localCurrentWidthMultiple - 1)
+            }
+            oldPointFrame?.size.width = localPointSize.width
+            oldPointView?.frame = oldPointFrame!
+
+            var newPointFrame = newPointView?.frame
+            if newSelectedIndex > oldSelectedIndex {
+                newPointFrame?.origin.x -= localPointSize.width * (localCurrentWidthMultiple - 1)
+            }
+            newPointFrame?.size.width = localPointSize.width * localCurrentWidthMultiple
+            newPointView?.frame = newPointFrame!
+        }
+
+        if localCurrentImage != nil {//
+            let view = oldPointView?.viewWithTag(oldSelectedIndex + 2000)
+
+            if view != nil {
+                let oldlocalCurrentImageView = view as! UIImageView
+
+                oldlocalCurrentImageView.frame = CGRect.init(x: 0, y: 0, width: localPointSize.width, height: localPointSize.height)
+                oldlocalCurrentImageView.image = localOtherImage
+            }
+        }
+
+        if localOtherImage != nil {//
+            let view = newPointView?.viewWithTag(newSelectedIndex + 2000)
+            if view != nil {
+                let oldlocalOtherImageView = view as! UIImageView
+                let width = localPointSize.width * localCurrentWidthMultiple
+
+                oldlocalOtherImageView.frame = CGRect.init(x: 0, y: 0, width: width, height: localPointSize.height)
+                oldlocalOtherImageView.image = localCurrentImage
+
+            }
+        }
+
+        if newSelectedIndex - oldSelectedIndex > 1 {//，
+            for index in oldSelectedIndex + 1 ..< newSelectedIndex {
+                let view = self.viewWithTag(1000 + index)
+                var frame = view?.frame
+                frame?.origin.x -= localPointSize.width * (localCurrentWidthMultiple - 1)
+                frame?.size.width = localPointSize.width
+                view?.frame = frame!
+            }
+        }
+
+        if newSelectedIndex - oldSelectedIndex < -1 {//，
+            for index in newSelectedIndex + 1 ..< oldSelectedIndex {
+                let view = self.viewWithTag(1000 + index)
+                var frame = view?.frame
+                frame?.origin.x += localPointSize.width * (localCurrentWidthMultiple - 1)
+                frame?.size.width = localPointSize.width
+                view?.frame = frame!
+            }
+        }
+    }
 }
