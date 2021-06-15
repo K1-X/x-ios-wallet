@@ -200,4 +200,78 @@ class SPPageControl: UIControl {
             return self.localCurrentBorderWidth!
         }
     }
+
+    func creatPointView() {
+        for view in self.subviews {
+            view.removeFromSuperview()
+        }
+
+        if localNumberOfPages <= 0 {//
+            return
+        }
+
+        var startX: CGFloat = 0
+        var startY: CGFloat = 0
+        let mainWidth = CGFloat(localNumberOfPages) * (localPointSize.width + localPointSpace)
+
+        if self.frame.size.width > mainWidth {
+            startX = (self.frame.size.width - mainWidth) / 2
+        }
+
+        if self.frame.size.height > localPointSize.height {
+            startY = (self.frame.size.height - localPointSize.height) / 2
+        }
+
+        //
+        for index in 0 ..< numberOfPages {
+            if index == localCurrentPage {//
+                let currentPointView = UIView.init()
+                let currentPointViewWidth = localPointSize.width * localCurrentWidthMultiple
+                currentPointView.frame = CGRect.init(x: startX, y: startY, width: currentPointViewWidth, height: localPointSize.height)
+                currentPointView.backgroundColor = localCurrentColor
+                currentPointView.tag = index + 1000
+                currentPointView.layer.cornerRadius = localIsSquare ? 0 : localPointSize.height / 2
+                currentPointView.layer.masksToBounds = true
+                currentPointView.layer.borderColor = localCurrentBorderColor != nil ? localCurrentBorderColor?.cgColor : localCurrentColor.cgColor
+                currentPointView.layer.borderWidth = localCurrentBorderWidth != nil ? localCurrentBorderWidth! : 0
+                currentPointView.isUserInteractionEnabled = true
+                self.addSubview(currentPointView)
+                let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickAction(tapGesture:)))//
+                currentPointView.addGestureRecognizer(tapGesture)
+                startX = currentPointView.frame.maxX + localPointSpace
+
+                if localCurrentImage != nil {
+                    currentPointView.backgroundColor = UIColor.clear
+                    let localCurrentImageView = UIImageView.init()
+                    localCurrentImageView.tag = index + 2000
+                    localCurrentImageView.frame = currentPointView.bounds
+                    localCurrentImageView.image = localCurrentImage
+                    currentPointView.addSubview(localCurrentImageView)
+                }
+            } else {//
+                let otherPointView = UIView.init()
+                otherPointView.frame = CGRect.init(x: startX, y: startY, width: localPointSize.width, height: localPointSize.height)
+                otherPointView.backgroundColor = localOtherColor
+                otherPointView.tag = index + 1000
+                otherPointView.layer.cornerRadius = localIsSquare ? 0 : localPointSize.height / 2
+                otherPointView.layer.borderColor = localOtherBorderColor != nil ? localOtherBorderColor?.cgColor : localOtherColor.cgColor
+                otherPointView.layer.borderWidth = localOtherBorderWidth != nil ? localOtherBorderWidth! : 0
+                otherPointView.layer.masksToBounds = true
+                otherPointView.isUserInteractionEnabled = true
+                self.addSubview(otherPointView)
+                let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(clickAction(tapGesture:)))
+                otherPointView.addGestureRecognizer(tapGesture)
+                startX = otherPointView.frame.maxX + localPointSpace
+
+                if localOtherImage != nil {
+                    otherPointView.backgroundColor = UIColor.clear
+                    let localOtherImageView = UIImageView.init()
+                    localOtherImageView.tag = index + 2000
+                    localOtherImageView.frame = otherPointView.bounds
+                    localOtherImageView.image = localOtherImage
+                    otherPointView.addSubview(localOtherImageView)
+                }
+            }
+        }
+    }
 }
