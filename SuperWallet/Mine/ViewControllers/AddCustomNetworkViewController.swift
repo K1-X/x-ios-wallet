@@ -19,4 +19,11 @@ final class AddCustomNetworkViewController: FormViewController {
     private var chainIDRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.chainID) as? TextFloatLabelRow
     }    
+
+    private var nameRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.name) as? TextFloatLabelRow
+    }
+    private var symbolRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.symbol) as? TextFloatLabelRow
+    }
 }
