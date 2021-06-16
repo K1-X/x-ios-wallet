@@ -26,4 +26,8 @@ final class AddCustomNetworkViewController: FormViewController {
     private var symbolRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.symbol) as? TextFloatLabelRow
     }
+
+    private var endpointRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.endpoint) as? TextFloatLabelRow
+    }
 }
