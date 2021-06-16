@@ -170,3 +170,13 @@ final class WalletCoordinator: Coordinator {
     }
 }
 
+extension WalletCoordinator: WalletCreateControllerDelegate {
+    func didPressCreateWallet(walletName: String, password: String, in viewController: WalletCreateController) {
+        createInstantWallet(walletName: walletName, password: password)
+    }
+
+    func didPressImportWallet(in viewController: WalletCreateController) {
+        pushImportWallet()
+    }
+}
+
