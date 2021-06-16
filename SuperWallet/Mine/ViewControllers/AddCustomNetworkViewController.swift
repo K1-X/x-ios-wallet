@@ -65,4 +65,23 @@ final class AddCustomNetworkViewController: FormViewController {
                 $0.title = R.string.localizable.endpoint()
             }
     }
+
+    func addNetwork(completion: @escaping(Result<CustomRPC, AnyError>) -> Void) {
+        guard form.validate().isEmpty else {
+            return
+        }
+        let chainID = Int(chainIDRow?.value ?? "0") ?? 0
+        let name = nameRow?.value ?? ""
+        let symbol = symbolRow?.value ?? ""
+        let endpoint = endpointRow?.value ?? ""
+
+        let customNetwork = CustomRPC(
+            chainID: chainID,
+            name: name,
+            symbol: symbol,
+            endpoint: endpoint
+        )
+
+        completion(.success(customNetwork))
+    }
 }
