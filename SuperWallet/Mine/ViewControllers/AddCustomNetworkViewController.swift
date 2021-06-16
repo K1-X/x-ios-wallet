@@ -30,4 +30,39 @@ final class AddCustomNetworkViewController: FormViewController {
     private var endpointRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.endpoint) as? TextFloatLabelRow
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = viewModel.title
+        form = Section()
+
+            +++ Section()
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.chainID) {
+                $0.add(rule: EthereumAddressRule())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.chainID()
+            }.cellUpdate { cell, _ in
+                cell.textField.keyboardType = .decimalPad
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.name()
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) {
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.symbol()
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.endpoint) {
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.endpoint()
+            }
+    }
 }
