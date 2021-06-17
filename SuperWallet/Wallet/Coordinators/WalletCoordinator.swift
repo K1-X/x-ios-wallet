@@ -216,3 +216,18 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
     }
 }
 
+extension WalletCoordinator: SelectCoinViewControllerDelegate {
+    func didSelect(coin: Coin, in controller: SelectCoinViewController) {
+        pushImportWalletView(for: coin)
+    }
+}
+
+extension WalletCoordinator: WelcomeViewControllerDelegate {
+    func didPressCreateWallet(in viewController: WelcomeViewController) {
+        pushCreateWallet()
+    }
+
+    func didPressImportWallet(in viewController: WelcomeViewController) {
+        pushImportWallet()
+    }
+}
