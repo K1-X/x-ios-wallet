@@ -180,3 +180,10 @@ extension WalletCoordinator: WalletCreateControllerDelegate {
     }
 }
 
+extension WalletCoordinator: ImportWalletControllerDelegate {
+    func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletController) {
+        keystore.store(object: account.info, fields: fields)
+        didCreateAccount(account: account)
+//        walletCreated(wallet: account, type: .imported)
+    }
+}
