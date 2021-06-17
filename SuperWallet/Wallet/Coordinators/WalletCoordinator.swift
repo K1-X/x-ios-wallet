@@ -187,3 +187,11 @@ extension WalletCoordinator: ImportWalletControllerDelegate {
 //        walletCreated(wallet: account, type: .imported)
     }
 }
+
+extension WalletCoordinator: PassphraseViewControllerDelegate {
+    func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String]) {
+        // show verify
+        verify(account: account, words: words)
+    }
+}
+
