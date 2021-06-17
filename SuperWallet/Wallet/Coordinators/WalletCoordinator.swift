@@ -195,3 +195,24 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
     }
 }
 
+extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
+    func didFinish(in controller: VerifyPassphraseViewController, with account: Wallet) {
+        showConfirm(for: account, completedBackup: true)
+    }
+
+    func didSkip(in controller: VerifyPassphraseViewController, with account: Wallet) {
+        controller.confirm(
+            title: NSLocalizedString("verifyPassphrase.skip.confirm.title", value: "Are you sure you want to skip this step?", comment: ""),
+            message: NSLocalizedString("verifyPassphrase.skip.confirm.message", value: "Loss of backup phrase can put your wallet at risk!", comment: ""),
+            okTitle: R.string.localizable.skip(),
+            okStyle: .destructive
+        ) { [weak self] result in
+            switch result {
+            case .success:
+                self?.showConfirm(for: account, completedBackup: false)
+            case .failure: break
+            }
+        }
+    }
+}
+
