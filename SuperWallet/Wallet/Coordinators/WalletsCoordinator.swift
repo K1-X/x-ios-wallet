@@ -10,3 +10,35 @@ protocol WalletsCoordinatorDelegate: class {
     func didCancel(in coordinator: WalletsCoordinator)
     func didUpdateAccounts(in coordinator: WalletsCoordinator)
 }
+
+class WalletsCoordinator: RootCoordinator {
+
+    var coordinators: [Coordinator] = []
+    let keystore: Keystore
+    let navigationController: NavigationController
+    weak var delegate: WalletsCoordinatorDelegate?
+
+    lazy var rootViewController: UIViewController = {
+        return walletController
+    }()
+
+    lazy var walletController: WalletManagerController = {
+        let controller = WalletManagerController(keystore: keystore)
+        controller.delegate = self
+        return controller
+    }()
+
+    init(
+        keystore: Keystore,
+        navigationController: NavigationController = NavigationController()
+    ) {
+        self.keystore = keystore
+        self.navigationController = navigationController
+    }
+
+    @objc func dismiss() {
+        delegate?.didCancel(in: self)
+    }
+
+}
+
