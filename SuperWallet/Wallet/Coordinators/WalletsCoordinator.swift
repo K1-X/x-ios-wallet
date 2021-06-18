@@ -75,5 +75,32 @@ class WalletsCoordinator: RootCoordinator {
             .mainWallet(true)
             ])
     } 
+   
+    func exportMnemonic(for account: Wallet) {
+        navigationController.topViewController?.displayLoading()
+        keystore.exportMnemonic(wallet: account) { [weak self] result in
+            self?.navigationController.topViewController?.hideLoading()
+            switch result {
+            case .success(let words):
+                self?.exportMnemonicCoordinator(for: account, words: words)
+            case .failure(let error):
+                self?.navigationController.topViewController?.displayError(error: error)
+            }
+        }
+    }
+
+    func exportPrivateKeyView(for account: Account) {
+        navigationController.topViewController?.displayLoading()
+        keystore.exportPrivateKey(account: account) { [weak self] result in
+            self?.navigationController.topViewController?.hideLoading()
+            switch result {
+            case .success(let privateKey):
+                self?.exportPrivateKey(with: privateKey)
+            case .failure(let error):
+                self?.navigationController.topViewController?.displayError(error: error)
+            }
+        }
+    }
+
 }
 
