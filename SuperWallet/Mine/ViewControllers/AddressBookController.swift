@@ -81,3 +81,15 @@ extension AddressBookController: UITableViewDataSource {
         return addressBookCell
     }
 }
+
+extension AddressBookController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let addressBook = viewModel.addressBookStorage.addresses[indexPath.row]
+        delegate?.didClickAddress(bookStorage: viewModel.addressBookStorage, addressBook: addressBook, viewController: self)
+    }
+}
