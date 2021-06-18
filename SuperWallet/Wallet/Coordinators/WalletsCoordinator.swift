@@ -56,6 +56,24 @@ class WalletsCoordinator: RootCoordinator {
         coordinator.start(.welcome)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
- 
+    
+    func showWalletInfo(for wallet: WalletInfo, account: Account, sender: UIView) {
+        let controller = WalletInfoViewController(
+            wallet: wallet
+        )
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    func saveWalletInfo(for wallet: WalletInfo, walletName: String) {
+        var initialName = walletName
+        if initialName.isEmpty {
+            initialName = ""
+        }
+        keystore.store(object: wallet.info, fields: [
+            .name(initialName),
+            .mainWallet(true)
+            ])
+    } 
 }
 
