@@ -64,3 +64,20 @@ class AddressBookController: UIViewController {
     }
 }
 
+extension AddressBookController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.addressBookStorage.addresses.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let addressBookCell: AddressBookCell = tableView.dequeueReusableCell(withIdentifier: R.nib.addressBookCell.name) as! AddressBookCell
+        let addresss = viewModel.addressBookStorage.addresses[indexPath.row]
+        addressBookCell.selectionStyle = .none
+        addressBookCell.configure(addressBook: addresss)
+        return addressBookCell
+    }
+}
