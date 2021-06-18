@@ -101,6 +101,29 @@ class WalletsCoordinator: RootCoordinator {
             }
         }
     }
+    func exportMnemonicCoordinator(for account: Wallet, words: [String]) {
+        let coordinator = ExportPhraseCoordinator(
+            keystore: keystore,
+            account: account,
+            words: words
+        )
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 
+    func exportKeystore(for account: Account) {
+        let coordinator = BackupCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            account: account
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
+
+    func exportPrivateKey(with privateKey: Data) {
+        let coordinator = ExportPrivateKeyCoordinator(privateKey: privateKey)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 }
 
