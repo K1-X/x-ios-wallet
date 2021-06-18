@@ -39,6 +39,23 @@ class WalletsCoordinator: RootCoordinator {
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
+   
+    func start() {
+        navigationController.viewControllers = [rootViewController]
+        walletController.fetch()
+    }
 
+    @objc func add() {
+        showCreateWallet()
+    }
+
+    func showCreateWallet() {
+        let coordinator = WalletCoordinator(keystore: keystore)
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        coordinator.start(.welcome)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+ 
 }
 
