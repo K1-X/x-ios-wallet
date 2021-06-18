@@ -53,5 +53,14 @@ class AddressBookController: UIViewController {
         }
         tableView.layoutIfNeeded()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
+    @objc func pushAddAddress() {
+        delegate?.didClickAddButton(bookStorage: viewModel.addressBookStorage, viewController: self)
+    }
 }
 
