@@ -147,3 +147,22 @@ extension WalletsCoordinator: WalletsViewControllerDelegate {
     }
 }
 
+extension WalletsCoordinator: WalletCoordinatorDelegate {
+
+    func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
+        delegate?.didUpdateAccounts(in: self)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        walletController.fetch()
+    }
+
+    func didFail(with error: Error, in coordinator: WalletCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didCancel(in coordinator: WalletCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+}
