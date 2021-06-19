@@ -166,3 +166,81 @@ extension WalletsCoordinator: WalletCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 }
+
+extension WalletsCoordinator: BackupCoordinatorDelegate {
+    func didCancel(coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+
+    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension WalletsCoordinator: WalletInfoViewControllerDelegate {
+    func didPress(item: WalletInfoType, in controller: WalletInfoViewController) {
+        switch item {
+        case .exportKeystore(let account):
+            exportKeystore(for: account)
+        case .exportPrivateKey(let account):
+            exportPrivateKeyView(for: account)
+        case .exportRecoveryPhrase(let account):
+            exportMnemonic(for: account)
+        case .copyAddress(let address):
+            controller.showShareActivity(from: controller.view, with: [address.description])
+        }
+    }
+
+    func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in controller: WalletInfoViewController) {
+        keystore.store(object: wallet.info, fields: fields)
+        navigationController.popViewController(animated: true)
+    }
+}
+
+extension WalletsCoordinator: WalletManagerControllerDelegate {
+    func didClickWallet(viewModel: WalletAccountViewModel, viewController: WalletManagerController) {
+        let controller = WalletEditController(viewModel: viewModel)
+        controller.delegate = self
+        controller.navigationItem.backBarButtonItem = .back
+        navigationController.pushViewController(controller, animated: true)
+    }
+}
+
+extension WalletsCoordinator: WalletEditControllerDelegate {
+    func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void) {
+        keystore.exportPrivateKey(account: account, completion: completion)
+    }
+
+    func exportKeystore(account: Account, password: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        let newPassword = keystore.getPassword(for: account.wallet!)
+        keystore.export(account: account, password: newPassword!, newPassword: password, completion: completion)
+    }
+
+    func deleteWallet(account: Account, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+        completion(keystore.delete(wallet: account.wallet!))
+    }
+
+    func saveWallet(account: Account, walletName: String) {
+        let type = WalletType.hd(account.wallet!)
+        let wallet = WalletInfo(type: type, info: keystore.storage.get(for: type))
+        saveWalletInfo(for: wallet, walletName: walletName)
+        navigationController.popViewController(animated: true)
+    }
+
+    func changePassword(viewModel: WalletAccountViewModel) {
+        let controller = UpdatePasswordController(viewModel: viewModel, nibName: "UpdatePasswordController", bundle: nil)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+}
+
+extension WalletsCoordinator: UpdatePasswordControllerDelegate {
+    func updatePassword(wallet: Wallet, newPassword: String) {
+        let isSuccess = keystore.setPassword(newPassword, for: wallet)
+        if isSuccess {
+            navigationController.popViewController(animated: true)
+        } else {
+
+        }
+    }
+}
