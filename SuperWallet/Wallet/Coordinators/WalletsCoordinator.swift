@@ -127,3 +127,23 @@ class WalletsCoordinator: RootCoordinator {
     }
 }
 
+extension WalletsCoordinator: WalletsViewControllerDelegate {
+    func didDeleteAccount(account: WalletInfo, in viewController: WalletsViewController) {
+        viewController.fetch()
+
+        //Remove Realm DB
+        let db = RealmConfiguration.configuration(for: account)
+        let fileManager = FileManager.default
+        guard let fileURL = db.fileURL else { return }
+        try? fileManager.removeItem(at: fileURL)
+    }
+
+    func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
+        delegate?.didSelect(wallet: wallet, in: self)
+    }
+
+    func didSelectForInfo(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
+        showWalletInfo(for: wallet, account: account, sender: controller.view)
+    }
+}
+
