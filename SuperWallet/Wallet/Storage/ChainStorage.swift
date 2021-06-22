@@ -7,5 +7,8 @@ class ChainStorage {
     var blocks: [ChainObject] {
         return Array(realm.objects(ChainObject.self))
     }
-   
+
+    init(realm: Realm) {
+        self.realm = realm
+    }   
 }
