@@ -8,3 +8,7 @@ struct NotificationChange: Codable {
     let preferences: Preferences
 }
 
+enum NotificationChanged {
+    case state(isEnabled: Bool)
+    case preferences(Preferences)
+}
