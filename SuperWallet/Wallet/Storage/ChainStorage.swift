@@ -30,4 +30,10 @@ class ChainStorage {
             realm.add(chainList, update: .all)
         }
     }
+
+    func delete(block: ChainObject) {
+        try? realm.write {
+            realm.delete(block)
+        }
+    }
 }
