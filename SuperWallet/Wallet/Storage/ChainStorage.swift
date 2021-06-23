@@ -25,4 +25,9 @@ class ChainStorage {
         return Array(realm.objects(ChainObject.self))
     }
 
+    func update(chainList: [ChainObject]) {
+        try? realm.write {
+            realm.add(chainList, update: .all)
+        }
+    }
 }
