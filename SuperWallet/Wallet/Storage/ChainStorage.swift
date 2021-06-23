@@ -21,4 +21,8 @@ class ChainStorage {
         }
         return realm.objects(ChainObject.self).first!
     }
+    func getAllBlocks() -> [ChainObject] {
+        return Array(realm.objects(ChainObject.self))
+    }
+
 }
