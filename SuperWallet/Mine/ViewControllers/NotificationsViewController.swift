@@ -35,4 +35,10 @@ final class NotificationsViewController: FormViewController {
         return Condition.predicate(NSPredicate(format: "$\(Keys.pushNotifications) == false"))
     }
 
+    init(
+        preferencesController: PreferencesController = PreferencesController()
+    ) {
+        self.preferencesController = preferencesController
+        super.init(nibName: nil, bundle: nil)
+    }
 }
