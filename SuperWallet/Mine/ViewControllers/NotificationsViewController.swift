@@ -75,4 +75,20 @@ final class NotificationsViewController: FormViewController {
             cell.switchControl.isEnabled = false
         }
     }
+
+    func updatePreferences() {
+        didChange?(.preferences(
+            NotificationsViewController.getPreferences()
+        ))
+    }
+
+    static func getPreferences() -> Preferences {
+        //let preferencesController = PreferencesController()
+        let preferences = Preferences()
+        return preferences
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
