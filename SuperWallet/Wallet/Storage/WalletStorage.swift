@@ -28,4 +28,10 @@ class WalletStorage {
             realm.add(address, update: .all)
         }
     }
+
+    func delete(address: WalletAddress) {
+        try? realm.write {
+            realm.delete(address)
+        }
+    }
 }
