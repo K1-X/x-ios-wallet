@@ -11,4 +11,15 @@ class WalletStorage {
         return Array(realm.objects(WalletAddress.self))
     }
     
+    init(realm: Realm) {
+        self.realm = realm
+    }
+
+    func get(for type: WalletType) -> WalletObject {
+        let firstWallet = realm.objects(WalletObject.self).filter { $0.id == type.description }.first
+        guard let foundWallet = firstWallet else {
+            return WalletObject.from(type)
+        }
+        return foundWallet
+    }
 }
