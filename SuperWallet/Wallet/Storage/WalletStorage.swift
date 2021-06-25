@@ -22,4 +22,10 @@ class WalletStorage {
         }
         return foundWallet
     }
+
+    func store(address: [WalletAddress]) {
+        try? realm.write {
+            realm.add(address, update: .all)
+        }
+    }
 }
