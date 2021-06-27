@@ -6,5 +6,9 @@ import Branch
 
 final class PrivacyViewController: FormViewController {
 
-    
+    private let viewModel = AnaliticsViewModel()
+
+    private var amountRow: SwitchRow? {
+        return form.rowBy(tag: viewModel.answer.rawValue) as? SwitchRow
+    }    
 }
