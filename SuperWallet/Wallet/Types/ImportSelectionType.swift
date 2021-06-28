@@ -3,5 +3,9 @@
 import Foundation
 
 enum ImportSelectionType {
-    
+
+    case keystore
+    case privateKey
+    case mnemonic
+    case address    
 }
