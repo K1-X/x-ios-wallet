@@ -12,4 +12,13 @@ class KeyStoreCodeController: UIViewController {
     @IBOutlet weak var safetyNotice: UILabel!
     @IBOutlet weak var codeImageView: UIImageView!
     
+
+    @IBOutlet weak var scanNoticeHConstraint: NSLayoutConstraint!
+    @IBOutlet weak var safetyNoticeHConstraint: NSLayoutConstraint!
+
+    let keystoreStr: String
+    init(keystoreStr: String) {
+        self.keystoreStr = keystoreStr
+        super.init(nibName: "KeyStoreCodeController", bundle: nil)
+    }
 }
