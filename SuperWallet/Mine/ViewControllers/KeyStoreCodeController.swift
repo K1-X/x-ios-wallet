@@ -30,4 +30,26 @@ class KeyStoreCodeController: UIViewController {
         super.viewDidLoad()
         self.setUpUI()
     }
+
+    func setUpUI() {
+        scrollView.backgroundColor = Colors.veryLightGray
+        scanTitle.textColor = Colors.blue
+        scanTitle.text = R.string.localizable.exportKeyStoreScanTitle()
+        scanNotice.textColor = Colors.lightGray
+        scanNotice.text = R.string.localizable.exportKeyStoreScanNotice()
+        safetyTitle.textColor = Colors.blue
+        safetyTitle.text = R.string.localizable.exportKeyStoreSafetyTitle()
+        safetyNotice.textColor = Colors.lightGray
+        safetyNotice.text = R.string.localizable.exportKeyStoreSafetyNotice()
+
+        scanNoticeHConstraint.constant = (scanNotice.text?.textHeight(font: scanNotice.font, width: scanNotice.frame.size.width))!
+        safetyNoticeHConstraint.constant = (safetyNotice.text?.textHeight(font: safetyNotice.font, width: safetyNotice.frame.size.width))!
+
+        DispatchQueue.global(qos: .userInteractive).async {
+            let image = QRGenerator.generate(from: self.keystoreStr)
+            DispatchQueue.main.async {
+                self.codeImageView.image = image
+            }
+        }
+    }
 }
