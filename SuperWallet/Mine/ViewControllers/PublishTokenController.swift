@@ -44,4 +44,24 @@ class PublishTokenController: UIViewController {
         return tableView
     }()
 
+    lazy var footerView: UIView = {
+        let footerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 144))
+        footerView.backgroundColor = Colors.white
+        let nextButton: UIButton = UIButton(type: .custom)
+        nextButton.setBackgroundColor(Colors.blue, forState: .normal)
+        nextButton.layer.cornerRadius = 4
+        nextButton.layer.masksToBounds = true
+        nextButton.setTitleColor(Colors.white, for: .normal)
+        nextButton.setTitle(R.string.localizable.publishTokenNextTitle(), for: .normal)
+        nextButton.addTarget(self, action: #selector(pushlishToken), for: .touchUpInside)
+        footerView.addSubview(nextButton)
+        nextButton.snp.makeConstraints({ (make) in
+            make.centerY.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
+            make.height.equalTo(48)
+        })
+        return footerView
+    }()
+
 }
