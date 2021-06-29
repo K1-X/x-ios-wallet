@@ -21,4 +21,17 @@ enum ImportSelectionType {
             return R.string.localizable.address()
         }
     }
+
+    init(title: String?) {
+        switch title {
+        case ImportSelectionType.privateKey.title?:
+            self = .privateKey
+        case ImportSelectionType.address.title?:
+            self = .address
+        case ImportSelectionType.mnemonic.title?:
+            self = .mnemonic
+        default:
+            self = .keystore
+        }
+    }
 }
