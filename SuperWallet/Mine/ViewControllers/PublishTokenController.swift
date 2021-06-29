@@ -99,4 +99,102 @@ class PublishTokenController: UIViewController {
         settingChainView.show()
     }
 
+    @objc func pushlishToken() {
+        guard let name = name, let symbol = symbol, let totalSupply = totalSupply else {
+            return
+        }
+        let totalSupplyBigInt: BigInt = EtherNumberFormatter.full.number(from: totalSupply, decimals: 18)!
+        let totalSupplyBigIntString: String = "\(totalSupplyBigInt)"
+        network.buildContract(name: name, symbol: symbol, decimal: "18", totalSupply: totalSupplyBigIntString) { result in
+            if !result.0.isEmpty {
+                let input: String = result.0.drop0x
+                let gasLimit: BigInt? = {
+                    return EtherNumberFormatter.full.number(from: "\(3000)", units: .kwei)
+                }()
+                let gasPrice: BigInt? = {
+                    return EtherNumberFormatter.full.number(from: "60", units: .gwei)
+                }()
+                let transfer: Transfer = {
+                    return Transfer(server: (self.session.account.coin?.server)!, type: .token(TokenObject()))
+                }()
+
+                let token: TokenObject = {
+                    return TokenObject(
+                        contract: "",
+                        name: "",
+                        coin: Coin(rawValue: 60)!,
+                        type: .ERC20,
+                        symbol: "",
+                        decimals: 18,
+                        value: "0",
+                        isCustom: false,
+                        isDisabled: true,
+                        order: 0,
+                        icon: "",
+                        supplyTotal: "",
+                        version: "",
+                        address: "",
+                        publisher: "",
+                        chainId: (self.chainObject?.chainId)!,
+                        isPublish: true
+                    )
+                }()
+                var signTransaction: SignTransaction {
+                    let value: BigInt = {
+                        return 0
+                    }()
+                    let address: EthereumAddress? = {
+                        return EthereumAddress(string: "")
+                    }()
+                    let localizedObject: LocalizedOperationObject? = {
+                        return LocalizedOperationObject(
+                            from: self.session.account.currentAccount.address.description,
+                            to: "",
+                            contract: "",
+                            type: "",
+                            value: "0",
+                            symbol: self.symbol,
+                            name: self.name,
+                            decimals: 18
+                        )
+                    }()
+
+                    let signTransaction = SignTransaction(
+                        value: value,
+                        account: self.session.account.currentAccount,
+                        to: address,
+                        nonce: BigInt(-1),
+                        data: Data().data(from: input),
+                        gasPrice: gasPrice!,
+                        gasLimit: gasLimit!,
+                        chainID: 0,
+                        localizedObject: localizedObject
+                    )
+
+                    return signTransaction
+                }
+                self.displayLoading()
+                self.sendTransactionCoordinator.send(transaction: signTransaction) { [weak self] result in
+                    guard let `self` = self else { return }
+                    switch result {
+                    case .success(let type):
+                        switch type {
+                        case .signedTransaction:
+                            self.displayLoading()
+                        case .sentTransaction(let transaction):
+                            print(transaction.id)
+                            print(Thread.current)
+                            self.pkHash = transaction.id
+                            self.dispatchTimer(timeInterval: 1, handler: { _ in
+                                self.getTransactionReceipt()
+                            })
+                        }
+                    case .failure:
+                        self.navigationController?.popViewController(animated: true)
+                        self.hideLoading()
+                    }
+                }
+            }
+        }
+    }
 }
