@@ -80,6 +80,23 @@ class PublishTokenController: UIViewController {
         self.keystore = keystore
         super.init(nibName: nil, bundle: nil)
     }
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = Colors.white
+        title = R.string.localizable.minePublishTokenTitle()
+        tableView.tableFooterView = footerView
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(currentNaviHeight)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        tableView.layoutIfNeeded()
+        let settingChainView: SettingChainView = SettingChainView()
+        settingChainView.configure(dataSource: self.session.chainStore.getAllBlocks())
+        settingChainView.delegate = self
+        settingChainView.show()
+    }
 
 }
