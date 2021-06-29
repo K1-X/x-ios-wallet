@@ -8,4 +8,17 @@ enum ImportSelectionType {
     case privateKey
     case mnemonic
     case address    
+
+    var title: String {
+        switch self {
+        case .keystore:
+            return R.string.localizable.keystore()
+        case .privateKey:
+            return R.string.localizable.privateKey()
+        case .mnemonic:
+            return R.string.localizable.phrase()
+        case .address:
+            return R.string.localizable.address()
+        }
+    }
 }
