@@ -197,4 +197,16 @@ class PublishTokenController: UIViewController {
             }
         }
     }
+
+    func dispatchTimer(timeInterval: Double, handler: @escaping (DispatchSourceTimer?) -> Void) {
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+        self.timer = timer
+        timer.schedule(deadline: .now(), repeating: timeInterval)
+        timer.setEventHandler {
+            DispatchQueue.main.async {
+                handler(timer)
+            }
+        }
+        timer.resume()
+    }
 }
