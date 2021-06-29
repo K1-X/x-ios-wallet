@@ -64,4 +64,22 @@ class PublishTokenController: UIViewController {
         return footerView
     }()
 
+    var name: String?
+    var symbol: String?
+    var totalSupply: String?
+    var chainObject: ChainObject?
+
+    let session: WalletSession
+    let keystore: Keystore
+
+    init(
+        session: WalletSession,
+        keystore: Keystore
+        ) {
+        self.session = session
+        self.keystore = keystore
+        super.init(nibName: nil, bundle: nil)
+    }
+
+
 }
