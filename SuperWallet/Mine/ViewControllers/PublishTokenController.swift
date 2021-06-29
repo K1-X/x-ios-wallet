@@ -209,4 +209,29 @@ class PublishTokenController: UIViewController {
         }
         timer.resume()
     }
+
+    @objc func getTransactionReceipt() {
+        if self.requestCount >= 100 {
+            self.hideLoading()
+            self.delegate?.selectWalletTab()
+            self.timer?.cancel()
+            return
+        }
+        self.requestCount += 1
+        self.timer?.suspend()
+        print(self.requestCount)
+        let request = GetTransactionReceiptRequest(hash: self.pkHash)
+        let server = RPCServer(rawValue: (self.chainObject?.pkId)!)
+        Session.send(EtherServiceRequest(for: server!, batch: BatchFactory().create(request))) { result in
+            switch result {
+            case .success(let receipt):
+                self.timer?.cancel()
+                self.storePublishToken(contractAddress: receipt.contractAddress, server: server!)
+                self.hideLoading()
+                self.delegate?.selectWalletTab()
+            case .failure:
+                self.timer?.resume()
+            }
+        }
+    }
 }
