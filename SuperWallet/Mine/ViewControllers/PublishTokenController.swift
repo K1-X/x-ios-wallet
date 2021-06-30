@@ -303,3 +303,29 @@ extension PublishTokenController: UITableViewDataSource {
         return textInputCell
     }
 }
+
+extension PublishTokenController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+}
+
+extension PublishTokenController: TextInputCellDelegate {
+    func didInput(text: String, cell: TextInputCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        if indexPath?.row == 0 {
+            self.name = text
+        } else if indexPath?.row == 1 {
+            self.symbol = text
+        } else if indexPath?.row == 2 {
+            self.totalSupply = text
+        }
+    }
+}
+
+extension PublishTokenController: SettingChainViewDelegate {
+    func didSelectChain(chain: ChainObject) {
+        self.chainObject = chain
+    }
+}
