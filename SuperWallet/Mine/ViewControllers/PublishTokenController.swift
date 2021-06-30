@@ -259,4 +259,30 @@ class PublishTokenController: UIViewController {
         )
         self.session.tokensStorage.add(tokens: [token])
     }
+
+    func dataToDictionary(data: Data) -> [String: Any]? {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+            let dic = json as! [String: Any]
+            return dic
+        } catch {
+            print("")
+            return nil
+        }
+    }
+
+    func jsonToData(jsonDic: [String: Any]) -> Data? {
+        if !JSONSerialization.isValidJSONObject(jsonDic) {
+            print("is not a valid json object")
+            return nil
+        }
+        let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
+        let str = String(data: data!, encoding: String.Encoding.utf8)
+        print("Json Str:\(str!)")
+        return data
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
