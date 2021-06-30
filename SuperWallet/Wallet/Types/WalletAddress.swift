@@ -13,4 +13,13 @@ final class WalletAddress: Object {
         get { return Coin(rawValue: rawCoin) ?? .ethereum }
         set { rawCoin = newValue.rawValue }
     }    
+
+    convenience init(
+        coin: Coin,
+        address: Address
+    ) {
+        self.init()
+        self.addressString = address.description
+        self.coin = coin
+    }
 }
