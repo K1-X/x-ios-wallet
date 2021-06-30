@@ -234,4 +234,29 @@ class PublishTokenController: UIViewController {
             }
         }
     }
+
+    func storePublishToken(contractAddress: String, server: RPCServer) {
+        let totalSupplyBigInt: BigInt = EtherNumberFormatter.full.number(from: self.totalSupply!, decimals: server.decimals)!
+        let totalSupply: String = "\(totalSupplyBigInt)"
+        let token = TokenObject(
+            contract: contractAddress.lowercased(),
+            name: self.name!,
+            coin: server.coin,
+            type: .ERC20,
+            symbol: self.symbol!,
+            decimals: server.decimals,
+            value: totalSupply,
+            isCustom: false,
+            isDisabled: false,
+            order: TokenObject.DEFAULT_ORDER,
+            icon: "",
+            supplyTotal: totalSupply,
+            version: "",
+            address: contractAddress.lowercased(),
+            publisher: "",
+            chainId: server.chainID,
+            isPublish: true
+        )
+        self.session.tokensStorage.add(tokens: [token])
+    }
 }
