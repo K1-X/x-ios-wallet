@@ -286,3 +286,20 @@ class PublishTokenController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension PublishTokenController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let textInputCell: TextInputCell = tableView.dequeueReusableCell(withIdentifier: R.nib.textInputCell.name) as! TextInputCell
+        textInputCell.setPlaceholder(indexPath: indexPath)
+        textInputCell.delegate = self
+        return textInputCell
+    }
+}
