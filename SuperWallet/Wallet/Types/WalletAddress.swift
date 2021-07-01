@@ -22,4 +22,9 @@ final class WalletAddress: Object {
         self.addressString = address.description
         self.coin = coin
     }
+
+    var address: EthereumAddress? {
+        return EthereumAddress(string: addressString)
+    }
+
 }
