@@ -26,5 +26,9 @@ final class WalletAddress: Object {
     var address: EthereumAddress? {
         return EthereumAddress(string: addressString)
     }
+ 
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 
 }
