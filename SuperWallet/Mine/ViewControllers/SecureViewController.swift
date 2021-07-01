@@ -79,4 +79,19 @@ class SecureViewController: UIViewController, Coordinator {
         addCoordinator(coordinator)
         navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    func verifyPasscode(completion: ((Bool) -> Void)? = .none) {
+        let coordinator = LockCreatePasscodeCoordinator(
+            model: LockCreatePasscodeViewModel()
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.lockViewController.type = GestureViewControllerType.login
+        coordinator.lockViewController.willFinishWithResult = { [weak self] result in
+            completion?(result)
+            self?.navigationController?.dismiss(animated: true, completion: nil)
+        }
+        addCoordinator(coordinator)
+        navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
+    }
 }
