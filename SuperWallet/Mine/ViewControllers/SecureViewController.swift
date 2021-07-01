@@ -56,4 +56,27 @@ class SecureViewController: UIViewController, Coordinator {
         }
         tableView.layoutIfNeeded()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
+    func setPasscode(completion: ((Bool) -> Void)? = .none) {
+        let coordinator = LockCreatePasscodeCoordinator(
+            model: LockCreatePasscodeViewModel()
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.lockViewController.willFinishWithResult = { [weak self] result in
+            if result {
+                let type = AutoLock.immediate
+                self?.lock.setAutoLockType(type: type)
+            }
+            completion?(result)
+            self?.navigationController?.dismiss(animated: true, completion: nil)
+        }
+        addCoordinator(coordinator)
+        navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
+    }
 }
