@@ -31,4 +31,7 @@ final class WalletAddress: Object {
         return "id"
     }
 
+    override static func ignoredProperties() -> [String] {
+        return ["coin"]
+    }
 }
