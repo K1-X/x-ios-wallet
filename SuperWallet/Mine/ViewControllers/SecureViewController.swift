@@ -29,4 +29,31 @@ class SecureViewController: UIViewController, Coordinator {
     }()
     var isOpenGestureSetting = false
     var dataList: [[String]]?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = Colors.white
+        navigationItem.title = ""
+        if isPasscodeEnabled {
+            let value = lock.getAutoLockType()
+            dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+        } else {
+            dataList = [
+                ["/TouchID", ""],
+                ["", ""]
+            ]
+        }
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(currentNaviHeight)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        tableView.layoutIfNeeded()
+    }
 }
