@@ -94,4 +94,74 @@ class SecureViewController: UIViewController, Coordinator {
         addCoordinator(coordinator)
         navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    func setAutoTime() {
+        var alert: UIAlertController!
+        alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let cancelAction = UIAlertAction(title: "", style: .cancel) { (_) in
+
+        }
+        let immediateAction = UIAlertAction(title: AutoLock.immediate.displayName, style: .default) { (_) in
+            self.lock.removeAutoLockTime()
+            self.lock.setAutoLockType(type: AutoLock.immediate)
+            let value = self.lock.getAutoLockType()
+            self.dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+            self.tableView.reloadData()
+        }
+        let oneMinuteAction = UIAlertAction(title: AutoLock.oneMinute.displayName, style: .default) { (_) in
+            self.lock.removeAutoLockTime()
+            self.lock.setAutoLockType(type: AutoLock.oneMinute)
+            let value = self.lock.getAutoLockType()
+            self.dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+            self.tableView.reloadData()
+        }
+        let fiveMinutesAction = UIAlertAction(title: AutoLock.fiveMinutes.displayName, style: .default) { (_) in
+            self.lock.removeAutoLockTime()
+            self.lock.setAutoLockType(type: AutoLock.fiveMinutes)
+            let value = self.lock.getAutoLockType()
+            self.dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+            self.tableView.reloadData()
+        }
+        let ioneHourAction = UIAlertAction(title: AutoLock.oneHour.displayName, style: .default) { (_) in
+            self.lock.removeAutoLockTime()
+            self.lock.setAutoLockType(type: AutoLock.oneHour)
+            let value = self.lock.getAutoLockType()
+            self.dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+            self.tableView.reloadData()
+        }
+        let fiveHoursAction = UIAlertAction(title: AutoLock.fiveHours.displayName, style: .default) { (_) in
+            self.lock.removeAutoLockTime()
+            self.lock.setAutoLockType(type: AutoLock.fiveHours)
+            let value = self.lock.getAutoLockType()
+            self.dataList = [
+                ["/TouchID", ""],
+                ["    ", value.displayName],
+                ["", ""]
+            ]
+            self.tableView.reloadData()
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(immediateAction)
+        alert.addAction(oneMinuteAction)
+        alert.addAction(fiveMinutesAction)
+        alert.addAction(ioneHourAction)
+        alert.addAction(fiveHoursAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
