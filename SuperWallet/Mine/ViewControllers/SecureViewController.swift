@@ -224,3 +224,39 @@ extension SecureViewController: UITableViewDelegate {
         return 0.00001
     }
 }
+
+extension SecureViewController: GestrueSettingCellDelegate {
+    func didOpenGestureSetting(cell: GestrueSettingCell, isOn: Bool) {
+        if !isPasscodeEnabled && isOn {
+            self.setPasscode { (success) in
+                if success {
+                    let value = self.lock.getAutoLockType()
+                    self.dataList = [
+                        ["/TouchID", ""],
+                        ["    ", value.displayName],
+                        ["", ""]
+                    ]
+                    self.tableView.reloadData()
+                }
+            }
+        } else if isPasscodeEnabled && !isOn {
+            self.verifyPasscode { (result) in
+                if result {
+                    self.lock.deletePasscode()
+                    self.dataList = [
+                        ["/TouchID", ""],
+                        ["", ""]
+                    ]
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+extension SecureViewController: LockCreatePasscodeCoordinatorDelegate {
+    func didCancel(in coordinator: LockCreatePasscodeCoordinator) {
+        coordinator.lockViewController.willFinishWithResult?(false)
+        removeCoordinator(coordinator)
+    }
+}
