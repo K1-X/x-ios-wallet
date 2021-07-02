@@ -186,3 +186,41 @@ extension SecureViewController: UITableViewDataSource {
         return gestrueSettingCell
     }
 }
+
+extension SecureViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == (dataList?.count)! - 1 && isPasscodeEnabled {
+            setAutoTime()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 || section == 3 {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 20))
+            view.backgroundColor = Colors.veryLightGray
+            return view
+        } else {
+            return UIView()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 20
+        } else {
+            return 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.00001
+    }
+}
