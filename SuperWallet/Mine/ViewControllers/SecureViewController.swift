@@ -165,3 +165,24 @@ class SecureViewController: UIViewController, Coordinator {
         self.present(alert, animated: true, completion: nil)
     }
 }
+
+extension SecureViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataList!.count
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let gestrueSettingCell: GestrueSettingCell = tableView.dequeueReusableCell(withIdentifier: R.nib.gestrueSettingCell.name) as! GestrueSettingCell
+        gestrueSettingCell.confgure(title: dataList![indexPath.section][0], detail: dataList![indexPath.section][1], indexPath: indexPath)
+        gestrueSettingCell.selectionStyle = .none
+        gestrueSettingCell.delegate = self
+        if indexPath.section == 0 {
+            gestrueSettingCell.openGesture.isOn = isPasscodeEnabled
+        }
+        return gestrueSettingCell
+    }
+}
