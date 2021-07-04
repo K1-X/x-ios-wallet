@@ -32,4 +32,23 @@ struct WalletInfo {
             return coin
         }
     }
+
+    var multiWallet: Bool {
+        return accounts.count > 1
+    }
+
+    var mainWallet: Bool {
+        return info.mainWallet
+    }
+
+    var accounts: [Account] {
+        switch type {
+        case .privateKey(let account), .hd(let account):
+            return account.accounts
+        case .address(let coin, let address):
+            return [
+                Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
+            ]
+        }
+    }
 }
