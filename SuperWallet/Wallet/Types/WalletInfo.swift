@@ -6,5 +6,17 @@ import TrustCore
 import BigInt
 
 struct WalletInfo {
-    
+
+    let type: WalletType
+    let info: WalletObject
+    private let shortFormatter = EtherNumberFormatter.short
+
+    var address: Address {
+        switch type {
+        case .privateKey, .hd:
+            return currentAccount.address
+        case .address(_, let address):
+            return address
+        }
+    }    
 }
