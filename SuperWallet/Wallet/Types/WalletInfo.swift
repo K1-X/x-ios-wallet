@@ -115,3 +115,15 @@ struct WalletInfo {
         return type.description
     }
 }
+
+extension WalletInfo: Equatable {
+    static func == (lhs: WalletInfo, rhs: WalletInfo) -> Bool {
+        return lhs.type.description == rhs.type.description
+    }
+}
+
+extension WalletInfo {
+    static func format(value: String, server: RPCServer) -> String {
+        return "\(value) \(server.symbol)"
+    }
+}
