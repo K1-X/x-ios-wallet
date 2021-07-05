@@ -69,4 +69,23 @@ struct WalletInfo {
             return .none
         }
     }
+
+    var isWatch: Bool {
+        switch type {
+        case .privateKey, .hd:
+            return false
+        case .address:
+            return true
+        }
+    }
+
+    var title: String {
+        if multiWallet {
+            return info.name
+        }
+        if !info.name.isEmpty {
+            return  info.name + " (" + coin!.server.symbol + ")"
+        }
+        return WalletInfo.emptyName
+    }
 }
