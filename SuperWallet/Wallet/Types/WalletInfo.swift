@@ -51,4 +51,22 @@ struct WalletInfo {
             ]
         }
     }
+
+    var currentAccount: Account! {
+        switch type {
+        case .privateKey, .hd:
+            return accounts.first //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
+        case .address(let coin, let address):
+            return Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
+        }
+    }
+
+    var currentWallet: Wallet? {
+        switch type {
+        case .privateKey(let wallet), .hd(let wallet):
+            return wallet
+        case .address:
+            return .none
+        }
+    }
 }
