@@ -14,5 +14,16 @@ class UpdatePasswordController: UIViewController {
     @IBOutlet weak var submitTextField: UITextField!
     @IBOutlet weak var noticeLabel: UILabel!
 
+    let viewModel: WalletAccountViewModel
+    weak var delegate: UpdatePasswordControllerDelegate?
+    var text: String = ""
+
+    init(viewModel: WalletAccountViewModel,
+        nibName: String?,
+        bundle: Bundle?
+        ) {
+        self.viewModel = viewModel
+        super.init(nibName: nibName, bundle: bundle)
+    }
 }
 
