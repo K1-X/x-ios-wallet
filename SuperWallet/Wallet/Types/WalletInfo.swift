@@ -88,4 +88,30 @@ struct WalletInfo {
         }
         return WalletInfo.emptyName
     }
+
+    var balance: String {
+        guard !info.balance.isEmpty, let server = coin?.server else {
+            return  WalletInfo.format(value: "0.0", server: .main)
+        }
+        return WalletInfo.format(value: shortFormatter.string(from: BigInt(info.balance) ?? BigInt(), decimals: server.decimals), server: server)
+    }
+    var image: UIImage? {
+        guard let coin = coin else { return .none }
+        if multiWallet {
+            return R.image.superwallet_icon()
+        }
+        return CoinViewModel(coin: coin).image
+    }
+
+    init(
+        type: WalletType,
+        info: WalletObject? = .none
+    ) {
+        self.type = type
+        self.info = info ?? WalletObject.from(type)
+    }
+
+    var description: String {
+        return type.description
+    }
 }
