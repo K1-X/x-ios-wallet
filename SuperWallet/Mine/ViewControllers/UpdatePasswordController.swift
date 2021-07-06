@@ -86,3 +86,25 @@ class UpdatePasswordController: UIViewController {
     }
 }
 
+extension UpdatePasswordController {
+
+    func checkout() -> Bool {
+        if currentPasswordTextField.text!.isEmpty {
+            self.text = ""
+            return false
+        }
+        if currentPasswordTextField.text != self.viewModel.keystore.getPassword(for: self.viewModel.account.wallet!) {
+            self.text = ""
+            return false
+        }
+        if passwordTextField.text!.isEmpty {
+            self.text = ""
+            return false
+        }
+        if submitTextField.text != passwordTextField.text {
+            self.text = ""
+            return false
+        }
+        return true
+    }
+}
