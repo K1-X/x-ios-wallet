@@ -73,5 +73,16 @@ class UpdatePasswordController: UIViewController {
         noticeLabel.text = R.string.localizable.changePasswordNoticeContent()
         noticeLabel.textColor = Colors.gray
     }
+
+    @objc func changePassword() {
+        if checkout() == true {
+            delegate?.updatePassword(wallet: viewModel.account.wallet!, newPassword: passwordTextField.text!)
+        } else {
+            let hud = MBProgressHUD.showAdded(to: view, animated: true)
+            hud.mode = .text
+            hud.label.text = text
+            hud.hide(animated: true, afterDelay: 1.5)
+        }
+    }
 }
 
