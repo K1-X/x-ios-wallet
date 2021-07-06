@@ -25,5 +25,17 @@ class UpdatePasswordController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nibName, bundle: bundle)
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = Colors.veryLightGray
+        navigationItem.title = viewModel.title + "-" + R.string.localizable.changePasswordNaviTitle()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: R.string.localizable.changePasswordDoneTitle(), style: .done, target: self, action: #selector(changePassword))
+        setUpViews()
+    }
 }
 
