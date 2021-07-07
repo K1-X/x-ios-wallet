@@ -24,4 +24,17 @@ enum WalletInfoType {
             return R.string.localizable.copyAddress()
         }
     }
+
+    var image: UIImage? {
+        switch self {
+        case .exportRecoveryPhrase:
+            return R.image.mnemonic_backup_icon()
+        case .exportKeystore:
+            return R.image.keystore_backup_icon()
+        case .exportPrivateKey:
+            return R.image.private_key_icon()
+        case .copyAddress:
+            return R.image.copy_wallet_icon()
+        }
+    }
 }
