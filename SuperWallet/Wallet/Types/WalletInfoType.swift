@@ -38,3 +38,23 @@ enum WalletInfoType {
         }
     }
 }
+
+extension WalletInfoType: Equatable {
+    static func == (lhs: WalletInfoType, rhs: WalletInfoType) -> Bool {
+        switch (lhs, rhs) {
+        case (let .exportRecoveryPhrase(lhs), let .exportRecoveryPhrase(rhs)):
+            return lhs == rhs
+        case (let .exportKeystore(lhs), let .exportKeystore(rhs)):
+            return lhs == rhs
+        case (let .exportPrivateKey(lhs), let .exportPrivateKey(rhs)):
+            return lhs == rhs
+        case (let .copyAddress(lhs), let .copyAddress(rhs)):
+            return lhs.data == rhs.data
+        case (_, .exportRecoveryPhrase),
+             (_, .exportKeystore),
+             (_, .exportPrivateKey),
+             (_, .copyAddress):
+            return false
+        }
+    }
+}
