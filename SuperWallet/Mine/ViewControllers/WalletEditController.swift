@@ -51,5 +51,37 @@ class WalletEditController: UIViewController {
         footerView.addSubview(deleteButton)
         return footerView
     }()
+    
+    let dataList: Array = [[R.string.localizable.walletEditName(), "", R.string.localizable.walletEditChangePassword()], [R.string.localizable.walletEditExportPrivatekey(), R.string.localizable.walletEditExportKeystore()]]
 
+    let viewModel: WalletAccountViewModel
+    init(viewModel: WalletAccountViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = Colors.white
+        title = viewModel.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(saveWallet))
+        tableView.tableFooterView = footerView
+        view.addSubview(tableView)
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(currentNaviHeight)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        deleteButton.snp.makeConstraints({ (make) in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(48)
+        })
+    }
 }
