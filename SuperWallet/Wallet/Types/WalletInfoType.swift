@@ -6,5 +6,9 @@ import UIKit
 import TrustCore
 
 enum WalletInfoType {
-    
+
+    case exportRecoveryPhrase(Wallet)
+    case exportPrivateKey(Account)
+    case exportKeystore(Account)
+    case copyAddress(Address)    
 }
