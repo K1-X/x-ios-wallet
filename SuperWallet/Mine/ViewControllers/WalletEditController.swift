@@ -84,4 +84,34 @@ class WalletEditController: UIViewController {
             make.height.equalTo(48)
         })
     }
+
+    @objc func deleteWallet() {
+        confirm(
+            title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
+            message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
+            okTitle: R.string.localizable.delete(),
+            okStyle: .destructive
+        ) { [weak self] result in
+            switch result {
+            case .success:
+                self?.navigationController!.topViewController?.displayLoading(
+                    text: NSLocalizedString("", value: "", comment: "")
+                )
+                self?.delegate?.deleteWallet(account: (self?.viewModel.account)!, completion: { [weak self] result in
+                    self?.navigationController!.topViewController?.hideLoading()
+                    switch result {
+                    case .success:
+                        self?.navigationController?.popViewController(animated: true)
+                    case .failure:
+                        let hud = MBProgressHUD.showAdded(to: (self?.view)!, animated: true)
+                        hud.mode = .text
+                        hud.label.text = ""
+                        hud.hide(animated: true, afterDelay: 1.5)
+                    }
+                })
+            case .failure: break
+            }
+        }
+
+    }
 }
