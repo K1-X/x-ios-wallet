@@ -114,4 +114,14 @@ class WalletEditController: UIViewController {
         }
 
     }
+
+     @objc func saveWallet() {
+        let textInputCell: TextInputCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! TextInputCell
+        let walletName = textInputCell.inputTextField.text ?? ""
+        delegate?.saveWallet(account: viewModel.account, walletName: walletName)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
