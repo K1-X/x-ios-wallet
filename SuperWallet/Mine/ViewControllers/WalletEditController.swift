@@ -125,3 +125,56 @@ class WalletEditController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension WalletEditController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataList.count
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataList[section].count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            switch indexPath.row {
+            case 0:
+                let editWalletHeaderCell: EditWalletHeaderCell = tableView.dequeueReusableCell(withIdentifier: R.nib.editWalletHeaderCell.name) as! EditWalletHeaderCell
+                editWalletHeaderCell.viewModel = viewModel
+                return editWalletHeaderCell
+            case 1:
+                let textInputCell: TextInputCell = tableView.dequeueReusableCell(withIdentifier: R.nib.textInputCell.name) as! TextInputCell
+                textInputCell.setPlaceholder(placeholder: R.string.localizable.walletEditName())
+                textInputCell.setText(text: viewModel.title)
+                return textInputCell
+            case 2:
+                let tableViewCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "customTableViewCell")!
+                tableViewCell.textLabel?.textColor = .black
+                tableViewCell.textLabel?.text = dataList[indexPath.section][indexPath.row]
+                tableViewCell.accessoryType = .disclosureIndicator
+                tableViewCell.selectionStyle = .none
+                return tableViewCell
+            default:
+                break
+            }
+        } else {
+            let tableViewCell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "customTableViewCell")!
+            tableViewCell.textLabel?.textColor = .black
+            tableViewCell.textLabel?.text = dataList[indexPath.section][indexPath.row]
+            tableViewCell.accessoryType = .disclosureIndicator
+            tableViewCell.selectionStyle = .none
+            if indexPath.row == 0 {
+                let lineView: UIView = UIView()
+                lineView.backgroundColor = Colors.veryLightGray
+                tableViewCell.addSubview(lineView)
+                lineView.snp.makeConstraints { (make) in
+                    make.bottom.equalToSuperview()
+                    make.leading.trailing.equalToSuperview()
+                    make.height.equalTo(1)
+                }
+            }
+            return tableViewCell
+        }
+        return UITableViewCell()
+    }
+}
