@@ -232,3 +232,71 @@ extension WalletEditController: UITableViewDelegate {
     }
 }
 
+extension WalletEditController {
+
+    func changePassword() {
+        delegate?.changePassword(viewModel: viewModel)
+    }
+
+    func exportPrivate() {
+        self.presentInputAlert(type: .exportPrivate)
+    }
+
+    func exportKeyStore() {
+        self.presentInputAlert(type: .exportKeyStore)
+    }
+
+    func presentInputAlert(type: AlertType) {
+        var inputText: UITextField = UITextField()
+        let alertViweConter = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "", style: .default) { (_) in
+            if inputText.text!.isEmpty {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.mode = .text
+                hud.label.text = ""
+                hud.hide(animated: true, afterDelay: 1.5)
+            } else {
+                switch type {
+                case .exportPrivate:
+                    self.navigationController!.topViewController?.displayLoading(
+                        text: NSLocalizedString("", value: "", comment: "")
+                    )
+                    self.delegate?.exportPrivateKey(account: self.viewModel.account, completion: { [weak self] result in
+                        self?.navigationController!.topViewController?.hideLoading()
+                        switch result {
+                        case .success(let privateKey):
+                            let exportPrivate: ExportPrivateView = ExportPrivateView()
+                            exportPrivate.privateLabel.text = privateKey.hexString
+                            exportPrivate.show()
+                        case .failure(let error):
+                            self?.navigationController!.topViewController?.displayError(error: error)
+                        }
+                    })
+                case .exportKeyStore:
+                    self.navigationController!.topViewController?.displayLoading(
+                        text: NSLocalizedString("keystore", value: "keystore", comment: "")
+                    )
+                    self.delegate?.exportKeystore(account: self.viewModel.account, password: inputText.text ?? "", completion: { [weak self] result in
+                        guard self != nil else { return }
+                        self?.navigationController!.topViewController?.hideLoading()
+                        switch result {
+                        case .success(let value):
+                            let exportKeyStore: ExportKeyStoreController = ExportKeyStoreController(keystoreStr: value)
+                            self!.navigationController?.pushViewController(exportKeyStore, animated: true)
+                        case .failure(let error):
+                            self?.navigationController!.topViewController?.displayError(error: error)
+                        }
+                    })
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "", style: .default) { (_) in }
+        alertViweConter.addAction(cancel)
+        alertViweConter.addAction(confirm)
+        alertViweConter.addTextField { (textField) in
+            inputText = textField
+            inputText.isSecureTextEntry = true
+        }
+        self.present(alertViweConter, animated: true, completion: nil)
+    }
+}
