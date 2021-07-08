@@ -178,3 +178,57 @@ extension WalletEditController: UITableViewDataSource {
         return UITableViewCell()
     }
 }
+
+extension WalletEditController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            switch indexPath.row {
+            case 0:
+                return 240
+            case 1:
+                return 60
+            case 2:
+                return 60
+            default:
+                break
+            }
+        } else {
+            return 60
+        }
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.00001
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 20
+        }
+        return 0.00001
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view: UIView = UIView()
+        if section == 0 {
+            view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 20)
+            view.backgroundColor = Colors.veryLightGray
+        }
+        return view
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 2 {
+            self.changePassword()
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            self.exportPrivate()
+        } else if indexPath.section == 1 && indexPath.row == 1 {
+            self.exportKeyStore()
+        }
+    }
+}
+
