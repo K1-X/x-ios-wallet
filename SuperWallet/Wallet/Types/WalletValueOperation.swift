@@ -19,4 +19,19 @@ final class WalletValueOperation: SuperWalletOperation {
         self.keystore = keystore
         self.wallet = wallet
     }    
+
+    override func main() {
+        _ = balanceProvider.balance().done { [weak self] balance in
+            guard let strongSelf = self else {
+                self?.finish()
+                return
+            }
+            strongSelf.updateModel(with: balance)
+        }
+    }
+
+    private func updateModel(with balance: BigInt) {
+        self.keystore.store(object: wallet, fields: [.balance(balance.description)])
+        self.finish()
+    }
 }
