@@ -44,4 +44,23 @@ class SettingViewController: FormViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = footerView
+        title = R.string.localizable.settingsNavigationTitle()
+        form +++ Section { section in
+            var header = HeaderFooterView(.class)
+            header.height = { 20 }
+            section.header = header
+            var footer = HeaderFooterView(.class)
+            footer.height = { 0 }
+            section.footer = footer
+        }
+            <<< chooseTokenRow()
+            <<< feebackRow()
+            <<< updateVersionRow()
+            <<< clearCacheRow()
+            <<< aboutRow()
+    }
 }
