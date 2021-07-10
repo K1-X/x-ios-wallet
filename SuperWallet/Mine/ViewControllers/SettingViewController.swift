@@ -228,3 +228,13 @@ class SettingViewController: FormViewController {
         }
     }
 }
+
+extension SettingViewController: SettingChainViewDelegate {
+    func didSelectChain(chain: ChainObject) {
+        delegate?.didSelectChain()
+        UserDefaults.standard.setValue(chain.chainId, forKey: DefaultChain)
+        UserDefaults.standard.setValue(chain.name, forKey: DefaultChainName)
+        UserDefaults.standard.setValue(chain.explorUrl, forKey: DefaultServer)
+        UserDefaults.standard.setValue(chain.pkId, forKey: DefaultChainId)
+    }
+}
