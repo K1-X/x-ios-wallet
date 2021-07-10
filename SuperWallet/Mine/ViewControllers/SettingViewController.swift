@@ -186,4 +186,45 @@ class SettingViewController: FormViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func checkUpdate() {
+        let network: NetworkProtocol = {
+            return SuperWalletNetwork(
+                provider: SuperWalletProviderFactory.makeProvider(),
+                wallet: session.account
+            )
+        }()
+        let currentVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        let currentNumber = Int(currentVersion.replacingOccurrences(of: ".", with: ""))
+        firstly {
+            network.versionCheck(osType: "ios", deviceType: "phone", appVersion: currentNumber!, channelNo: "DEFAULT")
+        }.done { [weak self] versionCheck in
+            self?.alertUpdate(versionCheck: versionCheck)
+        }.catch { error in
+            print("versionCheck \(error)")
+        }
+    }
+
+    func alertUpdate(versionCheck: VersionCheck) {
+        let currentVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+        let currentNumber = Int(currentVersion.replacingOccurrences(of: ".", with: ""))
+        if currentNumber! >= versionCheck.appVersion {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.mode = .text
+            hud.label.text = ""
+            hud.hide(animated: true, afterDelay: 1.5)
+        } else {
+            let alertViewController = UIAlertController(title: "", message: versionCheck.desc, preferredStyle: .alert)
+            let actionCancel = UIAlertAction(title: "", style: .cancel, handler: { (_) in
+            })
+            let actinSure = UIAlertAction(title: "", style: .default, handler: { (_) in
+                if let url = URL(string: versionCheck.downloadUrl) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            })
+            alertViewController.addAction(actionCancel)
+            alertViewController.addAction(actinSure)
+            self.present(alertViewController, animated: true, completion: nil)
+        }
+    }
 }
