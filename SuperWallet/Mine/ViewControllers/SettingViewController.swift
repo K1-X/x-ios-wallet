@@ -136,4 +136,27 @@ class SettingViewController: FormViewController {
             self.checkUpdate()
         })
     }
+
+    private func clearCacheRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.textLabel?.text = R.string.localizable.settingClearCacheTitle()
+            cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .none
+        }.cellSetup({ (cell, _) in
+            cell.height = ({ return 48 })
+            let separatorView = UIView(frame: .zero)
+            separatorView.backgroundColor = Colors.veryLightGray
+            cell.addSubview(separatorView)
+            separatorView.snp.makeConstraints({ (make) in
+                make.bottom.equalToSuperview()
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(1)
+            })
+        }).onCellSelection({ (_, _) in
+
+        })
+    }
 }
