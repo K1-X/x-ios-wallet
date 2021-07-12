@@ -22,4 +22,20 @@ final class EnterPasswordCoordinator: Coordinator {
     let navigationController: NavigationController
     private let account: Account
 
+    init(
+        navigationController: NavigationController = NavigationController(),
+        account: Account
+    ) {
+        self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
+        self.account = account
+    }
+
+    func start() {
+        navigationController.viewControllers = [enterPasswordController]
+    }
+
+    @objc func dismiss() {
+        delegate?.didCancel(in: self)
+    }
 }
