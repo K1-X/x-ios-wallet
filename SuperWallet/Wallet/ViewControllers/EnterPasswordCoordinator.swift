@@ -39,3 +39,9 @@ final class EnterPasswordCoordinator: Coordinator {
         delegate?.didCancel(in: self)
     }
 }
+
+extension EnterPasswordCoordinator: EnterPasswordViewControllerDelegate {
+    func didEnterPassword(password: String, for account: Account, in viewController: EnterPasswordViewController) {
+        delegate?.didEnterPassword(password: password, account: account, in: self)
+    }
+}
