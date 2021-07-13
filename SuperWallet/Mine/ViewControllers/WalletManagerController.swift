@@ -94,3 +94,10 @@ extension WalletManagerController {
         return 0.00001
     }
 }
+
+extension WalletManagerController: WalletsViewModelProtocol {
+    func update() {
+        viewModel.refresh()
+        tableView.reloadData()
+    }
+}
