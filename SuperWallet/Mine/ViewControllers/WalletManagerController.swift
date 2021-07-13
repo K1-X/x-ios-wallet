@@ -50,3 +50,19 @@ class WalletManagerController: UITableViewController {
     }
 }
 
+extension WalletManagerController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSection
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows(in: section)
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.walletManagerCell.name, for: indexPath) as! WalletManagerCell
+        cell.selectionStyle = .none
+        cell.viewModel = viewModel.cellViewModel(for: indexPath)
+        return cell
+    }
+}
