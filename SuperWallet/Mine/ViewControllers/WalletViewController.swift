@@ -27,4 +27,22 @@ class WalletViewController: UIViewController {
         return segmentedControl
     }()
 
+    var tokensViewController: TokensViewController
+    var nonFungibleTokensViewController: NonFungibleTokensViewController
+
+    init(
+        tokensViewController: TokensViewController,
+        nonFungibleTokensViewController: NonFungibleTokensViewController
+    ) {
+        self.tokensViewController = tokensViewController
+        self.nonFungibleTokensViewController = nonFungibleTokensViewController
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationItem.titleView = segmentController
+        setupView()
+    }
+
 }
