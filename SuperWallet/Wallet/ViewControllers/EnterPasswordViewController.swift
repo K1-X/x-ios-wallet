@@ -21,4 +21,17 @@ final class EnterPasswordViewController: FormViewController {
         return form.rowBy(tag: Values.password) as? TextFloatLabelRow
     }
 
+    var confirmPasswordRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.confirmPassword) as? TextFloatLabelRow
+    }
+
+    private let account: Account
+
+    init(
+        account: Account
+    ) {
+        self.account = account
+
+        super.init(nibName: nil, bundle: nil)
+    }
 }
