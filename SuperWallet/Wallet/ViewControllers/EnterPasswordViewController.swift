@@ -69,4 +69,23 @@ final class EnterPasswordViewController: FormViewController {
 
             +++ Section()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        passwordRow?.cell.textField.becomeFirstResponder()
+    }
+
+    @objc func done() {
+        guard
+            form.validate().isEmpty,
+            let password = passwordRow?.value
+        else { return }
+
+        delegate?.didEnterPassword(password: password, for: account, in: self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
