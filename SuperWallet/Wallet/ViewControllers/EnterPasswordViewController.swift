@@ -34,4 +34,39 @@ final class EnterPasswordViewController: FormViewController {
 
         super.init(nibName: nil, bundle: nil)
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = viewModel.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+
+        let ruleMin = RuleMinLength(minLength: 6)
+
+        form
+            +++ Section()
+
+            +++ Section(header: "", footer: viewModel.headerSectionText)
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
+                $0.add(rule: RuleRequired())
+                $0.add(rule: ruleMin)
+                $0.validationOptions = .validatesOnDemand
+            }.cellUpdate { [unowned self] cell, _ in
+                cell.textField.isSecureTextEntry = true
+                cell.textField.placeholder = self.viewModel.passwordFieldPlaceholder
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.confirmPassword) { [unowned self] in
+                $0.add(rule: RuleRequired())
+                $0.add(rule: ruleMin)
+                $0.add(rule: RuleEqualsToRow(form: self.form, tag: Values.password, msg: self.viewModel.passwordNoMatch))
+                $0.validationOptions = .validatesOnDemand
+            }.cellUpdate { [unowned self] cell, _ in
+                cell.textField.isSecureTextEntry = true
+                cell.textField.placeholder = self.viewModel.confirmPasswordFieldPlaceholder
+            }
+
+            +++ Section()
+    }
 }
