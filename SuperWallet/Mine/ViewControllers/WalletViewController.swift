@@ -61,4 +61,22 @@ class WalletViewController: UIViewController {
             add(asChildViewController: nonFungibleTokensViewController)
         }
     }
+
+    @objc func selectionDidChange(_ sender: UISegmentedControl) {
+        updateView()
+    }
+
+    private func showBarButtonItems() {
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        self.navigationItem.leftBarButtonItem?.isEnabled = true
+    }
+
+    private func hideBarButtonItems() {
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clear
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.navigationItem.leftBarButtonItem?.isEnabled = false
+    }
 }
