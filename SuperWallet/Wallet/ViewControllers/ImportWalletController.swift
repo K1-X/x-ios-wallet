@@ -56,4 +56,23 @@ class ImportWalletController: UIViewController {
         childControllerIndex = 0
         self.initSubViews()
     }
+
+    // MARK: - 
+    func initSubViews() {
+        let pageTitleH: CGFloat = 50.0
+
+        let configuration = SGPageTitleViewConfigure()
+        configuration.titleColor = Colors.lightGray
+        configuration.titleSelectedColor = Colors.white
+        configuration.indicatorColor = Colors.white
+        self.pageTitleView = SGPageTitleView(frame: CGRect(x: 0, y: currentNaviHeight, width: screenWidth, height: pageTitleH), delegate: self, titleNames: ["", ""], configure: configuration)
+        self.pageTitleView!.backgroundColor = Colors.blue
+        self.view.addSubview(self.pageTitleView!)
+        self.pageTitleView?.selectedIndex = 0
+
+        let childArr = [officialWallet, privateWallet]
+        self.pageContentView = SGPageContentScrollView(frame: CGRect(x: 0, y: currentNaviHeight+pageTitleH, width: screenWidth, height: self.view.frame.size.height - currentNaviHeight-pageTitleH), parentVC: self, childVCs: childArr)
+        self.pageContentView!.delegatePageContentScrollView = self
+        self.view.addSubview(self.pageContentView!)
+    }
 }
