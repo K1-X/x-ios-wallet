@@ -79,4 +79,8 @@ class WalletViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.navigationItem.leftBarButtonItem?.isEnabled = false
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
