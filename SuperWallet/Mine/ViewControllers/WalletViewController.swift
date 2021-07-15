@@ -83,4 +83,18 @@ class WalletViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+}
+
+extension WalletViewController: Scrollable {
+    func scrollOnTop() {
+        switch segmentController.selectedSegmentIndex {
+        case DetailsViewType.tokens.rawValue:
+            tokensViewController.tableView.scrollOnTop()
+        case DetailsViewType.nonFungibleTokens.rawValue:
+            nonFungibleTokensViewController.tableView.scrollOnTop()
+        default:
+            break
+        }
+    }
 }
