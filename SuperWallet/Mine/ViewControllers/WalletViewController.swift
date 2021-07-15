@@ -45,4 +45,20 @@ class WalletViewController: UIViewController {
         setupView()
     }
 
+
+    private func setupView() {
+        updateView()
+    }
+
+    private func updateView() {
+        if segmentController.selectedSegmentIndex == DetailsViewType.tokens.rawValue {
+            showBarButtonItems()
+            remove(asChildViewController: nonFungibleTokensViewController)
+            add(asChildViewController: tokensViewController)
+        } else {
+            hideBarButtonItems()
+            remove(asChildViewController: tokensViewController)
+            add(asChildViewController: nonFungibleTokensViewController)
+        }
+    }
 }
