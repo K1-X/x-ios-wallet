@@ -116,3 +116,15 @@ extension ImportWalletController: SGPageContentScrollViewDelegate {
         privateWallet.headerView.keystoreView.text = ""
     }
 }
+
+extension ImportWalletController: OfficialWalletControllerDelegate {
+    func didPressImportWallet(keystore: String, password: String, viewController: OfficialWalletController) {
+        importWallet(importType: .keystore(string: keystore, password: password), remark: "")
+    }
+}
+
+extension ImportWalletController: PrivateWalletControllerDelegate {
+    func didPressImportWallet(privite: String, password: String, remark: String, viewController: PrivateWalletController) {
+        importWallet(importType: .privateKey(privateKey: privite, password: password), remark: remark)
+    }
+}
