@@ -101,3 +101,18 @@ class ImportWalletController: UIViewController {
         }
     }
 }
+
+extension ImportWalletController: SGPageTitleViewDelegate {
+    func pageTitleView(_ pageTitleView: SGPageTitleView!, selectedIndex: Int) {
+        self.pageContentView!.setPageContentScrollViewCurrentIndex(selectedIndex)
+    }
+}
+
+extension ImportWalletController: SGPageContentScrollViewDelegate {
+    func pageContentScrollView(_ pageContentScrollView: SGPageContentScrollView!, progress: CGFloat, originalIndex: Int, targetIndex: Int) {
+        self.pageTitleView!.setPageTitleViewWithProgress(progress, originalIndex: originalIndex, targetIndex: targetIndex)
+        childControllerIndex = targetIndex
+        officialWallet.headerView.keystoreView.text = ""
+        privateWallet.headerView.keystoreView.text = ""
+    }
+}
