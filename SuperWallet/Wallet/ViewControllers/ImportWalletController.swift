@@ -75,4 +75,29 @@ class ImportWalletController: UIViewController {
         self.pageContentView!.delegatePageContentScrollView = self
         self.view.addSubview(self.pageContentView!)
     }
+
+   @objc func openReader() {
+        let controller = ScanCodeController()
+        controller.delegate = self
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func didImport(account: WalletInfo, name: String) {
+        delegate?.didImportAccount(account: account, fields: [
+            .name(name),
+            .backup(true)
+            ], in: self)
+    }
+
+    func importWallet(importType: ImportType, remark: String) {
+        keystore.importWallet(type: importType, coin: coin) { result in
+            self.hideLoading(animated: false)
+            switch result {
+            case .success(let account):
+                self.didImport(account: account, name: "")
+            case .failure(let error):
+                self.displayError(error: error)
+            }
+        }
+    }
 }
