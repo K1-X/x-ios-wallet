@@ -128,3 +128,31 @@ extension ImportWalletController: PrivateWalletControllerDelegate {
         importWallet(importType: .privateKey(privateKey: privite, password: password), remark: remark)
     }
 }
+
+extension ImportWalletController: ScanCodeControllerDelegate {
+    func scanResult(result: String, in controller: ScanCodeController) {
+        if childControllerIndex == 0 {
+            officialWallet.headerView.keystoreView.text = result
+        } else if childControllerIndex == 1 {
+            privateWallet.headerView.keystoreView.text = result
+        }
+    }
+
+    func didCancel(in controller: ScanCodeController) {
+
+    }
+}
+
+extension WalletInfo {
+    static var emptyName: String {
+        return "Unnamed " + R.string.localizable.wallet()
+    }
+
+    static func initialName(index numberOfWallets: Int) -> String {
+        if numberOfWallets == 0 {
+            return R.string.localizable.mainWallet()
+        }
+        return String(format: "%@ %@", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
+        )
+    }
+}
