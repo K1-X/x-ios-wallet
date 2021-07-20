@@ -58,4 +58,8 @@ final class WellDoneViewController: UIViewController {
 
             otherButton.widthAnchor.constraint(equalToConstant: 240)
         ])
+
+    @objc private func other(_ sender: UIView) {
+        delegate?.didPress(action: .other, sender: sender, in: self)
+    }
 }
