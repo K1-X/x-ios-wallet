@@ -23,4 +23,10 @@ final class OfficialWalletController: UIViewController {
         return tableView
     }()
 
+    lazy var headerView: ImportWalletHeaderView = {
+        let headerView: ImportWalletHeaderView = ImportWalletHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 200))
+        headerView.backgroundColor = Colors.veryLightGray
+        return headerView
+    }()
+
 }
