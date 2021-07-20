@@ -45,4 +45,17 @@ final class WellDoneViewController: UIViewController {
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 10
+
+        view.backgroundColor = .white
+        view.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
+
+            otherButton.widthAnchor.constraint(equalToConstant: 240)
+        ])
 }
