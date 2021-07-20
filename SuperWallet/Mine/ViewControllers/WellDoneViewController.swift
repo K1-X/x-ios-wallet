@@ -33,4 +33,16 @@ final class WellDoneViewController: UIViewController {
         otherButton.setTitle(R.string.localizable.share(), for: .normal)
         otherButton.addTarget(self, action: #selector(other(_:)), for: .touchUpInside)
 
+        let stackView = UIStackView(arrangedSubviews: [
+            imageView,
+            //titleLabel,
+            descriptionLabel,
+            .spacer(height: 10),
+            .spacer(),
+            otherButton
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.spacing = 10
 }
