@@ -101,3 +101,18 @@ extension OfficialWalletController: UITableViewDataSource {
         return textInputCell
     }
 }
+
+extension OfficialWalletController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+}
+
+extension OfficialWalletController: TextInputCellDelegate {
+    func didInput(text: String, cell: TextInputCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        if indexPath?.row == 0 {
+            password = text
+        }
+    }
+}
