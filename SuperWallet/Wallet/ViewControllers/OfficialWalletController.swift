@@ -82,3 +82,22 @@ final class OfficialWalletController: UIViewController {
     }
 
 }
+
+extension OfficialWalletController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let textInputCell: TextInputCell = tableView.dequeueReusableCell(withIdentifier: R.nib.textInputCell.name) as! TextInputCell
+        textInputCell.delegate = self
+        textInputCell.setPlaceholder(placeholder: dataArray[indexPath.row])
+        textInputCell.inputTextField.isSecureTextEntry = true
+        textInputCell.contentView.backgroundColor = Colors.veryLightGray
+        return textInputCell
+    }
+}
