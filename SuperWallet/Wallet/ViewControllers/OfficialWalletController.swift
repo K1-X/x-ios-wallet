@@ -72,4 +72,13 @@ final class OfficialWalletController: UIViewController {
         }
         tableView.layoutIfNeeded()
     }
+
+    @objc func importWallet() {
+        keystoreStr = headerView.keystoreView.text
+        guard let password = password, let keystore = keystoreStr  else {
+            return
+        }
+        delegate?.didPressImportWallet(keystore: keystore, password: password, viewController: self)
+    }
+
 }
