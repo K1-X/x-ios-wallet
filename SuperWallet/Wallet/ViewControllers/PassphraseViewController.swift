@@ -141,4 +141,13 @@ class PassphraseViewController: UIViewController {
             actionButton.isHidden = false
         }
         actionButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
+
+	func presentShare(in sender: UIView) {
+        let copyValue = words.joined(separator: " ")
+        showShareActivity(from: sender, with: [copyValue])
+    }
+
+    @objc private func copyAction(_ sender: UIButton) {
+        presentShare(in: sender)
+    }
 }
