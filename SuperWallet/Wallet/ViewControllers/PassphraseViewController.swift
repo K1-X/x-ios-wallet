@@ -150,4 +150,16 @@ class PassphraseViewController: UIViewController {
     @objc private func copyAction(_ sender: UIButton) {
         presentShare(in: sender)
     }
+
+    @objc private func copyGesture(_ sender: UIGestureRecognizer) {
+        presentShare(in: sender.view!)
+    }
+
+    @objc private func nextAction(_ sender: UIButton) {
+        delegate?.didPressVerify(in: self, with: account, words: words)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
