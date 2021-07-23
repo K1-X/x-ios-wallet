@@ -132,4 +132,13 @@ class PassphraseViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor)
         ])
 
+        copyButton.addTarget(self, action: #selector(copyAction(_:)), for: .touchUpInside)
+
+        switch mode {
+        case .showOnly:
+            actionButton.isHidden = true
+        case .showAndVerify:
+            actionButton.isHidden = false
+        }
+        actionButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
 }
