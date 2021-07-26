@@ -11,5 +11,12 @@ struct BrowserConfigurationViewModel {
     var searchEngineTitle: String {
         return NSLocalizedString("settings.browser.searchEngine.title", value: "Search Engine", comment: "")
     }
-    
+
+   var searchEngines: [SearchEngine] {
+        return [.google, .duckDuckGo]
+    }
+
+    var clearBrowserCacheTitle: String {
+        return NSLocalizedString("settings.browser.clearCache.title", value: "Clear Browser Cache", comment: "")
+    }    
 }
