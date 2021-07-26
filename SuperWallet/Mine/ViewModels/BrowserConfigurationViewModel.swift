@@ -19,4 +19,12 @@ struct BrowserConfigurationViewModel {
     var clearBrowserCacheTitle: String {
         return NSLocalizedString("settings.browser.clearCache.title", value: "Clear Browser Cache", comment: "")
     }    
+
+    var clearBrowserCacheConfirmTitle: String {
+        return NSLocalizedString("settings.browser.clearCache.alert.title", value: "Clear Browsing Data?", comment: "")
+    }
+
+    var clearBrowserCacheConfirmMessage: String {
+        return NSLocalizedString("settings.browser.clearCache.alert.message", value: "This will clear cache, cookies, and other browsing data.", comment: "")
+    }
 }
