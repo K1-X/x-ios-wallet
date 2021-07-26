@@ -50,4 +50,29 @@ final class PrivateWalletController: UIViewController {
         })
         return footerView
     }()
+
+    var privateStr: String?
+    var password: String?
+    var subPassword: String?
+    var remark: String?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        navigationItem.title = ""
+        tableView.tableHeaderView = headerView
+        tableView.tableFooterView = footerView
+        tableView.separatorStyle = .none
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+
+        tableView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        tableView.layoutIfNeeded()
+    }
 }
