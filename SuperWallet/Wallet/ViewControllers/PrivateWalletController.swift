@@ -116,3 +116,16 @@ extension PrivateWalletController: UITableViewDelegate {
         return 65
     }
 }
+
+extension PrivateWalletController: TextInputCellDelegate {
+    func didInput(text: String, cell: TextInputCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        if indexPath?.row == 0 {
+            password = text
+        } else if indexPath?.row == 1 {
+            subPassword = text
+        } else if indexPath?.row == 2 {
+            remark = text
+        }
+    }
+}
