@@ -109,3 +109,10 @@ extension PrivateWalletController: UITableViewDataSource {
         return textInputCell
     }
 }
+
+extension PrivateWalletController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+}
