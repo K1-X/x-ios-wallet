@@ -87,3 +87,25 @@ final class PrivateWalletController: UIViewController {
         delegate?.didPressImportWallet(privite: privite, password: password, remark: "", viewController: self)
     }
 }
+
+extension PrivateWalletController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let textInputCell: TextInputCell = tableView.dequeueReusableCell(withIdentifier: R.nib.textInputCell.name) as! TextInputCell
+        textInputCell.setPlaceholder(placeholder: dataArray[indexPath.row])
+        if indexPath.row != 2 {
+            textInputCell.inputTextField.isSecureTextEntry = true
+        } else {
+            textInputCell.inputTextField.isSecureTextEntry = false
+        }
+        textInputCell.contentView.backgroundColor = Colors.veryLightGray
+        textInputCell.delegate = self
+        return textInputCell
+    }
+}
