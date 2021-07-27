@@ -75,4 +75,15 @@ final class PrivateWalletController: UIViewController {
         }
         tableView.layoutIfNeeded()
     }
+
+    @objc func importWallet() {
+        privateStr = headerView.keystoreView.text
+        if password != subPassword {
+            return
+        }
+        guard let password = password, let privite = privateStr else {
+            return
+        }
+        delegate?.didPressImportWallet(privite: privite, password: password, remark: "", viewController: self)
+    }
 }
