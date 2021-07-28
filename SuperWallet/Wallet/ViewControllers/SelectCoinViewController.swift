@@ -28,4 +28,12 @@ class SelectCoinViewController: UIViewController {
     }()
     let coins: [Coin]
 
+    weak var delegate: SelectCoinViewControllerDelegate?
+
+    init(
+        coins: [Coin]
+    ) {
+        self.coins = coins
+        super.init(nibName: nil, bundle: nil)
+    }
 }
