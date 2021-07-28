@@ -30,4 +30,11 @@ struct HelpUsViewModel {
             comment: ""
         )
     ]    
+
+    var activityItems: [Any] {
+        return [
+            sharingText[Int(arc4random_uniform(UInt32(sharingText.count)))],
+            URL(string: Constants.website)!
+        ]
+    }
 }
