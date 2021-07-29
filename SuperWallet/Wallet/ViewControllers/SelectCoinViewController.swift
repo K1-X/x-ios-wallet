@@ -36,4 +36,22 @@ class SelectCoinViewController: UIViewController {
         self.coins = coins
         super.init(nibName: nil, bundle: nil)
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.title = viewModel.title
+        view.backgroundColor = Colors.white
+        view.addSubview(tableView)
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(currentNaviHeight)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        tableView.layoutIfNeeded()
+    }
 }
