@@ -76,3 +76,12 @@ extension SelectCoinViewController: UITableViewDataSource {
         return viewModel.numberOfRows(in: section)
     }
 }
+
+extension SelectCoinViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewModel = self.viewModel.cellViewModel(for: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.didSelect(coin: viewModel.coin, in: self)
+    }
+}
