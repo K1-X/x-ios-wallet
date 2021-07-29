@@ -59,3 +59,20 @@ class SelectCoinViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension SelectCoinViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.coinViewCell.name, for: indexPath) as! CoinViewCell
+        cell.configure(for: viewModel.cellViewModel(for: indexPath))
+        return cell
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSection
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows(in: section)
+    }
+}
