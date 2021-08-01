@@ -75,4 +75,18 @@ final class TransactionConfigurator {
         }
     }
 
+    private static func gasLimit(for type: TransferType) -> BigInt {
+        switch type {
+        case .ether:
+            return GasLimitConfiguration.default
+        case .token:
+            return GasLimitConfiguration.tokenTransfer
+        case .dapp:
+            return GasLimitConfiguration.dappTransfer
+        }
+    }
+
+    private static func gasPrice(for type: Transfer) -> BigInt {
+        return GasPriceConfiguration.default
+    }
 }
