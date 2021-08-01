@@ -89,4 +89,18 @@ final class TransactionConfigurator {
     private static func gasPrice(for type: Transfer) -> BigInt {
         return GasPriceConfiguration.default
     }
+
+    func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
+        if requestEstimateGas {
+            estimateGasLimit { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let gasLimit):
+                    self.refreshGasLimit(gasLimit)
+                case .failure: break
+                }
+            }
+        }
+        loadNonce(completion: completion)
+    }
 }
