@@ -63,3 +63,49 @@ class SubtitleBackupLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class VerifyPassphraseViewController: UIViewController {
+
+    let contentView = PassphraseView()
+    let proposalView = PassphraseView()
+    let account: Wallet
+    let words: [String]
+    let shuffledWords: [String]
+    weak var delegate: VerifyPassphraseViewControllerDelegate?
+
+    lazy var doneButton: UIButton = {
+        let button = Button(size: .large, style: .solid)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(R.string.localizable.done(), for: .normal)
+        button.addTarget(self, action: #selector(doneAction(_:)), for: .touchUpInside)
+        return button
+    }()
+
+    lazy var subTitleLabel: SubtitleBackupLabel = {
+        let label = SubtitleBackupLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = NSLocalizedString("verifyPassphrase.label.title", value: "Tap the words to put them next to each other in the correct order.", comment: "")
+        return label
+    }()
+
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = R.string.localizable.verifyBackupPhrase()
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.textAlignment = .center
+        return titleLabel
+    }()
+
+    private struct Layout {
+        static let contentSize: CGFloat = 140
+    }
+}
