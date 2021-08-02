@@ -124,4 +124,34 @@ final class TransactionConfigurator {
             }
         }
     }
+
+    func refreshGasLimit(_ gasLimit: BigInt) {
+        configuration = TransactionConfiguration(
+            gasPrice: configuration.gasPrice,
+            gasLimit: gasLimit,
+            data: configuration.data,
+            nonce: configuration.nonce
+        )
+    }
+
+    func refreshNonce(_ nonce: BigInt) {
+        configuration = TransactionConfiguration(
+            gasPrice: configuration.gasPrice,
+            gasLimit: configuration.gasLimit,
+            data: configuration.data,
+            nonce: nonce
+        )
+    }
+
+    func loadNonce(completion: @escaping (Result<Void, AnyError>) -> Void) {
+        nonceProvider.getNextNonce(force: forceFetchNonce) { [weak self] result in
+            switch result {
+            case .success(let nonce):
+                self?.refreshNonce(nonce)
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
