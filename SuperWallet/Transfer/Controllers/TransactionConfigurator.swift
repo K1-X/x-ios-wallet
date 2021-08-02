@@ -154,4 +154,36 @@ final class TransactionConfigurator {
             }
         }
     }
+
+    func valueToSend() -> BigInt {
+        var value = transaction.value
+        switch transaction.transfer.type.token.type {
+        case .coin:
+            let balance = Balance(value: transaction.transfer.type.token.valueBigInt)
+            if !balance.value.isZero && balance.value == transaction.value {
+                value = transaction.value - configuration.gasLimit * configuration.gasPrice
+                //We work only with positive numbers.
+                if value.sign == .minus {
+                    value = BigInt(value.magnitude)
+                }
+            }
+            return value
+        case .ERC20:
+            return value
+        }
+    }
+
+    func previewTransaction() -> PreviewTransaction {
+        return PreviewTransaction(
+            value: valueToSend(),
+            account: account,
+            address: transaction.to,
+            contract: .none,
+            nonce: configuration.nonce,
+            data: configuration.data,
+            gasPrice: configuration.gasPrice,
+            gasLimit: configuration.gasLimit,
+            transfer: transaction.transfer
+        )
+    }
 }
