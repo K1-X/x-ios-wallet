@@ -186,4 +186,92 @@ final class TransactionConfigurator {
             transfer: transaction.transfer
         )
     }
+
+    var signTransaction: SignTransaction {
+        let value: BigInt = {
+            switch transaction.transfer.type {
+            case .ether, .dapp: return valueToSend()
+            case .token: return 0
+            }
+        }()
+        let address: EthereumAddress? = {
+            switch transaction.transfer.type {
+            case .ether, .dapp: return transaction.to
+            case .token(let token): return token.contractAddress
+            }
+        }()
+        let localizedObject: LocalizedOperationObject? = {
+            switch transaction.transfer.type {
+            case .ether, .dapp: return .none
+            case .token(let token):
+                return LocalizedOperationObject(
+                    from: account.address.description,
+                    to: transaction.to?.description ?? "",
+                    contract: token.contract,
+                    type: OperationType.tokenTransfer.rawValue,
+                    value: BigInt(transaction.value.magnitude).description,
+                    symbol: token.symbol,
+                    name: token.name,
+                    decimals: token.decimals
+                )
+            }
+        }()
+
+        let signTransaction = SignTransaction(
+            value: value,
+            account: account,
+            to: address,
+            nonce: configuration.nonce,
+            data: configuration.data,
+            gasPrice: configuration.gasPrice,
+            gasLimit: configuration.gasLimit,
+            chainID: 0,
+            localizedObject: localizedObject
+        )
+
+        return signTransaction
+    }
+
+    func update(configuration: TransactionConfiguration) {
+        self.configuration = configuration
+    }
+
+    func balanceValidStatus() -> BalanceStatus {
+        var etherSufficient = true
+        var gasSufficient = true
+        var tokenSufficient = true
+
+        // fetching price of the coin, not the erc20 token.
+        let coin = session.tokensStorage.getToken(for: self.transaction.transfer.type.token.coin.server.priceID)
+        let currentBalance = coin?.valueBalance
+
+        guard let balance = currentBalance else {
+            return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
+        }
+        let transaction = previewTransaction()
+        let totalGasValue = transaction.gasPrice * transaction.gasLimit
+
+        //We check if it is ETH or token operation.
+        switch transaction.transfer.type {
+        case .ether, .dapp:
+            if transaction.value > balance.value {
+                etherSufficient = false
+                gasSufficient = false
+            } else {
+                if totalGasValue + transaction.value > balance.value {
+                    gasSufficient = false
+                }
+            }
+            return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
+        case .token(let token):
+            if totalGasValue > balance.value {
+                etherSufficient = false
+                gasSufficient = false
+            }
+            if transaction.value > token.valueBigInt {
+                tokenSufficient = false
+            }
+            return .token(tokenSufficient: tokenSufficient, gasSufficient: gasSufficient)
+        }
+    }
 }
