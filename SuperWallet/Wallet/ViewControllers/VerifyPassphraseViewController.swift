@@ -108,4 +108,87 @@ class VerifyPassphraseViewController: UIViewController {
     private struct Layout {
         static let contentSize: CGFloat = 140
     }
+
+    init(
+        account: Wallet,
+        words: [String]
+    ) {
+        self.account = account
+        self.words = words
+        self.shuffledWords = words.shuffled()
+
+        super.init(nibName: nil, bundle: nil)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: R.string.localizable.skip(), style: .plain, target: self, action: #selector(skipAction))
+
+        view.backgroundColor = .white
+
+        contentView.isEditable = true
+        contentView.words = []
+        contentView.didDeleteItem = { item in
+            self.proposalView.words.append(item)
+            self.refresh()
+        }
+        contentView.backgroundColor = .clear
+        contentView.collectionView.backgroundColor = .clear
+
+        proposalView.isEditable = true
+        proposalView.words = shuffledWords
+        proposalView.didDeleteItem = { item in
+            self.contentView.words.append(item)
+            self.refresh()
+        }
+
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        image.image = R.image.verify_passphrase()
+
+        let stackView = UIStackView(arrangedSubviews: [
+            image,
+            titleLabel,
+            .spacer(),
+            subTitleLabel,
+            .spacer(),
+            contentView,
+            proposalView,
+            statusLabel
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 12
+        stackView.backgroundColor = .clear
+
+        let wordBackgroundView = PassphraseBackgroundShadow()
+        wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(wordBackgroundView)
+
+        view.addSubview(stackView)
+        view.addSubview(doneButton)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor, constant: StyleLayout.sideMargin),
+            stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            stackView.centerYAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.centerYAnchor, constant: -80),
+
+            wordBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            wordBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 48),
+            proposalView.heightAnchor.constraint(greaterThanOrEqualToConstant: 48),
+
+            image.heightAnchor.constraint(equalToConstant: 32),
+            statusLabel.heightAnchor.constraint(equalToConstant: 34),
+
+            doneButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            doneButton.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            doneButton.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin)
+        ])
+
+        refresh()
+    }
+
 }
