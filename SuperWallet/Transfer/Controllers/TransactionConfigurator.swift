@@ -103,4 +103,25 @@ final class TransactionConfigurator {
         }
         loadNonce(completion: completion)
     }
+
+    func estimateGasLimit(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+        let request = EstimateGasRequest(
+            transaction: signTransaction
+        )
+        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { result in
+            switch result {
+            case .success(let gasLimit):
+                let gasLimit: BigInt = {
+                    let limit = BigInt(gasLimit.drop0x, radix: 16) ?? BigInt()
+                    if limit == BigInt(21000) {
+                        return limit
+                    }
+                    return limit + (limit * 20 / 100)
+                }()
+                completion(.success(gasLimit))
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
+            }
+        }
+    }
 }
