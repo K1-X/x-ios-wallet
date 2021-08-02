@@ -43,3 +43,23 @@ enum VerifyStatus {
         return .invalid
     }
 }
+
+class DarkVerifyPassphraseViewController: VerifyPassphraseViewController {
+
+}
+
+class SubtitleBackupLabel: UILabel {
+
+    init() {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        textAlignment = .center
+        numberOfLines = 0
+        font = AppStyle.paragraph.font
+        textColor = Colors.gray
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
