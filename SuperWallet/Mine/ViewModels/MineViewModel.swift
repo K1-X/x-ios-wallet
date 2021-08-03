@@ -10,4 +10,14 @@ struct MineViewModel {
         self.isDebug = isDebug
     }    
 
+
+    var servers: [RPCServer] {
+        return [
+            RPCServer.main
+//            RPCServer.classic,
+//            RPCServer.poa,
+//            RPCServer.callisto,
+//            RPCServer.gochain
+        ]
+    }
 }
