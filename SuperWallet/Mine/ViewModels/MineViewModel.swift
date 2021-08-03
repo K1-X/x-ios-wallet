@@ -20,4 +20,8 @@ struct MineViewModel {
 //            RPCServer.gochain
         ]
     }
+
+    var publishTokenTitle: String {
+        return NSLocalizedString("mine.publishToken.button.title", value: "publishToken", comment: "")
+    }
 }
