@@ -190,5 +190,17 @@ class VerifyPassphraseViewController: UIViewController {
 
         refresh()
     }
+    @objc func skipAction() {
+        // TODO: Add confirm warning
+        delegate?.didSkip(in: self, with: account)
+    }
 
+    func refresh() {
+        let progressWords = contentView.words
+        let status = VerifyStatus.from(initialWords: words, progressWords: progressWords)
+
+        doneButton.isEnabled = status == .correct
+        statusLabel.text = status.text
+        statusLabel.textColor = status.textColor
+    }
 }
