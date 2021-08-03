@@ -203,4 +203,12 @@ class VerifyPassphraseViewController: UIViewController {
         statusLabel.text = status.text
         statusLabel.textColor = status.textColor
     }
+
+    @objc private func doneAction(_ sender: UIButton) {
+        delegate?.didFinish(in: self, with: account)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
