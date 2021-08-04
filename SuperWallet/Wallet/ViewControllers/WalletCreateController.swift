@@ -30,4 +30,21 @@ final class WalletCreateController: UIViewController {
         return tableView
     }()
 
+    lazy var headerView: UIView = {
+        let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 120))
+        headerView.backgroundColor = Colors.blue
+        let noticeLabel: UILabel = UILabel()
+        noticeLabel.numberOfLines = 0
+        noticeLabel.textColor = Colors.white
+        noticeLabel.font = UIFont.systemFont(ofSize: 15)
+        noticeLabel.text = "*，\n*，f，"
+        headerView.addSubview(noticeLabel)
+        noticeLabel.snp.makeConstraints({ (make) in
+            make.top.equalToSuperview().offset(edgeWidth)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.bottom.equalTo(-edgeWidth)
+        })
+        return headerView
+    }()
 }
