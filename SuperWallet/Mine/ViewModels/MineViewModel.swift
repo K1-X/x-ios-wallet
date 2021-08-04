@@ -28,4 +28,8 @@ struct MineViewModel {
     var addressBookTitle: String {
         return NSLocalizedString("mine.addressBook.button.title", value: "addressBook", comment: "")
     }
+
+    var walletManagerTitle: String {
+        return NSLocalizedString("mine.walletManager.button.title", value: "WalletManager", comment: "")
+    }
 }
