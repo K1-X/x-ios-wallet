@@ -47,4 +47,37 @@ final class WalletCreateController: UIViewController {
         })
         return headerView
     }()
+
+    lazy var footerView: UIView = {
+        let footerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 156))
+        footerView.backgroundColor = Colors.white
+        let createWalletButton: UIButton = UIButton(type: .custom)
+        createWalletButton.setBackgroundColor(Colors.blue, forState: .normal)
+        createWalletButton.layer.cornerRadius = createWalletButton.frame.size.height/2.0
+        createWalletButton.layer.masksToBounds = true
+        createWalletButton.setTitleColor(Colors.white, for: .normal)
+        createWalletButton.setTitle("", for: .normal)
+        createWalletButton.addTarget(self, action: #selector(createWallet), for: .touchUpInside)
+        footerView.addSubview(createWalletButton)
+        createWalletButton.snp.makeConstraints({ (make) in
+            make.top.equalToSuperview().offset(30)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(48)
+        })
+
+        let importWalletButton: UIButton = UIButton(type: .custom)
+        importWalletButton.setBackgroundColor(Colors.white, forState: .normal)
+        importWalletButton.setTitleColor(Colors.gray, for: .normal)
+        importWalletButton.setTitle("，", for: .normal)
+        importWalletButton.addTarget(self, action: #selector(importWallet), for: .touchUpInside)
+        footerView.addSubview(importWalletButton)
+        importWalletButton.snp.makeConstraints({ (make) in
+            make.top.equalTo(createWalletButton.snp.bottom).offset(30)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(48)
+        })
+        return footerView
+    }()
 }
