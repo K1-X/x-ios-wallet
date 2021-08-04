@@ -32,4 +32,8 @@ struct MineViewModel {
     var walletManagerTitle: String {
         return NSLocalizedString("mine.walletManager.button.title", value: "WalletManager", comment: "")
     }
+
+    var safetyManagerTitle: String {
+        return NSLocalizedString("mine.safetyManager.button.title", value: "SafetyManager", comment: "")
+    }
 }
