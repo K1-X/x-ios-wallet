@@ -36,4 +36,8 @@ struct MineViewModel {
     var safetyManagerTitle: String {
         return NSLocalizedString("mine.safetyManager.button.title", value: "SafetyManager", comment: "")
     }
+
+    var settingTitle: String {
+        return NSLocalizedString("mine.setting.button.title", value: "Setting", comment: "")
+    }
 }
