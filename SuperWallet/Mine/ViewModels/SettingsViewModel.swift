@@ -27,4 +27,8 @@ struct SettingsViewModel {
             AutoLock.fiveHours
         ]
     }    
+
+    var currency: [Currency] {
+        return Currency.allValues.map { $0 }
+    }
 }
