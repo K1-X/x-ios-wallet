@@ -128,3 +128,25 @@ final class WalletCreateController: UIViewController {
         delegate?.didPressImportWallet(in: self)
     }
 }
+
+extension WalletCreateController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let textInputCell: TextInputCell = tableView.dequeueReusableCell(withIdentifier: R.nib.textInputCell.name) as! TextInputCell
+        if indexPath.row != 0 {
+            textInputCell.inputTextField.isSecureTextEntry = true
+        } else {
+            textInputCell.inputTextField.isSecureTextEntry = false
+        }
+        textInputCell.setPlaceholder(placeholder: dataArray[indexPath.row])
+        textInputCell.delegate = self
+        return textInputCell
+    }
+}
