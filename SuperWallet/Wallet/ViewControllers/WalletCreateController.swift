@@ -113,4 +113,18 @@ final class WalletCreateController: UIViewController {
         }
         tableView.layoutIfNeeded()
     }
+
+    @objc func createWallet() {
+        if password != subPassword {
+            return
+        }
+        guard let password = password, let walletName = walletName else {
+            return
+        }
+        delegate?.didPressCreateWallet(walletName: walletName, password: password, in: self)
+    }
+
+    @objc func importWallet() {
+        delegate?.didPressImportWallet(in: self)
+    }
 }
