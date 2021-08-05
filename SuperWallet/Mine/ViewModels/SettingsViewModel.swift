@@ -17,5 +17,14 @@ struct SettingsViewModel {
             RPCServer.main
         ]
     }
-    
+
+    var autoLockOptions: [AutoLock] {
+        return [
+            AutoLock.immediate,
+            AutoLock.oneMinute,
+            AutoLock.fiveMinutes,
+            AutoLock.oneHour,
+            AutoLock.fiveHours
+        ]
+    }    
 }
