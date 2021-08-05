@@ -150,3 +150,23 @@ extension WalletCreateController: UITableViewDataSource {
         return textInputCell
     }
 }
+
+extension WalletCreateController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+}
+
+extension WalletCreateController: TextInputCellDelegate {
+    func didInput(text: String, cell: TextInputCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        if indexPath?.row == 0 {
+            walletName = text
+        } else if indexPath?.row == 1 {
+            password = text
+        } else if indexPath?.row == 2 {
+            subPassword = text
+        }
+    }
+}
