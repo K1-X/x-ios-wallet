@@ -80,4 +80,37 @@ final class WalletCreateController: UIViewController {
         })
         return footerView
     }()
+
+    init(
+        keystore: Keystore
+        ) {
+        self.keystore = keystore
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        navigationItem.title = ""
+        tableView.tableHeaderView = headerView
+        tableView.tableFooterView = footerView
+        tableView.separatorStyle = .none
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(currentNaviHeight)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        tableView.layoutIfNeeded()
+    }
 }
