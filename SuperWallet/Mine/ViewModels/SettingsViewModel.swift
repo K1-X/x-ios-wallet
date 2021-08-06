@@ -43,4 +43,9 @@ struct SettingsViewModel {
             return NSLocalizedString("settings.biometricsDisabled.label.title", value: "Passcode", comment: "")
         }
     }
+
+    var networkTitle: String {
+        return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+    }
+
 }
