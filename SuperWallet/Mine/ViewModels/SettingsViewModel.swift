@@ -31,4 +31,16 @@ struct SettingsViewModel {
     var currency: [Currency] {
         return Currency.allValues.map { $0 }
     }
+
+    var passcodeTitle: String {
+        switch BiometryAuthenticationType.current {
+        case .faceID, .touchID:
+            return String(
+                format: NSLocalizedString("settings.biometricsEnabled.label.title", value: "Passcode / %@", comment: ""),
+                BiometryAuthenticationType.current.title
+            )
+        case .none:
+            return NSLocalizedString("settings.biometricsDisabled.label.title", value: "Passcode", comment: "")
+        }
+    }
 }
