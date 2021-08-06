@@ -48,4 +48,8 @@ struct SettingsViewModel {
         return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
     }
 
+    var autoLockTitle: String {
+        return NSLocalizedString("settings.autoLock.button.title", value: "Auto-Lock", comment: "")
+    }
+
 }
