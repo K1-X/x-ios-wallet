@@ -52,4 +52,20 @@ struct SettingsViewModel {
         return NSLocalizedString("settings.autoLock.button.title", value: "Auto-Lock", comment: "")
     }
 
+    var currencyTitle: String {
+        return NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
+    }
+
+    var testNetworkWarningTitle: String {
+        return NSLocalizedString("settings.network.test.warnning.title", value: "Warning", comment: "")
+    }
+
+    var testNetworkWarningMessage: String {
+        return NSLocalizedString("settings.network.test.warnning.message", value: "You are switching to a test network where transactions are for testing purpose only", comment: "")
+    }
+
+    var testNetworkWarningDontShowAgainLabel: String {
+        return NSLocalizedString("settings.network.test.warnning.dont.show.again", value: "Don't show again", comment: "")
+    }
+
 }
