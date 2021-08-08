@@ -9,3 +9,10 @@ protocol WalletInfoViewControllerDelegate: class {
     func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in controller: WalletInfoViewController)
 }
 
+enum WalletInfoField {
+    case name(String)
+    case backup(Bool)
+    case mainWallet(Bool)
+    case balance(String)
+}
+
