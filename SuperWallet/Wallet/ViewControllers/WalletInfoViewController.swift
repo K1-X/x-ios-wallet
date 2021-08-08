@@ -32,5 +32,16 @@ final class WalletInfoViewController: FormViewController {
         static let name = "name"
     }
 
+    lazy var saveBarButtonItem: UIBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+    }()
+
+    init(
+        wallet: WalletInfo
+    ) {
+        self.wallet = wallet
+        super.init(nibName: nil, bundle: nil)
+    }
+
 }
 
