@@ -16,3 +16,21 @@ enum WalletInfoField {
     case balance(String)
 }
 
+final class WalletInfoViewController: FormViewController {
+
+    lazy var viewModel: WalletInfoViewModel = {
+        return WalletInfoViewModel(wallet: wallet)
+    }()
+    var segmentRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.name)
+    }
+    let wallet: WalletInfo
+
+    weak var delegate: WalletInfoViewControllerDelegate?
+
+    private struct Values {
+        static let name = "name"
+    }
+
+}
+
