@@ -43,5 +43,29 @@ final class WalletInfoViewController: FormViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        navigationItem.title = viewModel.title
+        navigationItem.rightBarButtonItem = saveBarButtonItem
+
+        form +++ Section()
+
+        <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
+            $0.add(rule: RuleRequired())
+            $0.value = self.viewModel.name
+        }.cellUpdate { [weak self] cell, _ in
+            cell.textField.placeholder = self?.viewModel.nameTitle
+            cell.textField.rightViewMode = .always
+        }
+
+        for types in viewModel.sections {
+            let newSection = Section(footer: types.footer ?? "")
+            for type in types.rows {
+                newSection.append(link(item: type))
+            }
+            form +++ newSection
+        }
+    }
 }
 
