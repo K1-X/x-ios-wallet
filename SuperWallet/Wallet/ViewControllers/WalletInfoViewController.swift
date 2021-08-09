@@ -97,3 +97,4 @@ final class WalletInfoViewController: FormViewController {
     }
 }
 
+typealias ButtonRowRow = ButtonRowOf<WalletInfoType>
