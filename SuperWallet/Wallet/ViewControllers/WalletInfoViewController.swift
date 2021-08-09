@@ -87,5 +87,13 @@ final class WalletInfoViewController: FormViewController {
         return button
     }
 
+    @objc func save() {
+        let name = segmentRow?.value ?? ""
+        delegate?.didPressSave(wallet: wallet, fields: [.name(name)], in: self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
