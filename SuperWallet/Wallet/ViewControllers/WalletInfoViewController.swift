@@ -67,5 +67,25 @@ final class WalletInfoViewController: FormViewController {
             form +++ newSection
         }
     }
+ 
+    private func link(
+        item: WalletInfoType
+    ) -> ButtonRowRow {
+        let button = ButtonRowRow(item.title) {
+            $0.title = item.title
+            $0.value = item
+        }.onCellSelection { [weak self] (_, row) in
+            guard let `self` = self, let item = row.value else { return }
+            self.delegate?.didPress(item: item, in: self)
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = item.image
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
+            cell.accessoryType = .disclosureIndicator
+        }
+        return button
+    }
+
 }
 
