@@ -34,4 +34,14 @@ class VersionCheck: NSObject, Decodable {
         self.checksum = checksum
     }
 
+    private enum VersionCheckCodingKeys: String, CodingKey {
+        case appVersion
+        case isForceUpgrade
+        case downloadUrl
+        case description
+        case isNew
+        case packageSize
+        case displayVer
+        case checksum
+    }
 }
