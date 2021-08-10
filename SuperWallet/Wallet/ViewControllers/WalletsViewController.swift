@@ -33,4 +33,14 @@ class WalletsViewController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetch()
+    }
+
+    func fetch() {
+        viewModel.fetchBalances()
+        viewModel.refresh()
+        tableView.reloadData()
+    }
 }
