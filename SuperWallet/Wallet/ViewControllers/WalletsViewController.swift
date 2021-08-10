@@ -9,3 +9,19 @@ protocol WalletsViewControllerDelegate: class {
     func didSelectForInfo(wallet: WalletInfo, account: Account, in controller: WalletsViewController)
 }
 
+class WalletsViewController: UITableViewController {
+
+    let keystore: Keystore
+    lazy var viewModel: WalletsViewModel = {
+        let model = WalletsViewModel(keystore: keystore)
+        model.delegate = self
+        return model
+    }()
+    weak var delegate: WalletsViewControllerDelegate?
+
+    init(keystore: Keystore) {
+        self.keystore = keystore
+        super.init(style: .grouped)
+    }
+
+}
