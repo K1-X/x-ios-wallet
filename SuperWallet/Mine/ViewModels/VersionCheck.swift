@@ -44,4 +44,26 @@ class VersionCheck: NSObject, Decodable {
         case displayVer
         case checksum
     }
+
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: VersionCheckCodingKeys.self)
+        let appVersion = try container.decode(Int.self, forKey: .appVersion)
+        let isForceUpgrade = try container.decode(String.self, forKey: .isForceUpgrade)
+        let downloadUrl = try container.decode(String.self, forKey: .downloadUrl)
+        let desc = try container.decode(String.self, forKey: .description)
+        let isNew = try container.decode(String.self, forKey: .isNew)
+        let packageSize = try container.decode(Int.self, forKey: .packageSize)
+        let displayVer = try container.decode(String.self, forKey: .displayVer)
+        let checksum = try container.decode(String.self, forKey: .checksum)
+        self.init(
+            appVersion: appVersion,
+            isForceUpgrade: isForceUpgrade,
+            downloadUrl: downloadUrl,
+            desc: desc,
+            isNew: isNew,
+            packageSize: packageSize,
+            displayVer: displayVer,
+            checksum: checksum
+        )
+    }
 }
