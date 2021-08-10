@@ -23,5 +23,14 @@ class WalletsViewController: UITableViewController {
         self.keystore = keystore
         super.init(style: .grouped)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.register(UINib(resource: R.nib.walletViewCell), forCellReuseIdentifier: R.nib.walletViewCell.name)
+        navigationItem.title = viewModel.title
+        tableView.tableFooterView = UIView()
+    }
 
 }
