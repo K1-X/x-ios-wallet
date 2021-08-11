@@ -43,4 +43,15 @@ class WalletsViewController: UITableViewController {
         viewModel.refresh()
         tableView.reloadData()
     }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.walletViewCell.name, for: indexPath) as! WalletViewCell
+        cell.viewModel = viewModel.cellViewModel(for: indexPath)
+        cell.delegate = self
+        return cell
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSection
+    }
 }
