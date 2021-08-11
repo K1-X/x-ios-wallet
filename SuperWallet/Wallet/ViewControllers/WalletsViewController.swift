@@ -54,4 +54,12 @@ class WalletsViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSection
     }
+   
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows(in: section)
+    }
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return viewModel.canEditRowAt(for: indexPath)
+    }
 }
