@@ -108,3 +108,16 @@ class WalletsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension WalletsViewController: WalletViewCellDelegate {
+    func didPress(viewModel: WalletAccountViewModel, in cell: WalletViewCell) {
+        delegate?.didSelectForInfo(wallet: viewModel.wallet, account: viewModel.account, in: self)
+    }
+}
+
+extension WalletsViewController: WalletsViewModelProtocol {
+    func update() {
+        viewModel.refresh()
+        tableView.reloadData()
+    }
+}
