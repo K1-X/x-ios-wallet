@@ -10,4 +10,10 @@ class AddressBookCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var remarkLabel: UILabel!
     
+    func configure(addressBook: AddressBook) {
+        headerImageView.image = R.image.sct_logo()
+        addressNameLabel.text = addressBook.addressName
+        addressLabel.text = addressBook.address
+        remarkLabel.text = addressBook.remark
+    }
 }
