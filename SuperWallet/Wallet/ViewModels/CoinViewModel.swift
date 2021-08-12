@@ -11,5 +11,15 @@ struct CoinViewModel {
         return "\(name) (\(symbol))"
     }
 
+    var name: String {
+        switch coin {
+        case .bitcoin: return "Bitcoin"
+        case .ethereum: return "SCT"
+        case .ethereumClassic: return "ETH"
+        case .poa: return "POA Network"
+        case .callisto: return "Callisto"
+        case .gochain: return "GoChain"
+        }
+    }
     
 }
