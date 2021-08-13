@@ -21,5 +21,15 @@ struct CoinViewModel {
         case .gochain: return "GoChain"
         }
     }
-    
+
+    var symbol: String {
+        switch coin {
+        case .ethereum: return "SCT"
+        case .ethereumClassic: return "ETH"
+        case .callisto: return "CLO"
+        case .poa: return "POA"
+        case .gochain: return "GO"
+        case .bitcoin: return "Bitcoin"
+        }
+    }    
 }
