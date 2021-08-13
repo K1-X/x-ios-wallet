@@ -32,4 +32,20 @@ struct CoinViewModel {
         case .bitcoin: return "Bitcoin"
         }
     }    
+
+    var image: UIImage? {
+        switch coin {
+        case .bitcoin: return .none
+        case .ethereum: return R.image.sct_logo()
+        case .ethereumClassic: return R.image.ethereum_1()
+        case .poa: return R.image.ethereum99()
+        case .callisto: return R.image.ethereum820()
+        case .gochain: return R.image.ethereum60()
+        }
+    }
+
+    var walletName: String {
+        return name + " " + R.string.localizable.wallet()
+    }
+
 }
