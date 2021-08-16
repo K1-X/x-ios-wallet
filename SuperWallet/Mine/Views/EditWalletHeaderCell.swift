@@ -33,5 +33,9 @@ class EditWalletHeaderCell: UITableViewCell {
         bgView.backgroundColor = Colors.blue
         contentView.backgroundColor = Colors.white
     }
+  
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
 
+    }
 }
