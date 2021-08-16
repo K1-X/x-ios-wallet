@@ -21,4 +21,17 @@ class EditWalletHeaderCell: UITableViewCell {
             amountLabel.text = model.balance
         }
     }    
+ 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectionStyle = .none
+        walletHeaderView.layer.cornerRadius = walletHeaderView.frame.size.width/2.0
+        walletHeaderView.layer.masksToBounds = true
+        walletAddressLabel.textColor = Colors.white
+        walletAddressLabel.lineBreakMode = .byTruncatingMiddle
+        amountLabel.textColor = Colors.white
+        bgView.backgroundColor = Colors.blue
+        contentView.backgroundColor = Colors.white
+    }
+
 }
