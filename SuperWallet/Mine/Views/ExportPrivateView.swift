@@ -63,4 +63,26 @@ class ExportPrivateView: UIView {
         return closeButton
     }()
 
+    lazy var copyButton: UIButton = {
+        let copyButton = UIButton()
+        copyButton.setTitle(R.string.localizable.exportPrivateAlertCopy(), for: .normal)
+        copyButton.backgroundColor = Colors.blue
+        copyButton.setTitleColor(Colors.white, for: .normal)
+        copyButton.layer.cornerRadius = copyButton.frame.size.height / 2.0
+        copyButton.layer.masksToBounds = true
+        copyButton.addTarget(self, action: #selector(copyPrivate), for: .touchUpInside)
+        return copyButton
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(backgroundView)
+        addSubview(contentView)
+
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(noticeLabel)
+        contentView.addSubview(privateLabel)
+        contentView.addSubview(closeButton)
+        contentView.addSubview(copyButton)
+    }
 }
