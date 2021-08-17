@@ -44,4 +44,23 @@ class ExportPrivateView: UIView {
         noticeLabel.layer.borderWidth = 1
         return noticeLabel
     }()    
+
+    lazy var privateLabel: TextInsetLabel = {
+        let privateLabel = TextInsetLabel()
+        privateLabel.font = UIFont.systemFont(ofSize: 14)
+        privateLabel.textColor = Colors.black
+        privateLabel.textAlignment = .left
+        privateLabel.numberOfLines = 0
+        privateLabel.edgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 5)
+        privateLabel.backgroundColor = Colors.lightGray
+        return privateLabel
+    }()
+
+    lazy var closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.setImage(R.image.cancel(), for: .normal)
+        closeButton.addTarget(self, action: #selector(closeTap), for: .touchUpInside)
+        return closeButton
+    }()
+
 }
