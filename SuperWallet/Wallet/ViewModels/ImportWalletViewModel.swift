@@ -17,5 +17,14 @@ struct ImportWalletViewModel {
     var keystorePlaceholder: String {
         return R.string.localizable.keystoreJSON()
     }
-    
+
+    var mnemonicPlaceholder: String {
+        return R.string.localizable.phrase()
+    }
+    var privateKeyPlaceholder: String {
+        return R.string.localizable.privateKey()
+    }
+    var watchAddressPlaceholder: String {
+        return String(format: NSLocalizedString("import.wallet.watch.placeholder", value: "%@ Address", comment: ""), coin.name)
+    }    
 }
