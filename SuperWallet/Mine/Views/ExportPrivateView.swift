@@ -188,4 +188,23 @@ class ExportPrivateView: UIView {
         popAnimation.isCumulative = false
         self.layer.add(popAnimation, forKey: nil)
     }
+
+    func dismissView() {
+        let hideAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform")
+        hideAnimation.duration = 0.25
+        hideAnimation.values = [[NSValue(caTransform3D: CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0))],
+                               [NSValue(caTransform3D: CATransform3DScale(CATransform3DIdentity, 0.5, 0.5, 0.5))],
+                               [NSValue(caTransform3D: CATransform3DIdentity)]]
+        hideAnimation.keyTimes = [0.0, 0.0, 0.0]
+        hideAnimation.timingFunctions = [CAMediaTimingFunction(name: "easeOut"),
+                                        CAMediaTimingFunction(name: "easeOut"),
+                                        CAMediaTimingFunction(name: "easeOut")]
+        hideAnimation.isRemovedOnCompletion = true
+        hideAnimation.isCumulative = false
+        self.layer.add(hideAnimation, forKey: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
