@@ -4,5 +4,14 @@ import Foundation
 
 struct SelectCoinsViewModel {
 
+    let elements: [CoinViewModel]
+
+    init(elements: [CoinViewModel]) {
+        self.elements = elements
+    }
+
+    var title: String {
+        return R.string.localizable.importWalletImportButtonTitle()
+    }
     
 }
