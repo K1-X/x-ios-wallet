@@ -13,5 +13,15 @@ struct SelectCoinsViewModel {
     var title: String {
         return R.string.localizable.importWalletImportButtonTitle()
     }
-    
+
+    var numberOfSection: Int {
+        return 1
+    }
+
+    func numberOfRows(in section: Int) -> Int {
+        return elements.count
+    }
+    func cellViewModel(for indexPath: IndexPath) -> CoinViewModel {
+        return elements[indexPath.row]
+    }    
 }
