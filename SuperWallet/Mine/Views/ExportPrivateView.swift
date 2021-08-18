@@ -124,4 +124,24 @@ class ExportPrivateView: UIView {
             make.height.equalTo(50)
         }
     }
+
+    public func show() {
+        let keyWindow = UIApplication.shared.keyWindow
+        keyWindow?.addSubview(self)
+        self.frame = keyWindow!.bounds
+        self.isHidden = false
+        UIView.animate(withDuration: 0.2) {
+            self.backgroundView.alpha = 0.5
+        }
+//        self.popView()
+    }
+
+    func close(complete:@escaping () -> Void) {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.backgroundView.alpha = 0
+        }) { _ in
+            self.isHidden = true
+            complete()
+        }
+    }
 }
