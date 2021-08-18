@@ -144,4 +144,48 @@ class ExportPrivateView: UIView {
             complete()
         }
     }
+
+    public func dismiss() {
+        self.dissmiss {}
+    }
+
+    func dissmiss(complete:@escaping () -> Void) {
+//        self.dismissView()
+        self.close {
+            self.removeFromSuperview()
+        }
+    }
+
+    @objc func closeTap() {
+        self.dismiss()
+    }
+
+    @objc func copyPrivate() {
+        if  self.privateLabel.text!.isEmpty {
+            self.dismiss()
+            return
+        }
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = self.privateLabel.text
+        let hud = MBProgressHUD.showAdded(to: self, animated: true)
+        hud.mode = .text
+        hud.label.text = ""
+        hud.hide(animated: true, afterDelay: 1.5)
+        self.dismiss()
+    }
+
+    func popView() {
+        let popAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform")
+        popAnimation.duration = 0.35
+        popAnimation.values = [[NSValue(caTransform3D: CATransform3DScale(CATransform3DIdentity, 0.7, 0.7, 1.0))],
+                               [NSValue(caTransform3D: CATransform3DScale(CATransform3DIdentity, 1.0, 1.1, 1.0))],
+                               [NSValue(caTransform3D: CATransform3DIdentity)]]
+        popAnimation.keyTimes = [0.0, 0.75, 1.0]
+        popAnimation.timingFunctions = [CAMediaTimingFunction(name: "easeOut"),
+                                        CAMediaTimingFunction(name: "easeOut"),
+                                        CAMediaTimingFunction(name: "easeOut")]
+        popAnimation.isRemovedOnCompletion = true
+        popAnimation.isCumulative = false
+        self.layer.add(popAnimation, forKey: nil)
+    }
 }
