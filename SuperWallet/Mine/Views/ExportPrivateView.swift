@@ -85,4 +85,43 @@ class ExportPrivateView: UIView {
         contentView.addSubview(closeButton)
         contentView.addSubview(copyButton)
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        contentView.snp.makeConstraints { (make) in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 300, height: 340))
+        }
+        closeButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(5)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.size.equalTo(CGSize(width: 30, height: 30))
+        }
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(10)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 120, height: 25))
+        }
+        noticeLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(100)
+        }
+        privateLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(noticeLabel.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(100)
+        }
+        copyButton.snp.makeConstraints { (make) in
+            make.top.equalTo(privateLabel.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(50)
+        }
+    }
 }
