@@ -41,4 +41,23 @@ struct WalletAccountViewModel {
         }
         return WalletInfo.format(value: shortFormatter.string(from: BigInt(wallet.info.balance) ?? BigInt(), decimals: server.decimals), server: server)
     }
+
+    var isWatch: Bool {
+        return wallet.isWatch
+    }
+
+    var image: UIImage? {
+        guard let coin = account.coin else { return .none }
+        if wallet.multiWallet {
+            return R.image.superwallet_icon()
+        }
+        return CoinViewModel(coin: coin).image
+    }
+
+    var selectedImage: UIImage? {
+        if currentWallet == wallet {
+            return R.image.blueCheck()
+        }
+        return .none
+    }
 }
