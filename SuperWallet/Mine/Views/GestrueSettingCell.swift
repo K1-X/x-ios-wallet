@@ -13,4 +13,12 @@ class GestrueSettingCell: UITableViewCell {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var enterarrow: UIImageView!
     @IBOutlet weak var openGesture: UISwitch!    
+
+    lazy var underLineView: UIView = {
+        let underLineView = UIView()
+        underLineView.backgroundColor = Colors.veryLightGray
+        return underLineView
+    }()
+    weak var delegate: GestrueSettingCellDelegate?
+    var isOpenGestureSetting = false
 }
