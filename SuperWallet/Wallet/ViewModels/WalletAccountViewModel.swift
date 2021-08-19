@@ -60,4 +60,18 @@ struct WalletAccountViewModel {
         }
         return .none
     }
+
+var canDelete: Bool {
+        return currentWallet != wallet // || keystore.wallets.count == 1
+    }
+}
+
+extension Account {
+    var coin: Coin? {
+        return Coin(rawValue: derivationPath.coinType)
+    }
+
+    var description: String {
+        return derivationPath.description + "-" + address.description
+    }
 }
