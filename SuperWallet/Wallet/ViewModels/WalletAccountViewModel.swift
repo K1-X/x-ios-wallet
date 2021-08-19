@@ -27,4 +27,18 @@ struct WalletAccountViewModel {
     var isBalanceHidden: Bool {
         return wallet.multiWallet
     }    
+
+    var address: String {
+        guard wallet.multiWallet else {
+             return account.address.description
+        }
+        return R.string.localizable.multiCoinWallet()
+    }
+
+    var balance: String {
+        guard !wallet.info.balance.isEmpty, let server = wallet.coin?.server else {
+            return  WalletInfo.format(value: "0.0", server: .main)
+        }
+        return WalletInfo.format(value: shortFormatter.string(from: BigInt(wallet.info.balance) ?? BigInt(), decimals: server.decimals), server: server)
+    }
 }
