@@ -38,4 +38,42 @@ class GestrueSettingCell: UITableViewCell {
     @objc func openGesture(openGestureSwitch: UISwitch) {
         delegate?.didOpenGestureSetting(cell: self, isOn: openGestureSwitch.isOn)
     }
+
+    public func confgure(title: String, detail: String, indexPath: IndexPath) {
+        titleLabel.text = title
+
+        if indexPath.section == 0 {
+            openGesture.isHidden = false
+            enterarrow.isHidden = true
+            detailLabel.isHidden = true
+            underLineView.isHidden = false
+            openGesture.addTarget(self, action: #selector(openGesture(openGestureSwitch:)), for: .valueChanged)
+            underLineView.snp.updateConstraints { (make) in
+                make.leading.equalToSuperview().offset(0)
+            }
+        } else {
+            openGesture.isHidden = true
+            enterarrow.isHidden = false
+            detailLabel.isHidden = false
+        }
+
+        if !detail.isEmpty && indexPath.section != 0 {
+            enterarrow.isHidden = true
+            detailLabel.text = detail
+        } else {
+            detailLabel.isHidden = true
+        }
+
+        if indexPath.section == 3 {
+            underLineView.isHidden = true
+        }
+
+        if indexPath.section == 1 {
+            underLineView.isHidden = false
+            underLineView.snp.updateConstraints { (make) in
+                make.leading.equalToSuperview().offset(edgeWidth)
+            }
+        }
+
+    }
 }
