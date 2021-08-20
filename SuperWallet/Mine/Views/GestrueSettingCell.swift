@@ -34,4 +34,8 @@ class GestrueSettingCell: UITableViewCell {
             make.height.equalTo(1)
         }
     }
+
+    @objc func openGesture(openGestureSwitch: UISwitch) {
+        delegate?.didOpenGestureSetting(cell: self, isOn: openGestureSwitch.isOn)
+    }
 }
