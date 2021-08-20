@@ -21,4 +21,17 @@ class GestrueSettingCell: UITableViewCell {
     }()
     weak var delegate: GestrueSettingCellDelegate?
     var isOpenGestureSetting = false
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel.textColor = Colors.black
+        detailLabel.textColor = Colors.lightGray
+        contentView.addSubview(underLineView)
+        underLineView.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(0)
+            make.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+    }
 }
