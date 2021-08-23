@@ -40,4 +40,58 @@ struct WalletInfoViewModel {
         return R.string.localizable.name()
     }
 
+    var sections: [FormSection] {
+        switch wallet.type {
+        case .privateKey:
+            return [
+                FormSection(
+                    rows: [
+                        .exportKeystore(wallet.currentAccount),
+                        .exportPrivateKey(wallet.currentAccount)
+                    ]
+                ),
+                FormSection(
+                    footer: wallet.currentAccount.address.description,
+                    rows: [
+                        .copyAddress(wallet.address)
+                    ]
+                )
+            ]
+        case .hd(let account):
+            if wallet.multiWallet {
+                return [
+                    FormSection(
+                        footer: R.string.localizable.multiCoinWallet(),
+                        rows: [
+                            .exportRecoveryPhrase(account)
+                        ]
+                    )
+                ]
+            }
+            return [
+                FormSection(
+                    rows: [
+                        .exportRecoveryPhrase(account),
+                        .exportKeystore(wallet.currentAccount),
+                        .exportPrivateKey(wallet.currentAccount)
+                    ]
+                ),
+                FormSection(
+                    footer: wallet.currentAccount.address.description,
+                    rows: [
+                        .copyAddress(wallet.address)
+                    ]
+                )
+            ]
+        case .address(_, let address):
+            return [
+                FormSection(
+                    footer: wallet.currentAccount.address.description,
+                    rows: [
+                        .copyAddress(address)
+                    ]
+                )
+            ]
+        }
+    }
 }
