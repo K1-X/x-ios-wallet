@@ -10,4 +10,11 @@ class MineHeaderView: UIView {
         return imageView
     }()    
 
+    lazy var headerButton: UIButton = {
+        let headerButton = UIButton()
+        headerButton.translatesAutoresizingMaskIntoConstraints = false
+        headerButton.setBackgroundImage(R.image.ic_mine_checked(), for: .normal)
+        return headerButton
+    }()
+
 }
