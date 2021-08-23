@@ -14,3 +14,19 @@ struct FormSection {
         self.rows = rows
     }
 }
+
+struct WalletInfoViewModel {
+
+    let wallet: WalletInfo
+
+    init(
+        wallet: WalletInfo
+    ) {
+        self.wallet = wallet
+    }
+
+    var title: String {
+        return R.string.localizable.manage()
+    }
+
+}
