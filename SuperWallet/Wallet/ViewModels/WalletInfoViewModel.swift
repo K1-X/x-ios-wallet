@@ -29,4 +29,15 @@ struct WalletInfoViewModel {
         return R.string.localizable.manage()
     }
 
+    var name: String {
+        if wallet.info.name.isEmpty {
+            return WalletInfo.emptyName
+        }
+        return wallet.info.name
+    }
+
+    var nameTitle: String {
+        return R.string.localizable.name()
+    }
+
 }
