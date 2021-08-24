@@ -17,4 +17,19 @@ class MineHeaderView: UIView {
         return headerButton
     }()
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(bgImageView)
+        addSubview(headerButton)
+
+        bgImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        headerButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(80)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 80, height: 80))
+        }
+
+    }
 }
