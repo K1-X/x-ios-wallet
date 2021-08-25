@@ -22,6 +22,11 @@ class WalletsViewModel {
     ) {
         self.keystore = keystore
     }
-
+   
+    func refresh() {
+        self.sections = self.keystore.wallets.compactMap {
+            return WalletAccountViewModel(keystore: keystore, wallet: $0, account: $0.currentAccount, currentWallet: keystore.recentlyUsedWallet)
+        }
+    }
 }
 
