@@ -28,5 +28,23 @@ class WalletsViewModel {
             return WalletAccountViewModel(keystore: keystore, wallet: $0, account: $0.currentAccount, currentWallet: keystore.recentlyUsedWallet)
         }
     }
+
+    func fetchBalances() {
+        guard operationQueue.operationCount == 0 else { return }
+        var valueProviders = [(WalletBalanceProvider, WalletObject)]()
+        for wallet in self.keystore.wallets {
+            guard let server = wallet.coin?.server, let address = EthereumAddress(string: wallet.currentAccount.address.description)   else { continue }
+            valueProviders.append((WalletBalanceProvider(server: server, addressUpdate: address), wallet.info))
+        }
+        let operations: [WalletValueOperation] = valueProviders.compactMap {
+            return  WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
+        }
+        operations.onFinish { [weak self] in
+            DispatchQueue.main.async {
+                 self?.delegate?.update()
+            }
+        }
+        operationQueue.addOperations(operations, waitUntilFinished: false)
+    }
 }
 
