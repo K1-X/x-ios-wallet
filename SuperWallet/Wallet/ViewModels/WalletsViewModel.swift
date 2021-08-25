@@ -54,5 +54,17 @@ class WalletsViewModel {
     var numberOfSection: Int {
         return 1
     }
+
+    func numberOfRows(in section: Int) -> Int {
+        return sections.count
+    }
+
+    func cellViewModel(for indexPath: IndexPath) -> WalletAccountViewModel {
+        return sections[indexPath.row]
+    }
+
+    func canEditRowAt(for indexPath: IndexPath) -> Bool {
+        return cellViewModel(for: indexPath).canDelete
+    }
 }
 
