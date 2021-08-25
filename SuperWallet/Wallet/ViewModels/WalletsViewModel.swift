@@ -46,5 +46,13 @@ class WalletsViewModel {
         }
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }
+
+    var title: String {
+        return R.string.localizable.wallets()
+    }
+
+    var numberOfSection: Int {
+        return 1
+    }
 }
 
