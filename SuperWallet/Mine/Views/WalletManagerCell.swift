@@ -46,4 +46,8 @@ class WalletManagerCell: UITableViewCell {
         bgView.layer.cornerRadius = 4.0
         bgView.layer.masksToBounds = true
     }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+    }
 }
