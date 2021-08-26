@@ -12,4 +12,15 @@ class WalletManagerCell: UITableViewCell {
     @IBOutlet weak var walletBlockLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!    
 
+    var viewModel: WalletAccountViewModel? {
+        didSet {
+            guard let model = viewModel else {
+                return
+            }
+            walletHeaderView.image = model.image
+            walletNameLabel.text = model.title
+            walletAddressLabel.text = model.wallet.address.description
+            amountLabel.text = model.balance
+        }
+    }
 }
