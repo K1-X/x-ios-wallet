@@ -13,5 +13,14 @@ class ImportWalletHeaderView: UIView {
         noticeLabel.text = "KeyStore。KeyStore，"
         return noticeLabel
     }()
-    
+
+    lazy var keystoreView: UITextView = {
+        let keystoreView = UITextView()
+        keystoreView.tintColor = Colors.blue
+        keystoreView.layer.shadowColor = Colors.black.cgColor
+        keystoreView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        keystoreView.layer.shadowOpacity = 0.8
+        keystoreView.layer.shadowRadius = 2.0
+        return keystoreView
+    }()    
 }
