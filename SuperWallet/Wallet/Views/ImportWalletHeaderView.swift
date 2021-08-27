@@ -43,4 +43,8 @@ class ImportWalletHeaderView: UIView {
             make.height.equalTo(120)
         }
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
