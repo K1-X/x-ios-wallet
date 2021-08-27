@@ -23,4 +23,24 @@ class ImportWalletHeaderView: UIView {
         keystoreView.layer.shadowRadius = 2.0
         return keystoreView
     }()    
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(noticeLabel)
+        addSubview(keystoreView)
+        let noticeH = (noticeLabel.text?.textHeight(font: noticeLabel.font, width: frame.size.width-2*edgeWidth))!+5.0
+        self.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 50+noticeH+80+120)
+        noticeLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(50)
+            make.leading.equalToSuperview().offset(edgeWidth)
+            make.trailing.equalToSuperview().offset(-edgeWidth)
+            make.height.equalTo(noticeH)
+        }
+        keystoreView.snp.makeConstraints { (make) in
+            make.top.equalTo(noticeLabel.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
+            make.height.equalTo(120)
+        }
+    }
 }
