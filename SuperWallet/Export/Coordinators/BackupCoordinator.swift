@@ -28,5 +28,18 @@ final class BackupCoordinator: Coordinator {
         self.account = account
     }
 
+    func start() {
+        export(for: account)
+    }
+
+    func finish(result: Result<Bool, AnyError>) {
+        switch result {
+        case .success:
+            delegate?.didFinish(wallet: account.wallet!, in: self)
+        case .failure:
+            delegate?.didCancel(coordinator: self)
+        }
+    }
+
 }
 
