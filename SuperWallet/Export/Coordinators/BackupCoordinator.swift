@@ -41,5 +41,14 @@ final class BackupCoordinator: Coordinator {
         }
     }
 
+    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+        navigationController.topViewController?.displayLoading(
+            text: NSLocalizedString("export.presentBackupOptions.label.title", value: "Preparing backup options...", comment: "")
+        )
+        keystore.export(account: account, password: password, newPassword: newPassword) { [weak self] result in
+            guard let `self` = self else { return }
+            self.handleExport(result: result, completion: completion)
+        }
+    }
 }
 
