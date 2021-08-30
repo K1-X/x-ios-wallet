@@ -50,5 +50,37 @@ final class BackupCoordinator: Coordinator {
             self.handleExport(result: result, completion: completion)
         }
     }
+    private func handleExport(result: (Result<String, KeystoreError>), completion: @escaping (Result<Bool, AnyError>) -> Void) {
+        switch result {
+        case .success(let value):
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("super_backup_\(account.address.description).json"))
+            do {
+                try value.data(using: .utf8)!.write(to: url)
+            } catch {
+                return completion(.failure(AnyError(error)))
+            }
+
+            let activityViewController = UIActivityViewController.make(items: [url])
+            activityViewController.completionWithItemsHandler = { _, result, _, error in
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch { }
+                guard let error = error else {
+                    return completion(.success(result))
+                }
+                completion(.failure(AnyError(error)))
+            }
+            let presenterViewController = navigationController.topViewController
+
+            activityViewController.popoverPresentationController?.sourceView = presenterViewController?.view
+            activityViewController.popoverPresentationController?.sourceRect = presenterViewController?.view.centerRect ?? .zero
+            presenterViewController?.present(activityViewController, animated: true) { [weak presenterViewController] in
+                presenterViewController?.hideLoading()
+            }
+        case .failure(let error):
+            navigationController.topViewController?.hideLoading()
+            navigationController.topViewController?.displayError(error: error)
+        }
+    }
 }
 
