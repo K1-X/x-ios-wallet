@@ -98,3 +98,20 @@ final class BackupCoordinator: Coordinator {
     }
 }
 
+extension BackupCoordinator: EnterPasswordCoordinatorDelegate {
+    func didCancel(in coordinator: EnterPasswordCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didEnterPassword(password: String, account: Account, in coordinator: EnterPasswordCoordinator) {
+        coordinator.navigationController.dismiss(animated: true) { [unowned self] in
+            if let currentPassword = self.keystore.getPassword(for: account.wallet!) {
+                self.presentShareActivity(for: account, password: currentPassword, newPassword: password)
+            } else {
+                self.presentShareActivity(for: account, password: password, newPassword: password)
+            }
+        }
+        removeCoordinator(coordinator)
+    }
+}
