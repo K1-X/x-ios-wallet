@@ -82,5 +82,11 @@ final class BackupCoordinator: Coordinator {
             navigationController.topViewController?.displayError(error: error)
         }
     }
+
+    func presentShareActivity(for account: Account, password: String, newPassword: String) {
+        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { result in
+            self.finish(result: result)
+        }
+    }
 }
 
