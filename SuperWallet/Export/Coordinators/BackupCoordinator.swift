@@ -88,5 +88,13 @@ final class BackupCoordinator: Coordinator {
             self.finish(result: result)
         }
     }
+
+    func export(for account: Account) {
+        let coordinator = EnterPasswordCoordinator(account: account)
+        coordinator.delegate = self
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
+    }
 }
 
