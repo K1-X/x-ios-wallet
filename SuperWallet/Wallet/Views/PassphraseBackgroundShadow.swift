@@ -28,4 +28,8 @@ final class PassphraseBackgroundShadow: UIView {
             bottomSeparator.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }    
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
