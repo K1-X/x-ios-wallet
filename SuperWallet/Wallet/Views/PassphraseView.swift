@@ -65,3 +65,15 @@ extension PassphraseView: UICollectionViewDataSource {
         return cell
     }
 }
+
+extension PassphraseView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        guard isEditable else { return }
+
+        let item = words[indexPath.row]
+        words.remove(at: indexPath.row)
+        collectionView.reloadData()
+        didDeleteItem?(item)
+    }
+}
