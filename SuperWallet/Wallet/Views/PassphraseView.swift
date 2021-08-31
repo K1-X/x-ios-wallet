@@ -50,4 +50,18 @@ final class PassphraseView: UIView {
     }
 }
 
+extension PassphraseView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return words.count
+    }
 
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.wordCollectionViewCell.identifier, for: indexPath) as! WordCollectionViewCell
+        cell.wordLabel.text = words[indexPath.row]
+        return cell
+    }
+}
