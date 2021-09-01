@@ -24,4 +24,18 @@ final class ExportPhraseCoordinator: RootCoordinator {
         controller.title = viewModel.title
         return controller
     }
+
+    private lazy var viewModel: ExportPhraseViewModel = {
+        return .init(keystore: keystore, account: account)
+    }()
+
+    init(
+        keystore: Keystore,
+        account: Wallet,
+        words: [String]
+    ) {
+        self.keystore = keystore
+        self.account = account
+        self.words = words
+    }
 }
