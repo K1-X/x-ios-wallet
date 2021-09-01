@@ -14,4 +14,14 @@ final class ExportPhraseCoordinator: RootCoordinator {
         return passphraseViewController
     }
     
+
+    var passphraseViewController: PassphraseViewController {
+        let controller = PassphraseViewController(
+            account: account,
+            words: words
+        )
+        controller.delegate = self
+        controller.title = viewModel.title
+        return controller
+    }
 }
