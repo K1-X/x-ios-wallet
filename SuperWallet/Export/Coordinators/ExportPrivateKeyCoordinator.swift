@@ -6,5 +6,15 @@ import TrustKeystore
 
 final class ExportPrivateKeyCoordinator: RootCoordinator {
 
+        let privateKey: Data
+    var coordinators: [Coordinator] = []
+    var rootViewController: UIViewController {
+        return exportViewController
+    }
+    lazy var exportViewController: ExportPrivateKeyViewConroller = {
+        let controller = ExportPrivateKeyViewConroller(viewModel: viewModel)
+        controller.navigationItem.title = NSLocalizedString("export.privateKey.navigation.title", value: "Export Private Key", comment: "")
+        return controller
+    }()
     
 }
