@@ -46,6 +46,19 @@ final class WalletViewCell: UITableViewCell {
         super.prepareForReuse()
         self.viewModel = nil
     }
+
+    @IBAction func infoAction(_ sender: Any) {
+        guard let viewModel = viewModel else { return }
+        delegate?.didPress(viewModel: viewModel, in: self)
+    }
+
+    private func updateSeparatorInset() {
+        separatorInset = UIEdgeInsets(
+            top: 0,
+            left: layoutInsets.left + 80,
+            bottom: 0, right: 0
+        )
+    }
 }
 
 
