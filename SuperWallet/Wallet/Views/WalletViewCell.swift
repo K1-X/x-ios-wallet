@@ -18,6 +18,24 @@ final class WalletViewCell: UITableViewCell {
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var balance: UILabel!
 
+    weak var delegate: WalletViewCellDelegate?
+
+    var viewModel: WalletAccountViewModel? {
+        didSet {
+            guard let model = viewModel else {
+                return
+            }
+            title.text = model.title
+            subtitle.text = model.address
+            glassesImageView.isHidden = !model.isWatch
+            infoButton.tintColor = Colors.lightBlue
+            identiconImageView.image = model.image
+            selectedImageView.image = model.selectedImage
+            balance.isHidden = model.isBalanceHidden
+            balance.text = model.balance
+        }
+    }
+
 }
 
 
