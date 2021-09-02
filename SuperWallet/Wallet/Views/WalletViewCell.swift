@@ -36,6 +36,16 @@ final class WalletViewCell: UITableViewCell {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        updateSeparatorInset()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.viewModel = nil
+    }
 }
 
 
