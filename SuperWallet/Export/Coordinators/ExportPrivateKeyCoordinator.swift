@@ -17,4 +17,14 @@ final class ExportPrivateKeyCoordinator: RootCoordinator {
         return controller
     }()
     
+
+    private lazy var viewModel: ExportPrivateKeyViewModel = {
+        return .init(privateKey: privateKey)
+    }()
+
+    init(
+        privateKey: Data
+    ) {
+        self.privateKey = privateKey
+    }
 }
