@@ -99,4 +99,12 @@ final class ExportPrivateKeyViewConroller: UIViewController {
             }
         }
     }    
+
+    @objc private func copyAction(_ sender: UIButton) {
+        showShareActivity(from: sender, with: [viewModel.privateKeyString])
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
