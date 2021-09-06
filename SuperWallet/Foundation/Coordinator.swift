@@ -2,3 +2,6 @@
 
 import Foundation
 
+protocol Coordinator: class {
+    var coordinators: [Coordinator] { get set }
+}
