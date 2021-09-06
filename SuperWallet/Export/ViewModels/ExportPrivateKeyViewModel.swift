@@ -5,5 +5,15 @@ import TrustKeystore
 
 struct ExportPrivateKeyViewModel {
 
-    
+    let privateKey: Data
+
+    init(
+        privateKey: Data
+    ) {
+        self.privateKey = privateKey
+    }
+
+    var headlineText: String {
+        return NSLocalizedString("export.warning.private.key", value: "Export at your own risk!", comment: "")
+    }    
 }
