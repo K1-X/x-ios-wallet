@@ -15,5 +15,12 @@ struct ExportPhraseViewModel {
         self.keystore = keystore
         self.account = account
     }
-    
+
+    var title: String {
+        return R.string.localizable.backupPhrase()
+    }
+
+    var backgroundColor: UIColor {
+        return .white
+    }    
 }
