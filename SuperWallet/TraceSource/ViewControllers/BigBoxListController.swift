@@ -1,5 +1,4 @@
-import UIKit
-import TrustKeystore
+import UIKit import TrustKeystore
 import PromiseKit
 import Web3Core
 
@@ -16,5 +15,21 @@ class BigBoxListController: UIViewController {
     tableView.register(UINib(resource: R.nib.boxListCell), forCellReuseIdentifier: R.nib.boxListCell.name)
     return tableView
 }()
+
+var address:String = ""
+var boxList: [String] = []
+let privateKey: String
+let bigBoxAddress: String
+let session: WalletSession
+init(
+    privateKey: String,
+    boxAddress: String,
+    session: WalletSession
+    ) {
+    self.privateKey = privateKey
+    self.bigBoxAddress = boxAddress
+    self.session = session
+    super.init(nibName: nil, bundle: nil)
+}
   
 }
