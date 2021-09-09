@@ -45,5 +45,28 @@ override func viewDidLoad() {
     }
     self.requestData()
 }
-  
+
+func requestData() {
+    self.navigationController!.topViewController?.displayLoading()
+    let web3 = Web3(rpcURL: "http://sctim.cn/sy")
+    let contractAddress = try! EthereumAddress(hex: bigBoxAddress, eip55: false)
+    let contract = web3.eth.Contract(type: BigPackingBoxContract.self, address: contractAddress)
+    firstly {
+        contract.boxList().callWithFrom(from: contractAddress)
+        }.done { outputs in
+            let boxList: String = outputs["_boxes"] as! String
+            let addressList:[String] = boxList.components(separatedBy: "$");
+            self.boxList = addressList
+            self.tableView.reloadData()
+            self.navigationController!.topViewController?.hideLoading()
+        }.catch { error in
+            self.navigationController!.topViewController?.hideLoading()
+    }
+}
+
+    @objc func sourceDetail() {
+        let controller = BoxListController(privateKey: privateKey,boxAddress:address,session: session);
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}  
 }
