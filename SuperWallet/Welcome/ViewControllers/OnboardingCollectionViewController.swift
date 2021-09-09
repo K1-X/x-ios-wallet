@@ -25,4 +25,15 @@ final class OnboardingCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pages.count
     }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingPage.identifier, for: indexPath) as! OnboardingPage
+        cell.model = pages[indexPath.row]
+        return cell
+    }
+
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+        pageControl?.currentPage = Int(round(scrollView.contentOffset.x / flowLayout.itemSize.width - 0.5))
+    }
 }
