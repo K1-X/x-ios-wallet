@@ -18,4 +18,11 @@ final class OnboardingCollectionViewController: UICollectionViewController {
         flowLayout.itemSize = view.bounds.size
     }
     
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pages.count
+    }
 }
