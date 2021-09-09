@@ -70,3 +70,27 @@ func requestData() {
     }
 }  
 }
+
+extension BigBoxListController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.boxList.count + 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let boxListCell: BoxListCell = tableView.dequeueReusableCell(withIdentifier: R.nib.boxListCell.name) as! BoxListCell
+        boxListCell.selectionStyle = .none
+        
+        if indexPath.section == 0 {
+            boxListCell.configure(address: "", index: indexPath)
+        } else {
+            let address = self.boxList[indexPath.section - 1]
+            self.address = address
+            boxListCell.configure(address: address, index: indexPath)
+            boxListCell.sourceButton.addTarget(self, action: #selector(sourceDetail), for: .touchUpInside)
+        }
+        return boxListCell
+    }
+}
