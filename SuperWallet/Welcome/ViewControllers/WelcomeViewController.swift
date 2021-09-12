@@ -6,3 +6,29 @@ protocol WelcomeViewControllerDelegate: class {
     func didPressImportWallet(in viewController: WelcomeViewController)
 }
 
+final class WelcomeViewController: UIViewController {
+
+    var viewModel = WelcomeViewModel()
+    weak var delegate: WelcomeViewControllerDelegate?
+
+//    lazy var collectionViewController: OnboardingCollectionViewController = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.minimumLineSpacing = 0
+//        layout.minimumInteritemSpacing = 0
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        layout.scrollDirection = .horizontal
+//        let collectionViewController = OnboardingCollectionViewController(collectionViewLayout: layout)
+//        collectionViewController.pages = pages
+//        collectionViewController.pageControl = pageControl
+//        collectionViewController.collectionView?.isPagingEnabled = true
+//        collectionViewController.collectionView?.showsHorizontalScrollIndicator = false
+//        collectionViewController.collectionView?.backgroundColor = viewModel.backgroundColor
+//        return collectionViewController
+//    }()
+//    let pageControl: UIPageControl = {
+//        let pageControl = UIPageControl()
+//        pageControl.translatesAutoresizingMaskIntoConstraints = false
+//        return pageControl
+//    }()
+
+}
