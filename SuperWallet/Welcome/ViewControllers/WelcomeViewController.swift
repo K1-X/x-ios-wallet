@@ -31,4 +31,12 @@ final class WelcomeViewController: UIViewController {
 //        return pageControl
 //    }()
 
+    let createWalletButton: UIButton = {
+        let button = Button(size: .large, style: .solid)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(NSLocalizedString("welcome.createWallet.button.title", value: "CREATE WALLET", comment: ""), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        button.backgroundColor = Colors.darkBlue
+        return button
+    }()
 }
