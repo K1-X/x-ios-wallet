@@ -101,4 +101,21 @@ final class WelcomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+
+    func configure(viewModel: WelcomeViewModel) {
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+//        pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
+//        pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
+//        pageControl.numberOfPages = viewModel.numberOfPages
+//        pageControl.currentPage = viewModel.currentPage
+    }
+
+    @IBAction func start() {
+        delegate?.didPressCreateWallet(in: self)
+    }
+
+    @IBAction func importFlow() {
+        delegate?.didPressImportWallet(in: self)
+    }
 }
