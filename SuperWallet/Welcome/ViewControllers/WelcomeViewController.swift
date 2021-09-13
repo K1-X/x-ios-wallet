@@ -48,4 +48,47 @@ final class WelcomeViewController: UIViewController {
         importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+//        viewModel.numberOfPages = pages.count
+//        view.addSubview(collectionViewController.view)
+
+        let stackView = UIStackView(arrangedSubviews: [
+//            pageControl,
+            createWalletButton,
+            importWalletButton
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 30
+        view.addSubview(stackView)
+
+//        collectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+//            collectionViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+//            collectionViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            collectionViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            collectionViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//
+            stackView.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -60),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: 300),
+
+//            pageControl.heightAnchor.constraint(equalToConstant: 20),
+//            pageControl.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+
+            createWalletButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            createWalletButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+
+            importWalletButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            importWalletButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+        ])
+
+        createWalletButton.addTarget(self, action: #selector(start), for: .touchUpInside)
+        importWalletButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
+        configure(viewModel: viewModel)
+    }
 }
