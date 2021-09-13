@@ -39,4 +39,13 @@ final class WelcomeViewController: UIViewController {
         button.backgroundColor = Colors.darkBlue
         return button
     }()
+
+    let importWalletButton: UIButton = {
+        let importWalletButton = Button(size: .large, style: .border)
+        importWalletButton.translatesAutoresizingMaskIntoConstraints = false
+        importWalletButton.setTitle(NSLocalizedString("welcome.importWallet.button.title", value: "IMPORT WALLET", comment: ""), for: .normal)
+        importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        importWalletButton.accessibilityIdentifier = "import-wallet"
+        return importWalletButton
+    }()
 }
