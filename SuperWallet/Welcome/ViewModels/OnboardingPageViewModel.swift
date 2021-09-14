@@ -13,4 +13,10 @@ struct OnboardingPageViewModel {
         subtitle = ""
         image = #imageLiteral(resourceName: "onboarding_lock")
     }    
+
+    init(title: String, subtitle: String, image: UIImage) {
+        self.title = title
+        self.subtitle = subtitle
+        self.image = image
+    }
 }
