@@ -9,5 +9,17 @@ final class OnboardingPage: UICollectionViewCell {
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
     private var subtitleLabel: UILabel!
-    
+ 
+    override var reuseIdentifier: String? {
+        return OnboardingPage.identifier
+    }
+
+    var model = OnboardingPageViewModel() {
+        didSet {
+            imageView.image = model.image
+            titleLabel.text = model.title
+            subtitleLabel.text = model.subtitle
+        }
+    }    
+
 }
