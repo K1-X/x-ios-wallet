@@ -14,4 +14,10 @@ extension Bundle {
     var buildNumberInt: Int {
         return Int(Bundle.main.buildNumber ?? "-1") ?? -1
     }    
+
+    var fullVersion: String {
+        let versionNumber = Bundle.main.versionNumber ?? ""
+        let buildNumber = Bundle.main.buildNumber ?? ""
+        return "\(versionNumber) (\(buildNumber))"
+    }
 }
