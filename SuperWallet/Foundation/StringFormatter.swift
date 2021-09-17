@@ -14,4 +14,13 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()    
+
+    /// decimalFormatter of a `StringFormatter` to represent curent locale.
+    private lazy var decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        formatter.isLenient = true
+        return formatter
+    }()
 }
