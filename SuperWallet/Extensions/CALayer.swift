@@ -22,4 +22,14 @@ extension CALayer {
         border.backgroundColor = color.cgColor
         self.addSublayer(border)
     }    
+
+    func shake() {
+        let kfa = CAKeyframeAnimation.init(keyPath: "transform.translation.x")
+        let s:CGFloat = 5.0
+        kfa.values = [(-s),(0),s,0,-s,0,s,0]
+        kfa.duration = 0.3
+        kfa.repeatCount = 2
+        kfa.isRemovedOnCompletion = true
+        add(kfa, forKey: "shake")
+    }
 }
