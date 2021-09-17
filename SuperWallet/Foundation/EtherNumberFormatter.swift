@@ -20,4 +20,16 @@ final class EtherNumberFormatter {
 
     /// Maximum number of digits after the decimal point.
     var maximumFractionDigits = Int.max
+
+    /// Decimal point.
+    var decimalSeparator = "."
+
+    /// Thousands separator.
+    var groupingSeparator = ","
+
+    /// Initializes a `EtherNumberFormatter` with a `Locale`.
+    init(locale: Locale = .current) {
+        decimalSeparator = locale.decimalSeparator ?? "."
+        groupingSeparator = locale.groupingSeparator ?? ","
+    }
 }
