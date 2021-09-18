@@ -50,4 +50,21 @@ final class DecimalFormatter {
         self.numberFormatter.numberStyle = .decimal
         self.numberFormatter.isLenient = true
     }
+
+    /// Converts a String to a `NSumber`.
+    ///
+    /// - Parameters:
+    ///   - string: string to convert.
+    /// - Returns: `NSumber` represenation.
+    func number(from string: String) -> NSNumber? {
+        return self.numberFormatter.number(from: string) ?? self.usFormatter.number(from: string) ?? self.frFormatter.number(from: string) ?? self.enCaFormatter.number(from: string)
+    }
+    /// Converts a NSumber to a `String`.
+    ///
+    /// - Parameters:
+    ///   - number: nsnumber to convert.
+    /// - Returns: `NSumber` represenation.
+    func string(from number: NSNumber) -> String? {
+        return self.numberFormatter.string(from: number)
+    }
 }
