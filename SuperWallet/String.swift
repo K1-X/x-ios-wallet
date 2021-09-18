@@ -91,3 +91,9 @@ extension String {
         return String(self[startIndex..<endIndex])
     }
 }
+
+extension String {
+    func textHeight(font: UIFont, width: CGFloat) -> CGFloat {
+        return self.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil).size.height
+    }
+}
