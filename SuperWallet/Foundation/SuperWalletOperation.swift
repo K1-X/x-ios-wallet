@@ -31,4 +31,18 @@ class SuperWalletOperation: Operation {
         }
     }
 
+    func finish() {
+        isExecuting = false
+        isFinished = true
+    }
+
+    override func start() {
+        if isCancelled {
+            finish()
+
+        } else {
+            isExecuting = true
+            main()
+        }
+    }
 }
