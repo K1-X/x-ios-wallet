@@ -23,4 +23,13 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()    
+
+    /// frFormatter of a `DecimalFormatter` to represent decimal separator ",".
+    private lazy var frFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "fr_FR")
+        formatter.numberStyle = .decimal
+        formatter.isLenient = true
+        return formatter
+    }()
 }
