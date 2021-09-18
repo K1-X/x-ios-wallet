@@ -23,4 +23,12 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
+    /// tenthFormatter of a `StringFormatter` to represent Int numbers with grouping.
+    private lazy var tenthFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
 }
