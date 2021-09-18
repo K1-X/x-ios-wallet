@@ -147,4 +147,38 @@ final class EtherNumberFormatter {
         }
         return string
     }
+
+    private func fractionalString(from number: BigInt, decimals: Int) -> String {
+        var number = number
+        let digits = number.description.count
+
+        if number == 0 || decimals - digits > maximumFractionDigits {
+            // Value is smaller than can be represented with `maximumFractionDigits`
+            return String(repeating: "0", count: minimumFractionDigits)
+        }
+
+        if decimals < minimumFractionDigits {
+            number *= BigInt(10).power(minimumFractionDigits - decimals)
+        }
+        if decimals > maximumFractionDigits {
+            number /= BigInt(10).power(decimals - maximumFractionDigits)
+        }
+
+        var string = number.description
+        if digits < decimals {
+            // Pad with zeros at the left if necessary
+            string = String(repeating: "0", count: decimals - digits) + string
+        }
+
+        // Remove extra zeros after the decimal point.
+        if let lastNonZeroIndex = string.reversed().index(where: { $0 != "0" })?.base {
+            let numberOfZeros = string.distance(from: string.startIndex, to: lastNonZeroIndex)
+            if numberOfZeros > minimumFractionDigits {
+                let newEndIndex = string.index(string.startIndex, offsetBy: numberOfZeros - minimumFractionDigits)
+                string = String(string[string.startIndex..<newEndIndex])
+            }
+        }
+
+        return string
+    }
 }
