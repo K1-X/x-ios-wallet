@@ -21,4 +21,14 @@ class SuperWalletOperation: Operation {
             didChangeValue(forKey: KVOProperties.isFinished)
         }
     }
+
+    override public var isExecuting: Bool {
+        get { return _isExecuting }
+        set {
+            willChangeValue(forKey: KVOProperties.isExecuting)
+            _isExecuting = newValue
+            didChangeValue(forKey: KVOProperties.isExecuting)
+        }
+    }
+
 }
