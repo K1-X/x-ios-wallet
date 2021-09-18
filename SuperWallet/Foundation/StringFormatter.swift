@@ -31,4 +31,27 @@ final class StringFormatter {
         formatter.numberStyle = .decimal
         return formatter
     }()
+
+    /// Converts a Decimal to a `currency String`.
+    ///
+    /// - Parameters:
+    ///   - value: Decimal to convert.
+    ///   - currencyCode: code of the currency.
+    /// - Returns: Currency `String` represenation.
+    func currency(with value: Decimal, and currencyCode: String) -> String {
+        let formatter = currencyFormatter
+        formatter.currencyCode = currencyCode
+        return formatter.string(for: value) ?? "\(value)"
+    }
+    /// Converts a Decimal to a `token String`.
+    ///
+    /// - Parameters:
+    ///   - value: Decimal to convert.
+    ///   - decimals: symbols after coma.
+    /// - Returns: Token `String` represenation.
+    func token(with value: Decimal, and decimals: Int) -> String {
+        let formatter = decimalFormatter
+        formatter.maximumFractionDigits = decimals
+        return formatter.string(for: value) ?? "\(value)"
+    }
 }
