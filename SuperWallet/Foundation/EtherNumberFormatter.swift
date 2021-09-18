@@ -75,4 +75,35 @@ final class EtherNumberFormatter {
             return number
         }
     }
+
+    /// Formats a `BigInt` for displaying to the user.
+    ///
+    /// - Parameters:
+    ///   - number: number to format
+    ///   - units: units to use
+    /// - Returns: string representation
+    func string(from number: BigInt, units: EthereumUnit = .ether) -> String {
+        let decimals = Int(log10(Double(units.rawValue)))
+        return string(from: number, decimals: decimals)
+    }
+
+    /// Formats a `BigInt` for displaying to the user.
+    ///
+    /// - Parameters:
+    ///   - number: number to format
+    ///   - decimals: decimal places used for scaling values.
+    /// - Returns: string representation
+    func string(from number: BigInt, decimals: Int) -> String {
+        precondition(minimumFractionDigits >= 0)
+        precondition(maximumFractionDigits >= 0)
+
+        let dividend = BigInt(10).power(decimals)
+        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: dividend)
+        let integerString = self.integerString(from: integerPart)
+        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
+        if fractionalString.isEmpty {
+            return integerString
+        }
+        return "\(integerString).\(fractionalString)"
+    }
 }
