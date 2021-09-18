@@ -55,4 +55,43 @@ final class StringFormatter {
         formatter.maximumFractionDigits = decimals
         return formatter.string(for: value) ?? "\(value)"
     }
+
+
+    /// Converts a String to a `Decimal`.
+    ///
+    /// - Parameters:
+    ///   - value: String to convert.
+    /// - Returns: Decimal represenation.
+    func decimal(with value: String) -> Decimal? {
+        let formatter = decimalFormatter
+        formatter.generatesDecimalNumbers = true
+        formatter.decimalSeparator = Locale.current.decimalSeparator
+        return formatter.number(from: value) as? Decimal
+    }
+    /// Converts a Double to a `String`.
+    ///
+    /// - Parameters:
+    ///   - double: double to convert.
+    ///   - precision: symbols after coma.
+    /// - Returns: `String` represenation.
+    func formatter(for double: Double, with precision: Int) -> String {
+        return String(format: "%.\(precision)f", double)
+    }
+    /// Converts a Double to a `String`.
+    ///
+    /// - Parameters:
+    ///   - double: double to convert.
+    /// - Returns: `String` represenation.
+    func formatter(for double: Double) -> String {
+        return String(format: "%f", double)
+    }
+    /// Converts a Int to a `String` that respect tenth.
+    ///
+    /// - Parameters:
+    ///   - int: int to convert.
+    /// - Returns: `String` represenation.
+    func formatter(for int: Int) -> String? {
+        let formatter = tenthFormatter
+        return formatter.string(from: NSNumber(value: int))
+    }
 }
