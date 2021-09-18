@@ -41,6 +41,23 @@ struct QRURLParser {
         return from.substring(to: AddressValidatorType.ethereum.addressLength)
     }
 
+    private static func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
+        if paramParts.isEmpty {
+            return [:]
+        }
+        var params = [String: String]()
+        var i = 0
+        while i < paramParts.count {
+            let tokenizedParamParts = paramParts[i].components(separatedBy: "=")
+            if tokenizedParamParts.count < 2 {
+                break
+            }
+            params[tokenizedParamParts[0]] = tokenizedParamParts[1]
+            i += 1
+        }
+        return params
+    }
+
 }
 
 
