@@ -12,4 +12,13 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()    
+
+    /// usFormatter of a `DecimalFormatter` to represent decimal separator ".".
+    private lazy var usFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .decimal
+        formatter.isLenient = true
+        return formatter
+    }()
 }
