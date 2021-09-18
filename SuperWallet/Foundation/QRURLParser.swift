@@ -60,4 +60,9 @@ struct QRURLParser {
 
 }
 
+extension ParserResult: Equatable {
+    static func == (lhs: ParserResult, rhs: ParserResult) -> Bool {
+        return lhs.protocolName == rhs.protocolName && lhs.address == rhs.address && lhs.params == rhs.params
+    }
+}
 
