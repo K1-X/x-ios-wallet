@@ -41,4 +41,13 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
+    /// Initializes a `DecimalFormatter` with a `Locale`.
+    init(locale: Locale = .current) {
+        self.locale = locale
+        self.numberFormatter = NumberFormatter()
+        self.numberFormatter.locale = self.locale
+        self.numberFormatter.numberStyle = .decimal
+        self.numberFormatter.isLenient = true
+    }
 }
