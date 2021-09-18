@@ -56,4 +56,15 @@ extension String {
         }
         return [:]
     }
+
+    var drop0x: String {
+        if self.count > 2 && self.substring(with: 0..<2) == "0x" {
+            return String(self.dropFirst(2))
+        }
+        return self
+    }
+
+    var add0x: String {
+        return "0x" + self
+    }
 }
