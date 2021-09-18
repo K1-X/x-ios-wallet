@@ -106,4 +106,45 @@ final class EtherNumberFormatter {
         }
         return "\(integerString).\(fractionalString)"
     }
+
+    func string(from number: BigUInt, decimals: Int) -> String {
+        precondition(minimumFractionDigits >= 0)
+        precondition(maximumFractionDigits >= 0)
+
+        let dividend = BigInt(10).power(decimals)
+        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: BigUInt(dividend))
+        let integerString = self.integerString(from: BigInt(integerPart))
+        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
+        if fractionalString.isEmpty {
+            return integerString
+        }
+        return "\(integerString).\(fractionalString)"
+    }
+    /// Formats a `BigInt` to a Decimal.
+    ///
+    /// - Parameters:
+    ///   - number: number to format
+    ///   - decimals: decimal places used for scaling values.
+    /// - Returns: Decimal representation
+    func decimal(from number: BigInt, decimals: Int) -> Decimal? {
+        precondition(minimumFractionDigits >= 0)
+        precondition(maximumFractionDigits >= 0)
+        let dividend = BigInt(10).power(decimals)
+        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: dividend)
+        let integerString = integerPart.description
+        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
+        if fractionalString.isEmpty {
+            return Decimal(string: integerString)
+        }
+        return Decimal(string: "\(integerString).\(fractionalString)")
+    }
+    private func integerString(from: BigInt) -> String {
+        var string = from.description
+        let end = from.sign == .minus ? 1 : 0
+        for offset in stride(from: string.count - 3, to: end, by: -3) {
+            let index = string.index(string.startIndex, offsetBy: offset)
+            string.insert(contentsOf: groupingSeparator, at: index)
+        }
+        return string
+    }
 }
