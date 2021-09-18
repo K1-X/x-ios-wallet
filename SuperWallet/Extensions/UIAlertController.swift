@@ -31,4 +31,15 @@ extension UIAlertController {
         return alertController
     }
     
+    static func alertController(
+        title: String? = .none,
+        message: String? = .none,
+        style: UIAlertControllerStyle,
+        in navigationController: NavigationController
+    ) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        alertController.popoverPresentationController?.sourceView = navigationController.view
+        alertController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+        return alertController
+    }
 }
