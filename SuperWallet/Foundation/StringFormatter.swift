@@ -3,7 +3,6 @@
 import UIKit
 
 final class StringFormatter {
-
     /// currencyFormatter of a `StringFormatter` to represent curent locale.
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -13,8 +12,7 @@ final class StringFormatter {
         formatter.numberStyle = .currencyAccounting
         formatter.isLenient = true
         return formatter
-    }()    
-
+    }()
     /// decimalFormatter of a `StringFormatter` to represent curent locale.
     private lazy var decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -23,7 +21,6 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
-
     /// tenthFormatter of a `StringFormatter` to represent Int numbers with grouping.
     private lazy var tenthFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -31,7 +28,6 @@ final class StringFormatter {
         formatter.numberStyle = .decimal
         return formatter
     }()
-
     /// Converts a Decimal to a `currency String`.
     ///
     /// - Parameters:
@@ -54,7 +50,6 @@ final class StringFormatter {
         formatter.maximumFractionDigits = decimals
         return formatter.string(for: value) ?? "\(value)"
     }
-
     /// Converts a String to a `Decimal`.
     ///
     /// - Parameters:
@@ -93,3 +88,4 @@ final class StringFormatter {
         return formatter.string(from: NSNumber(value: int))
     }
 }
+
