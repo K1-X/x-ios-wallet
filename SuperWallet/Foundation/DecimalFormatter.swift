@@ -30,4 +30,13 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
+    /// enCaFormatter of a `DecimalFormatter` to represent decimal separator "'".
+    private lazy var enCaFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_CA")
+        formatter.numberStyle = .decimal
+        formatter.isLenient = true
+        return formatter
+    }()
 }
