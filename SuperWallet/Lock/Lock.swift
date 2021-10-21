@@ -21,5 +21,15 @@ final class Lock: LockInterface {
     private let autoLockType = "autoLockType"
     private let autoLockTime = "autoLockTime"
     private let touchId = "superwallet.touchId"
+
+    private let keychain: KeychainSwift
+
+    init(keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)) {
+        self.keychain = keychain
+    }
+
+    func shouldShowProtection() -> Bool {
+        return isPasscodeSet() && autoLockTriggered()
+    }
     
 }
