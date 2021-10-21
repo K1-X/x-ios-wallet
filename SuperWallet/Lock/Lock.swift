@@ -31,5 +31,12 @@ final class Lock: LockInterface {
     func shouldShowProtection() -> Bool {
         return isPasscodeSet() && autoLockTriggered()
     }
-    
+
+    func isPasscodeSet() -> Bool {
+        return currentPasscode() != nil
+    }
+
+    func currentPasscode() -> String? {
+        return SAMKeychain.password(forService: Keys.service, account: Keys.account)
+    }    
 }
