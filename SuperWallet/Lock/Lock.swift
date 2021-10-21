@@ -11,5 +11,15 @@ protocol LockInterface {
 
 final class Lock: LockInterface {
 
+    private struct Keys {
+        static let service = "superwallet.lock"
+        static let account = "superwallet.account"
+    }
+
+    private let passcodeAttempts = "passcodeAttempts"
+    private let maxAttemptTime = "maxAttemptTime"
+    private let autoLockType = "autoLockType"
+    private let autoLockTime = "autoLockTime"
+    private let touchId = "superwallet.touchId"
     
 }
