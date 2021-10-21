@@ -39,4 +39,12 @@ final class Lock: LockInterface {
     func currentPasscode() -> String? {
         return SAMKeychain.password(forService: Keys.service, account: Keys.account)
     }    
+
+    func isPasscodeValid(passcode: String) -> Bool {
+        return passcode == currentPasscode()
+    }
+
+    func setAutoLockType(type: AutoLock) {
+         keychain.set(String(type.rawValue), forKey: autoLockType)
+    }
 }
