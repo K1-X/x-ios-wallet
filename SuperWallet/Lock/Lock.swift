@@ -84,4 +84,27 @@ final class Lock: LockInterface {
     func setPasscode(passcode: String) {
         SAMKeychain.setPassword(passcode, forService: Keys.service, account: Keys.account)
     }
+
+    func deletePasscode() {
+        SAMKeychain.deletePassword(forService: Keys.service, account: Keys.account)
+        resetPasscodeAttemptHistory()
+        setAutoLockType(type: AutoLock.immediate)
+    }
+
+    func numberOfAttempts() -> Int {
+        guard let attempts = keychain.get(passcodeAttempts) else {
+            return 0
+        }
+        return Int(attempts)!
+    }
+
+    func resetPasscodeAttemptHistory() {
+         keychain.delete(passcodeAttempts)
+    }
+
+    func recordIncorrectPasscodeAttempt() {
+        var numberOfAttemptsSoFar = numberOfAttempts()
+        numberOfAttemptsSoFar += 1
+        keychain.set(String(numberOfAttemptsSoFar), forKey: passcodeAttempts)
+    }
 }
