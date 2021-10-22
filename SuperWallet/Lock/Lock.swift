@@ -47,4 +47,25 @@ final class Lock: LockInterface {
     func setAutoLockType(type: AutoLock) {
          keychain.set(String(type.rawValue), forKey: autoLockType)
     }
+
+    func getAutoLockType() -> AutoLock {
+        let id = keychain.get(autoLockType)
+        guard let type = id, let intType = Int(type), let autoLock = AutoLock(rawValue: intType) else {
+            return .immediate
+        }
+        return autoLock
+    }
+
+    func setAutoLockTime() {
+        guard isPasscodeSet(), keychain.get(autoLockTime) == nil else { return }
+        let timeString = dateFormatter().string(from: Date())
+        keychain.set(timeString, forKey: autoLockTime)
+    }
+
+    func getAutoLockTime() -> Date {
+        guard let timeString = keychain.get(autoLockTime), let time = dateFormatter().date(from: timeString) else {
+            return Date()
+        }
+        return time
+    }
 }
