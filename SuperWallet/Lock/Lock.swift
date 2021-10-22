@@ -107,4 +107,61 @@ final class Lock: LockInterface {
         numberOfAttemptsSoFar += 1
         keychain.set(String(numberOfAttemptsSoFar), forKey: passcodeAttempts)
     }
+
+    func recordedMaxAttemptTime() -> Date? {
+        guard let timeString = keychain.get(maxAttemptTime) else {
+            return nil
+        }
+        return dateFormatter().date(from: timeString)
+    }
+
+    func incorrectMaxAttemptTimeIsSet() -> Bool {
+        guard let timeString = keychain.get(maxAttemptTime), !timeString.isEmpty  else {
+            return false
+        }
+        return true
+    }
+
+    func recordIncorrectMaxAttemptTime() {
+        let timeString = dateFormatter().string(from: Date())
+        keychain.set(timeString, forKey: maxAttemptTime)
+    }
+
+    func removeIncorrectMaxAttemptTime() {
+        keychain.delete(maxAttemptTime)
+    }
+
+    func removeAutoLockTime() {
+        keychain.delete(autoLockTime)
+    }
+
+    private func dateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.medium
+        return dateFormatter
+    }
+
+    private func autoLockTriggered() -> Bool {
+        let type = getAutoLockType()
+        switch type {
+        case .immediate:
+            return true
+        default:
+            return timeOutInterval(for: type)
+        }
+    }
+
+    private func timeOutInterval(for type: AutoLock) -> Bool {
+        let elapsed = Date().timeIntervalSince(getAutoLockTime())
+        let intervalPassed = Int(elapsed) >= type.interval
+        return intervalPassed
+    }
+
+    func clear() {
+        deletePasscode()
+        resetPasscodeAttemptHistory()
+        removeIncorrectMaxAttemptTime()
+        removeAutoLockTime()
+    }
 }
