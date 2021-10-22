@@ -68,4 +68,20 @@ final class Lock: LockInterface {
         }
         return time
     }
+
+    func setTouchId() {
+        keychain.set("touchId", forKey: touchId)
+    }
+
+    func getTouchId() -> Bool {
+        let touchIdValue = keychain.get(touchId)
+        guard let touchIdStr = touchIdValue else {
+            return false
+        }
+        return true
+    }
+
+    func setPasscode(passcode: String) {
+        SAMKeychain.setPassword(passcode, forService: Keys.service, account: Keys.account)
+    }
 }
