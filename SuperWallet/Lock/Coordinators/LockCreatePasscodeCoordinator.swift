@@ -7,5 +7,9 @@ protocol LockCreatePasscodeCoordinatorDelegate: class {
 }
 
 final class LockCreatePasscodeCoordinator: Coordinator {
-    
+
+    var coordinators: [Coordinator] = []
+    private let model: LockCreatePasscodeViewModel
+    let navigationController: NavigationController
+    weak var delegate: LockCreatePasscodeCoordinatorDelegate?    
 }
