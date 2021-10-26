@@ -33,4 +33,12 @@ final class AuthenticateUserCoordinator: Coordinator {
 
         navigationController.present(lockEnterPasscodeViewController, animated: true)
     }
+
+    func showAuthentication() {
+        
+    }
+
+    func stop() {
+        navigationController.dismiss(animated: true)
+    }
 }
