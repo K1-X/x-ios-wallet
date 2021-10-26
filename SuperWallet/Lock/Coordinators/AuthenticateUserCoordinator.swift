@@ -11,5 +11,20 @@ final class AuthenticateUserCoordinator: Coordinator {
     private lazy var lockEnterPasscodeViewController: GestureVerifyViewController = {
         return GestureVerifyViewController()
     }()
-    
+
+    init(
+        navigationController: NavigationController,
+        model: LockEnterPasscodeViewModel = LockEnterPasscodeViewModel(),
+        lock: LockInterface = Lock()
+    ) {
+        self.navigationController = navigationController
+        self.model = model
+        self.lock = lock
+
+        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in
+            if state {
+                self?.stop()
+            }
+        }
+    }    
 }
