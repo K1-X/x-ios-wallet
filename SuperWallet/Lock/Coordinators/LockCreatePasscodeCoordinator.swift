@@ -27,4 +27,8 @@ final class LockCreatePasscodeCoordinator: Coordinator {
         self.navigationController = navigationController
         self.model = model
     }
+
+    func start() {
+        navigationController.viewControllers = [lockViewController]
+    }
 }
