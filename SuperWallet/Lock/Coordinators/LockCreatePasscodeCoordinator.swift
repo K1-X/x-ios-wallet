@@ -19,4 +19,12 @@ final class LockCreatePasscodeCoordinator: Coordinator {
         controller.type = GestureViewControllerType.setting
         return controller
     }()
+
+    init(
+        navigationController: NavigationController = NavigationController(),
+        model: LockCreatePasscodeViewModel
+    ) {
+        self.navigationController = navigationController
+        self.model = model
+    }
 }
