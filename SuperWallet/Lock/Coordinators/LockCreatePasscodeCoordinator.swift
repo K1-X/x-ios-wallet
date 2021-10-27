@@ -12,4 +12,11 @@ final class LockCreatePasscodeCoordinator: Coordinator {
     private let model: LockCreatePasscodeViewModel
     let navigationController: NavigationController
     weak var delegate: LockCreatePasscodeCoordinatorDelegate?    
+
+    lazy var lockViewController: GestureViewController = {
+        let controller = GestureViewController()
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        controller.type = GestureViewControllerType.setting
+        return controller
+    }()
 }
