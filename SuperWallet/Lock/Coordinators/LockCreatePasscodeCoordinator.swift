@@ -31,4 +31,8 @@ final class LockCreatePasscodeCoordinator: Coordinator {
     func start() {
         navigationController.viewControllers = [lockViewController]
     }
+
+@objc func dismiss() {
+        delegate?.didCancel(in: self)
+    }
 }
