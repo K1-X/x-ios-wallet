@@ -35,4 +35,8 @@ final class LockEnterPasscodeCoordinator: Coordinator {
         }
         lockEnterPasscodeViewController.touchId()
     }
+
+    func stop() {
+        window.isHidden = true
+    }
 }
