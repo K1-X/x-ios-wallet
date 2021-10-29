@@ -74,4 +74,36 @@ class GestureVerifyViewController: UIViewController {
         }
     }
 
+
+    func touchId() {
+        //
+        if (lock?.getTouchId())! {
+            //
+            let authenticationContext = LAContext()
+            var error: NSError?
+            //1：Touch ID
+            let isTouchIdAvailable = authenticationContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+            //,
+            if isTouchIdAvailable {
+                authenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "", reply: {
+                    (success, error) -> Void in
+                    if success {
+                        //View,
+                        OperationQueue.main.addOperation {
+                            print("\(Thread.current)")
+//                            self.lockView!.isHidden = true
+//                            self.msgLabel?.isHidden = true
+                            self.unlock(withResult: true, bioUnlock: false)
+                        }
+                    } else {
+                        print("，Touch ID！\n\(String(describing: error))")
+                    }
+                })
+            } else {
+                print("")
+            }
+        } else {
+            print("")
+        }
+    }
 }
