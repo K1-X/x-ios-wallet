@@ -63,4 +63,15 @@ class GestureVerifyViewController: UIViewController {
             make.size.equalTo(CGSize(width: CircleRadius * 2 * 0.6, height: CircleRadius * 2 * 0.6))
         }
     }
+  
+    private func unlock(withResult success: Bool, bioUnlock: Bool) {
+        self.view.endEditing(true)
+        if success {
+            lock!.removeAutoLockTime()
+        }
+        if let unlock = unlockWithResult {
+            unlock(success, bioUnlock)
+        }
+    }
+
 }
