@@ -126,4 +126,15 @@ extension GestureVerifyViewController: SPCircleViewDelegate {
         }
     }
 
+    func circleViewdidCompleteSetFirstGesture(_ view: SPCircleView, type: CircleViewType, gesture: String) {
+
+    }
+
+    func circleViewConnectCirclesLessThanNeedWithGesture(_ view: SPCircleView, type: CircleViewType, gesture: String) {
+
+    }
+
+    func circleViewdidCompleteSetSecondGesture(_ view: SPCircleView, type: CircleViewType, gesture: String, result: Bool) {
+
+    }
 }
