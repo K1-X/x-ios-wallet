@@ -107,3 +107,23 @@ class GestureVerifyViewController: UIViewController {
         }
     }
 }
+
+extension GestureVerifyViewController: SPCircleViewDelegate {
+    func circleViewdidCompleteLoginGesture(_ view: SPCircleView, type: CircleViewType, gesture: String, result: Bool) {
+        if type == CircleViewType.circleViewTypeVerify {
+            if result {
+                if isToSetNewGesture {
+                    let gesture = GestureViewController()
+                    gesture.type = GestureViewControllerType.setting
+                    navigationController?.pushViewController(gesture, animated: true)
+                } else {
+                    unlock(withResult: true, bioUnlock: false)
+                }
+            } else {
+                print("!")
+                self.msgLabel?.showWarnMsg(msg: gestureTextGestureVerifyError)
+            }
+        }
+    }
+
+}
